@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "seatMaps",
-    "slug": "seatmaps",
+    "slug": "jet-flight",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/custom-icon.png",
