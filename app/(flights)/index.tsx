@@ -143,6 +143,7 @@ const Flights = () => {
       <Image
         source={require("@/assets/images/world-map.png")}
         style={styles.image}
+        blurRadius={10}
       />
       <StatusBar style="light" />
       <View style={{ marginTop: top * 3, flex: 1 }}>

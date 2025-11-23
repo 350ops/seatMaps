@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
@@ -9,7 +9,9 @@ import {
     ViewStyle,
     TextStyle,
     Image,
-    TextInput
+    TextInput,
+    Pressable,
+    Keyboard
 } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { searchAirports } from '../utils/amadeus';
@@ -45,6 +47,7 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
     const [showResults, setShowResults] = useState(false);
     const [isSelection, setIsSelection] = useState(false);
     const debouncedQuery = useDebounce(query, 500);
+    const inputRef = useRef<TextInput>(null);
 
     useEffect(() => {
         if (debouncedQuery.length > 2 && !isSelection) {
@@ -67,31 +70,35 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
         setIsSelection(true);
         setQuery(`${item.address.cityName} (${item.iataCode})`);
         setShowResults(false);
+        Keyboard.dismiss();
         onSelect(item);
     };
 
     return (
         <View style={styles.container}>
             <BlurView intensity={30} tint="light" style={[styles.inputContainer, containerStyle]}>
-                {icon && <Image source={icon} style={styles.icon} />}
-                <TextInput
-                    placeholder={placeholder}
-                    placeholderTextColor="rgba(255, 255, 255, 0.5)"
-                    style={[styles.inputText, inputStyle]}
-                    value={query}
-                    onChangeText={(text) => {
-                        setQuery(text);
-                        setIsSelection(false);
-                    }}
-                    onFocus={() => {
-                        if (isSelection) {
-                            setQuery('');
+                <Pressable style={styles.inputPressable} onPress={() => inputRef.current?.focus()}>
+                    {icon && <Image source={icon} style={styles.icon} />}
+                    <TextInput
+                        ref={inputRef}
+                        placeholder={placeholder}
+                        placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                        style={[styles.inputText, inputStyle]}
+                        value={query}
+                        onChangeText={(text) => {
+                            setQuery(text);
                             setIsSelection(false);
-                        }
-                        if (results.length > 0) setShowResults(true);
-                    }}
-                />
-                {loading && <ActivityIndicator size="small" color="#272727" />}
+                        }}
+                        onFocus={() => {
+                            if (isSelection) {
+                                setQuery('');
+                                setIsSelection(false);
+                            }
+                            if (results.length > 0) setShowResults(true);
+                        }}
+                    />
+                    {loading && <ActivityIndicator size="small" color="#272727" />}
+                </Pressable>
             </BlurView>
 
             {showResults && results.length > 0 && (
@@ -122,16 +129,18 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
         backgroundColor: 'rgba(128, 128, 128, 0.3)',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
         borderRadius: 100,
         borderWidth: 1.4,
         borderColor: 'rgba(255, 255, 255, 0.4)',
-        gap: 24,
         overflow: 'hidden',
+    },
+    inputPressable: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        gap: 24,
     },
     icon: {
         tintColor: '#ffffff',

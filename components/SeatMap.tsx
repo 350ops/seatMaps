@@ -1,8 +1,12 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from "react-native";
 import React from "react";
 import Svg, { Path, Rect } from "react-native-svg";
 import { BlurView } from 'expo-blur';
 import { Ionicons } from "@expo/vector-icons";
+
+// Import the fuselage images
+const fuselageImage = require("../assets/images/fuselage.png");
+const upperDeckImage = require("../assets/images/upperdeck.png");
 
 interface SeatMapProps {
     seatmapData: any;
@@ -40,21 +44,21 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
         switch (status) {
             case "AVAILABLE":
                 return {
-                    backgroundColor: "#87ff0fff", // White
+                    backgroundColor: "#ffffff7f", // White
                     borderColor: "#E0E0E0",
                     textColor: "#333333"
                 };
             case "OCCUPIED":
                 return {
                     backgroundColor: "#505050", // Dark Gray
-                    borderColor: "#404040",
+                    borderColor: "#777777ff",
                     textColor: "#AAAAAA"
                 };
             case "BLOCKED":
                 return {
-                    backgroundColor: "#707070", // Medium Gray
-                    borderColor: "#606060",
-                    textColor: "#AAAAAA"
+                    backgroundColor: "#38072b89", // Medium Gray
+                    borderColor: "#959595ff",
+                    textColor: "#ffffffc2"
                 };
             default:
                 return {
@@ -82,6 +86,11 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
 
     const renderDeck = (deck: any, deckIndex: number) => {
         const seats = deck.seats || [];
+
+        // If the deck has no seats, do not render it
+        if (seats.length === 0) {
+            return null;
+        }
 
         // Group seats by row (using X coordinate as row number)
         const seatsByRow: { [key: string]: any[] } = {};
@@ -133,14 +142,18 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
             // For A380 and other multi-deck aircraft:
             // Deck 0 (first deck) = Upper Deck
             // Deck 1 (second deck) = Main Deck
-            if (deckIndex === 0) return "Upper Deck";
-            if (deckIndex === 1) return "Main Deck";
+            if (deckIndex === 0) return "LOWER DECK";
+            if (deckIndex === 1) return "UPPER DECK";
 
             // Fallback for aircraft with more than 2 decks
             return `Deck ${deckIndex + 1}`;
         };
 
         const deckLabel = getDeckLabel();
+
+        // Determine background image based on deck index
+        // Deck 1 is typically the upper deck on A380
+        const bgImage = deckIndex === 1 ? upperDeckImage : fuselageImage;
 
         return (
             <View key={deckIndex} style={styles.deckContainer}>
@@ -151,7 +164,12 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                 )}
 
                 <View style={styles.cabinContainer}>
-                    {/* Fuselage background - removed to prevent visual artifacts */}
+                    {/* Fuselage background */}
+                    <Image
+                        source={bgImage}
+                        style={styles.cabinGraphic}
+                        resizeMode="stretch"
+                    />
 
                     <View style={styles.contentContainer}>
                         {deckIndex === 0 && (
@@ -180,8 +198,8 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                                 const rowMaxCol = Math.max(...rowSeats.map((s: any) => s.coordinates.y));
                                 const trailingGap = globalMaxCol - rowMaxCol;
 
-                                const leadingWidth = leadingGap > 0 ? (leadingGap * seatSize) + (leadingGap * gapSize) : 0;
-                                const trailingWidth = trailingGap > 0 ? (trailingGap * seatSize) + (trailingGap * gapSize) : 0;
+                                const leadingWidth = leadingGap > 0 ? (leadingGap * seatSize) + ((leadingGap - 1) * gapSize) : 0;
+                                const trailingWidth = trailingGap > 0 ? (trailingGap * seatSize) + ((trailingGap - 1) * gapSize) : 0;
 
                                 return (
                                     <View key={row} style={[styles.row, { gap: gapSize }]}>
@@ -217,7 +235,6 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                                                             selectedSeat === seat.number && styles.selectedSeatShadow
                                                         ]}
                                                         onPress={() => handleSeatPress(seat)}
-                                                        disabled={!isAvailable}
                                                         activeOpacity={0.7}
                                                     >
                                                         <Text style={[styles.seatText, { fontSize, color: style.textColor }]}>
@@ -250,10 +267,10 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        paddingBottom: 120,
+        paddingBottom: 20,
         backgroundColor: "transparent",
         minHeight: "100%",
-        paddingTop: 20,
+        paddingTop: 0,
     },
     deckContainer: {
         width: "100%",
@@ -278,9 +295,11 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(255, 255, 255, 0.3)',
     },
     cabinContainer: {
-        width: width - 20, // Margins on side
-        minHeight: 600,
+        width: width * 0.95, // Slightly wider to accommodate seats better
         alignItems: "center",
+        alignSelf: "center",
+        paddingVertical: 20, // Add padding to extend background beyond seats
+        marginBottom: 0,
     },
     cabinGraphic: {
         position: "absolute",
@@ -288,7 +307,9 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        borderRadius: 40,
+        width: "100%",
+        height: "100%",
+        borderRadius: 30,
         overflow: "hidden",
     },
     svgPosition: {
@@ -298,19 +319,17 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         zIndex: 1,
-        paddingVertical: 20,
+        paddingTop: 50,
+        paddingBottom: 30,
         width: "100%",
         alignItems: "center",
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
-        marginBottom: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        gap: 5,
         paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20,
+        paddingVertical: 30,
     },
     aircraftText: {
         color: 'rgba(255, 255, 255, 0.8)',

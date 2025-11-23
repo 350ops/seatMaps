@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator, ScrollView, TouchableOpacity, Platform, Animated } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator, ScrollView, TouchableOpacity, Platform, Animated, Pressable } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { getSeatmap } from "@/utils/amadeus";
 import SeatMap from "@/components/SeatMap";
-import { Ionicons } from "@expo/vector-icons";
+import { getSeatCharacteristicDescription } from "@/utils/seatCharacteristics";
+import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 
@@ -102,9 +103,11 @@ const TicketDetail = () => {
       <SafeAreaView style={styles.safeArea}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color="#fff" />
-          </TouchableOpacity>
+          <BlurView intensity={50} tint="light" style={styles.backButtonContainer}>
+            <Pressable onPress={() => router.back()} style={styles.backButton}>
+              <AntDesign name="arrow-left" size={22} color="#fff" />
+            </Pressable>
+          </BlurView>
           <View>
             <Text style={styles.title}>Seat Map</Text>
             {cabin ? <Text style={styles.subtitle}>{cabin.replace(/_/g, " ")} CLASS</Text> : null}
@@ -129,8 +132,8 @@ const TicketDetail = () => {
           <>
             {/* Legend */}
             <BlurView
-              intensity={100}
-              tint="dark"
+              intensity={60}
+              tint="light"
               style={styles.legend}
             >
               <View style={styles.legendItem}>
@@ -146,7 +149,7 @@ const TicketDetail = () => {
                 <Text style={styles.legendText}>Occupied</Text>
               </View>
               <View style={styles.legendItem}>
-                <View style={[styles.legendDot, { backgroundColor: "#707070" }]} />
+                <View style={[styles.legendDot, { backgroundColor: "#62156b96" }]} />
                 <Text style={styles.legendText}>Blocked</Text>
               </View>
             </BlurView>
@@ -181,7 +184,7 @@ const TicketDetail = () => {
                 <Text style={styles.toastSeatNumber}>Seat {toastData.number}</Text>
                 <View style={[
                   styles.statusDot,
-                  { backgroundColor: toastData.status === 'AVAILABLE' ? '#FFFFFF' : (toastData.status === 'OCCUPIED' ? '#505050' : '#707070') }
+                  { backgroundColor: toastData.status === 'AVAILABLE' ? '#ffffffff' : (toastData.status === 'OCCUPIED' ? '#505050' : '#707070') }
                 ]} />
                 <Text style={styles.toastStatus}>
                   {toastData.status === 'AVAILABLE' ? 'Available' : (toastData.status === 'OCCUPIED' ? 'Occupied' : 'Blocked')}
@@ -191,9 +194,13 @@ const TicketDetail = () => {
 
             {toastData.characteristics && toastData.characteristics.length > 0 && (
               <View style={styles.toastCharacteristics}>
-                {toastData.characteristics.map((char: string, index: number) => (
-                  <Text key={index} style={styles.toastCharText}>• {char}</Text>
-                ))}
+                {toastData.characteristics.map((char: string, index: number) => {
+                  const description = getSeatCharacteristicDescription(char);
+                  if (!description) return null;
+                  return (
+                    <Text key={index} style={styles.toastCharText}>• {description}</Text>
+                  );
+                })}
               </View>
             )}
           </BlurView>
@@ -230,9 +237,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
   },
+  backButtonContainer: {
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginLeft: -2,
+    marginTop: -2,
+  },
   backButton: {
-    padding: 8,
-    marginLeft: -8,
+    backgroundColor: "transparent",
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 18,

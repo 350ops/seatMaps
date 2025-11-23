@@ -4,7 +4,7 @@
     "slug": "jet-flight",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/custom-icon.png",
+    "icon": "./assets/images/blue-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -14,11 +14,12 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jet-flight"
+      "bundleIdentifier": "com.yulis.seatMaps",
+      "appleTeamId": "JR5FPWYH4L"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/custom-icon.png",
+        "foregroundImage": "./assets/images/blue-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.jet_flight"

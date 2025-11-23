@@ -61,112 +61,112 @@ const Home = () => {
       <Image
         source={require("@/assets/images/world-map.png")}
         style={styles.image}
+        blurRadius={5}
       />
-      <View style={{ position: 'absolute', top: 104, left: 32 }}>
+      <View style={{ position: 'absolute', top: 70, left: 32, zIndex: 1 }}>
         <Text style={[styles.heading, styles.headingStroke]}>seatMaps</Text>
-        <Text style={[styles.heading, { position: 'absolute', top: 0, left: 0 }]}>seatMaps</Text>
+        <Text style={[styles.heading, { position: 'absolute', top: 10, left: 90 }]}>seatMaps</Text>
       </View>
 
-      <BlurView
-        intensity={80}
-        tint="light"
-        style={styles.formContainer}
-      >
+      <View style={styles.screen}>
         <ScrollView
           style={{ flex: 1 }}
           contentContainerStyle={styles.formContent}
           keyboardShouldPersistTaps="handled"
+          scrollEnabled={false}
         >
 
+          <BlurView
+            intensity={50}
+            tint="light"
+            style={styles.cardContainer}
+          >
+            <View style={{ marginBottom: 8 }}>
+              <Text style={styles.label}>From</Text>
+              <AirportAutocomplete
+                placeholder="Origin"
+                icon={require("@/assets/images/takeoff.png")}
+                onSelect={setFromAirport}
+                containerStyle={{ marginBottom: 5 }}
+              />
+            </View>
 
-          <View style={{ marginBottom: 15, marginTop: 0 }}>
-            <Text style={styles.label}>From</Text>
-            <AirportAutocomplete
-              placeholder="Origin"
-              icon={require("@/assets/images/takeoff.png")}
-              onSelect={setFromAirport}
-              containerStyle={{ marginBottom: 0 }}
-            />
-          </View>
+            <View style={{ marginBottom: 8 }}>
+              <Text style={styles.label}>To</Text>
+              <AirportAutocomplete
+                placeholder="Destination"
+                icon={require("@/assets/images/landing.png")}
+                onSelect={setToAirport}
+              />
+            </View>
 
-          <View style={{ marginBottom: 15 }}>
-            <Text style={styles.label}>To</Text>
-            <AirportAutocomplete
-              placeholder="Destination"
-              icon={require("@/assets/images/landing.png")}
-              onSelect={setToAirport}
-            />
-          </View>
+            <View style={{ marginBottom: 10 }}>
 
-          <View style={{ marginBottom: 20 }}>
-            <Text style={styles.label}>Departure Date</Text>
+              <Calendar
+                onDayPress={handleDateSelect}
+                theme={{
+                  calendarBackground: 'transparent',
+                  textSectionTitleColor: 'rgba(255, 255, 255, 0.6)',
+                  textSectionTitleDisabledColor: 'rgba(255, 255, 255, 0.3)',
+                  selectedDayBackgroundColor: 'rgba(255, 255, 255, 0.18)',
+                  selectedDayTextColor: '#ffffff',
+                  todayTextColor: '#ffffff',
+                  dayTextColor: '#ffffff',
+                  textDisabledColor: 'rgba(255, 255, 255, 0.3)',
+                  dotColor: '#ffffff',
+                  selectedDotColor: '#ffffff',
+                  arrowColor: '#ffffff',
+                  disabledArrowColor: 'rgba(255, 255, 255, 0.3)',
+                  monthTextColor: '#ffffff',
+                  indicatorColor: '#ffffff',
+                  textDayFontFamily: 'System',
+                  textMonthFontFamily: 'System',
+                  textDayHeaderFontFamily: 'System',
+                  textDayFontWeight: '400',
+                  textMonthFontWeight: '600',
+                  textDayHeaderFontWeight: '500',
+                  textDayFontSize: 14,
+                  textMonthFontSize: 15,
+                  textDayHeaderFontSize: 11,
+                }}
+                style={{ height: 350 }}
+                markedDates={{
+                  [selectedDate]: {
+                    selected: true,
+                    selectedColor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                }}
+              />
 
-            <Calendar
-              onDayPress={handleDateSelect}
-              theme={{
-                calendarBackground: 'transparent',
-                textSectionTitleColor: 'rgba(255, 255, 255, 0.6)',
-                textSectionTitleDisabledColor: 'rgba(255, 255, 255, 0.3)',
-                selectedDayBackgroundColor: 'rgba(255, 255, 255, 0.18)',
-                selectedDayTextColor: '#ffffff',
-                todayTextColor: '#ffffff',
-                dayTextColor: '#ffffff',
-                textDisabledColor: 'rgba(255, 255, 255, 0.3)',
-                dotColor: '#ffffff',
-                selectedDotColor: '#ffffff',
-                arrowColor: '#ffffff',
-                disabledArrowColor: 'rgba(255, 255, 255, 0.3)',
-                monthTextColor: '#ffffff',
-                indicatorColor: '#ffffff',
-                textDayFontFamily: 'System',
-                textMonthFontFamily: 'System',
-                textDayHeaderFontFamily: 'System',
-                textDayFontWeight: '400',
-                textMonthFontWeight: '600',
-                textDayHeaderFontWeight: '500',
-                textDayFontSize: 14,
-                textMonthFontSize: 15,
-                textDayHeaderFontSize: 11,
-              }}
-              style={{ height: 300 }}
-              markedDates={{
-                [selectedDate]: {
-                  selected: true,
-                  selectedColor: 'rgba(255, 255, 255, 0.18)',
-                },
-              }}
-            />
+            </View>
 
-          </View>
-
-          <View style={{ marginBottom: -30, marginTop: 30 }}>
-
-            <BlurView intensity={30} tint="light" style={styles.classSelectorContainer}>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.classSelectorContent}>
-                {['ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST'].map((item) => {
-                  const isSelected = travelClass === item;
-                  return (
-                    <TouchableOpacity
-                      key={item}
-                      onPress={() => setTravelClass(item)}
-                      style={[
-                        styles.classItem,
-                        isSelected && styles.classItemSelected
-                      ]}
-                    >
-                      <Text style={[
-                        styles.classItemText,
-                        isSelected && styles.classItemTextSelected
-                      ]}>
-                        {item.replace('_', ' ')}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </ScrollView>
-            </BlurView>
-          </View>
-
+            <View style={{ marginBottom: 0, marginTop: 5 }}>
+              <BlurView intensity={20} tint="light" style={styles.classSelectorContainer}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.classSelectorContent}>
+                  {['ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST'].map((item) => {
+                    const isSelected = travelClass === item;
+                    return (
+                      <TouchableOpacity
+                        key={item}
+                        onPress={() => setTravelClass(item)}
+                        style={[
+                          styles.classItem,
+                          isSelected && styles.classItemSelected
+                        ]}
+                      >
+                        <Text style={[
+                          styles.classItemText,
+                          isSelected && styles.classItemTextSelected
+                        ]}>
+                          {item.replace('_', ' ')}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </ScrollView>
+              </BlurView>
+            </View>
+          </BlurView>
 
           <BlurView
             intensity={40}
@@ -196,7 +196,7 @@ const Home = () => {
             </Pressable>
           </BlurView>
         </ScrollView>
-      </BlurView>
+      </View>
     </LinearGradient>
   );
 };
@@ -205,13 +205,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    height: 400,
-    width: "200%",
     position: "absolute",
-    top: -110,
-    left: -127,
-    tintColor: "rgba(255, 255, 255, 0.1)",
-    opacity: 0.3,
+    justifyContent: "center",
+    alignItems: "center",
+    left: "-100%",
+    height: 400,
+    objectFit: "scale-down",
+    tintColor: "#a9a9a9ff",
   },
   icon: {
     tintColor: "#272727",
@@ -225,37 +225,35 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     position: "absolute",
-    top: 104,
+    top: 70,
     left: 32,
-    textShadowColor: "rgba(255, 255, 255, 0.2)",
-    textShadowOffset: { width: 10, height: 0 },
-    textShadowRadius: 10,
+    textShadowColor: "rgba(49, 49, 49, 0.71)",
+    textShadowOffset: { width: 1, height: 5 },
+    textShadowRadius: 4,
   },
 
   headingStroke: {
     color: "transparent",
-    textShadowColor: "rgba(144, 74, 132, 0.5)",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 20,
+    textShadowColor: "#001A33",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
   },
 
   container: {
     flex: 1,
   },
 
-  formContainer: {
-    flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    marginTop: 180,
-    borderWidth: 1,
+  cardContainer: {
+    backgroundColor: 'rgba(128, 128, 128, 0.3)',
+    borderRadius: 24,
+    padding: 20,
+    marginTop: 130,
+    borderWidth: 1.4,
     borderColor: 'rgba(255, 255, 255, 0.3)',
-    borderTopColor: 'rgba(255, 255, 255, 0.5)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 16,
     elevation: 8,
     overflow: 'hidden',
   },
@@ -401,10 +399,10 @@ const styles = StyleSheet.create({
   },
   // New Class Selector Styles
   classSelectorContainer: {
-    backgroundColor: 'rgba(128, 128, 128, 0.3)',
+    backgroundColor: 'rgba(201, 201, 201, 0.12)',
     borderRadius: 100,
-    borderWidth: 1.4,
-    borderColor: 'rgba(255, 255, 255, 0.4)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.17)',
     overflow: 'hidden',
     padding: 6,
     marginHorizontal: 0,
@@ -422,7 +420,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   classItemSelected: {
-    backgroundColor: 'rgba(94, 94, 94, 0.5)',
+    backgroundColor: 'rgba(234, 234, 234, 0.15)',
   },
   classItemText: {
     fontSize: 15,
@@ -439,7 +437,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.4)',
     overflow: 'hidden',
-    marginTop: 40,
+    marginTop: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
