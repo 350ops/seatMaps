@@ -22,6 +22,7 @@ const TicketDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  const [travelClass, setTravelClass] = useState<string>("");
 
   const [toastData, setToastData] = useState<any>(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -55,6 +56,8 @@ const TicketDetail = () => {
     });
   };
 
+  const parsedOffer = flightOffer ? JSON.parse(flightOffer) : null;
+
   useEffect(() => {
     const fetchSeatmap = async () => {
       if (!flightOffer) {
@@ -66,10 +69,50 @@ const TicketDetail = () => {
       try {
         setLoading(true);
         const parsedOffer = JSON.parse(flightOffer);
-        const response = await getSeatmap(parsedOffer);
+
+        // Modify the offer to use the selected travel class
+        const modifiedOffer = {
+          ...parsedOffer,
+          travelerPricings: parsedOffer.travelerPricings.map((tp: any) => ({
+            ...tp,
+            fareDetailsBySegment: tp.fareDetailsBySegment.map((seg: any) => ({
+              ...seg,
+              cabin: travelClass || seg.cabin
+            }))
+          }))
+        };
+
+        const response = await getSeatmap(modifiedOffer);
 
         if (response && response.data && response.data.length > 0) {
-          setSeatmapData(response.data[0]);
+          // Filter the decks to show only seats for the selected cabin class
+          const seatmap = response.data[0];
+
+          if (seatmap.decks && travelClass) {
+            // Log the complete structure to understand it
+            console.log('=== SEATMAP STRUCTURE DEBUG ===');
+            console.log('Filtering for cabin class:', travelClass);
+            console.log('Number of decks:', seatmap.decks.length);
+
+            if (seatmap.decks[0]) {
+              console.log('Deck 0 keys:', Object.keys(seatmap.decks[0]));
+              console.log('Deck 0 full structure:', JSON.stringify(seatmap.decks[0], null, 2));
+
+              if (seatmap.decks[0].seats) {
+                console.log('Deck 0 has seats array, length:', seatmap.decks[0].seats.length);
+                if (seatmap.decks[0].seats[0]) {
+                  console.log('First row structure:', JSON.stringify(seatmap.decks[0].seats[0], null, 2));
+                }
+              }
+            }
+            console.log('=== END STRUCTURE DEBUG ===');
+
+            // For now, don't filter - just show all seats
+            setSeatmapData(seatmap);
+          } else {
+            setSeatmapData(seatmap);
+          }
+
           setDictionaries(response.dictionaries);
         } else {
           setError("No seatmap available for this flight");
@@ -83,9 +126,16 @@ const TicketDetail = () => {
     };
 
     fetchSeatmap();
-  }, [flightOffer]);
+  }, [flightOffer, travelClass]);
 
-  const parsedOffer = flightOffer ? JSON.parse(flightOffer) : null;
+  // Initialize travelClass from flight offer
+  useEffect(() => {
+    if (parsedOffer && !travelClass) {
+      const initialCabin = parsedOffer?.travelerPricings?.[0]?.fareDetailsBySegment?.[0]?.cabin || "ECONOMY";
+      setTravelClass(initialCabin);
+    }
+  }, [parsedOffer]);
+
   const cabin = parsedOffer?.travelerPricings?.[0]?.fareDetailsBySegment?.[0]?.cabin || "";
   const price = parsedOffer?.price?.total || "0";
   const currency = parsedOffer?.price?.currency || "USD";
@@ -120,7 +170,7 @@ const TicketDetail = () => {
           </Pressable>
           <View>
             <Text style={styles.title}>Seat Map</Text>
-            {cabin ? <Text style={styles.subtitle}>{cabin.replace(/_/g, " ")} CLASS</Text> : null}
+            {travelClass ? <Text style={styles.subtitle}>{travelClass.replace(/_/g, " ")} CLASS</Text> : null}
           </View>
           <View style={{ width: 40 }} />
         </View>
@@ -140,6 +190,34 @@ const TicketDetail = () => {
 
         {!loading && !error && seatmapData && (
           <>
+            {/* Class Selector */}
+            <View style={{ marginBottom: 10, marginTop: 5, paddingHorizontal: 16 }}>
+              <BlurView intensity={20} tint="light" style={styles.classSelectorContainer}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.classSelectorContent}>
+                  {['ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST'].map((item) => {
+                    const isSelected = travelClass === item;
+                    return (
+                      <TouchableOpacity
+                        key={item}
+                        onPress={() => setTravelClass(item)}
+                        style={[
+                          styles.classItem,
+                          isSelected && styles.classItemSelected
+                        ]}
+                      >
+                        <Text style={[
+                          styles.classItemText,
+                          isSelected && styles.classItemTextSelected
+                        ]}>
+                          {item.replace('_', ' ')}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </ScrollView>
+              </BlurView>
+            </View>
+
             {/* Legend */}
             <BlurView
               intensity={60}
@@ -414,12 +492,41 @@ const styles = StyleSheet.create({
   },
   toastCharText: {
     fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.6)',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 4,
+    color: 'rgba(255, 255, 255, 0.8)',
+    marginLeft: 6,
+  },
+  classSelectorContainer: {
+    backgroundColor: 'rgba(201, 201, 201, 0.12)',
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.17)',
     overflow: 'hidden',
+    padding: 6,
+    marginHorizontal: 0,
+  },
+  classSelectorContent: {
+    flexDirection: 'row',
+    gap: 8,
+    paddingRight: 20,
+  },
+  classItem: {
+    height: 44,
+    paddingHorizontal: 20,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  classItemSelected: {
+    backgroundColor: 'rgba(234, 234, 234, 0.15)',
+  },
+  classItemText: {
+    fontSize: 15,
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontWeight: '600',
+    textTransform: 'capitalize',
+  },
+  classItemTextSelected: {
+    color: '#FFFFFF',
   },
 });
 
