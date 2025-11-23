@@ -70,49 +70,95 @@ const TicketDetail = () => {
         setLoading(true);
         const parsedOffer = JSON.parse(flightOffer);
 
-        // Modify the offer to use the selected travel class
-        const modifiedOffer = {
-          ...parsedOffer,
-          travelerPricings: parsedOffer.travelerPricings.map((tp: any) => ({
-            ...tp,
-            fareDetailsBySegment: tp.fareDetailsBySegment.map((seg: any) => ({
-              ...seg,
-              cabin: travelClass || seg.cabin
-            }))
-          }))
-        };
+        // If travelClass is set and different from the original booking, re-search
+        const originalCabin = parsedOffer?.travelerPricings?.[0]?.fareDetailsBySegment?.[0]?.cabin;
 
-        const response = await getSeatmap(modifiedOffer);
+        if (travelClass && travelClass !== originalCabin) {
+          console.log(`Re-searching flight with cabin class: ${travelClass}`);
 
-        if (response && response.data && response.data.length > 0) {
-          // Filter the decks to show only seats for the selected cabin class
-          const seatmap = response.data[0];
+          // Extract flight details for re-search
+          const segment = parsedOffer.itineraries[0].segments[0];
+          const origin = segment.departure.iataCode;
+          const destination = segment.arrival.iataCode;
+          const departureDate = segment.departure.at.split('T')[0];
+          const carrierCode = segment.carrierCode;
+          const flightNumber = segment.number;
+          const operatingCarrier = segment.operating?.carrierCode || carrierCode;
 
-          if (seatmap.decks && travelClass) {
-            console.log('Filtering for cabin class:', travelClass);
+          console.log(`Searching for ${carrierCode}${flightNumber}: ${origin} -> ${destination} on ${departureDate} in ${travelClass}`);
+          console.log(`Operating carrier: ${operatingCarrier}`);
 
-            // Filter seats in the flat array by cabin class
-            const filteredDecks = seatmap.decks.map((deck: any) => {
-              const filteredSeats = deck.seats?.filter((seat: any) => seat.cabin === travelClass);
-              console.log(`Deck filtered: ${filteredSeats?.length || 0} seats match ${travelClass} out of ${deck.seats?.length || 0} total`);
+          // Re-search flights with the new cabin class
+          const { searchFlightOffers } = await import('@/utils/amadeus');
+          const searchResponse = await searchFlightOffers(
+            origin,
+            destination,
+            departureDate,
+            1,
+            true,  // Always search for non-stop flights
+            travelClass
+          );
 
-              return {
-                ...deck,
-                seats: filteredSeats && filteredSeats.length > 0 ? filteredSeats : deck.seats
-              };
+          if (searchResponse && searchResponse.data && searchResponse.data.length > 0) {
+            console.log(`Found ${searchResponse.data.length} flights in ${travelClass} class`);
+
+            // Log all available flights for debugging
+            searchResponse.data.forEach((offer: any, index: number) => {
+              const seg = offer.itineraries[0].segments[0];
+              const opCarrier = seg.operating?.carrierCode || seg.carrierCode;
+              console.log(`  Flight ${index + 1}: ${seg.carrierCode}${seg.number} (Operating: ${opCarrier}${seg.number})`);
             });
 
-            setSeatmapData({
-              ...seatmap,
-              decks: filteredDecks
+            let matchingFlight = null;
+
+            // Strategy 1: Match by carrier and flight number (exact match)
+            matchingFlight = searchResponse.data.find((offer: any) => {
+              const seg = offer.itineraries[0].segments[0];
+              const matches = seg.carrierCode === carrierCode && seg.number === flightNumber;
+              if (matches) console.log(`✓ Strategy 1: Found exact match ${seg.carrierCode}${seg.number}`);
+              return matches;
             });
+
+            // Strategy 2: Match by operating carrier and flight number
+            if (!matchingFlight) {
+              matchingFlight = searchResponse.data.find((offer: any) => {
+                const seg = offer.itineraries[0].segments[0];
+                const opCarrier = seg.operating?.carrierCode || seg.carrierCode;
+                const matches = opCarrier === operatingCarrier && seg.number === flightNumber;
+                if (matches) console.log(`✓ Strategy 2: Found operating carrier match ${opCarrier}${seg.number}`);
+                return matches;
+              });
+            }
+
+            if (matchingFlight) {
+              const seg = matchingFlight.itineraries[0].segments[0];
+              console.log(`✓ Using flight: ${seg.carrierCode}${seg.number} in ${travelClass} class`);
+              const response = await getSeatmap(matchingFlight);
+
+              if (response && response.data && response.data.length > 0) {
+                setSeatmapData(response.data[0]);
+                setDictionaries(response.dictionaries);
+                setError(null);
+              } else {
+                setError(`No seatmap available for ${travelClass} class`);
+              }
+            } else {
+              console.log(`✗ Flight ${carrierCode}${flightNumber} not found in ${travelClass} class`);
+              setError(`Flight ${carrierCode}${flightNumber} is not available in ${travelClass} class`);
+            }
           } else {
-            setSeatmapData(seatmap);
+            setError(`No flights found for ${travelClass} class`);
           }
-
-          setDictionaries(response.dictionaries);
         } else {
-          setError("No seatmap available for this flight");
+          // Original cabin or no travelClass set - use original offer
+          const response = await getSeatmap(parsedOffer);
+
+          if (response && response.data && response.data.length > 0) {
+            setSeatmapData(response.data[0]);
+            setDictionaries(response.dictionaries);
+          } else {
+            setError("No seatmap available for this flight");
+          }
         }
       } catch (err) {
         console.error("Error fetching seatmap:", err);
