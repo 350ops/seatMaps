@@ -9,6 +9,7 @@ import { Pressable, TouchableWithoutFeedback } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import MeshBackground from "@/components/MeshBackground";
+import { FlightProvider } from "@/contexts/FlightContext";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -75,7 +76,9 @@ const InitialLayout = () => {
 const RootLayoutNav = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <InitialLayout />
+      <FlightProvider>
+        <InitialLayout />
+      </FlightProvider>
     </GestureHandlerRootView>
   );
 };

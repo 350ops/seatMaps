@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>myapp</string>
-          <string>com.yulis.seatMaps</string>
+          <string>com.mmdev.seatmaps</string>
         </array>
       </dict>
       <dict>

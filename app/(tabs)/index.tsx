@@ -11,6 +11,7 @@ import {
   Switch,
   ScrollView,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -20,6 +21,8 @@ import { router } from "expo-router";
 import AirportAutocomplete from "@/components/AirportAutocomplete";
 import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from "expo-blur";
+import { useFlightContext } from "@/contexts/FlightContext";
+import { searchFlightOffers } from "@/utils/amadeus";
 
 const RadioButton = ({
   selected,
@@ -49,31 +52,104 @@ const Home = () => {
   const screenWidth = Dimensions.get('window').width;
   const today = new Date().toISOString().split('T')[0];
 
+  const { setFlights, setSearchParams, setDictionaries, loading, setLoading } = useFlightContext();
+
   const handleDateSelect = (day: any) => {
     setSelectedDate(day.dateString);
+  };
+
+  const handleSearch = async () => {
+    if (!fromAirport || !toAirport || !selectedDate) {
+      Alert.alert("Error", "Please select all fields");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const isNonStop = true;
+      const { data: results, dictionaries: dicts } = await searchFlightOffers(
+        fromAirport.iataCode,
+        toAirport.iataCode,
+        selectedDate,
+        1,
+        isNonStop,
+        travelClass
+      );
+
+      setDictionaries(dicts);
+
+      // Filter out duplicate flights (codeshares)
+      const uniqueFlightsMap = new Map();
+
+      results.forEach((flight: any) => {
+        const segment = flight.itineraries[0].segments[0];
+        const operatingCarrier = segment.operating?.carrierCode || segment.carrierCode;
+        const marketingCarrier = segment.carrierCode;
+        const key = `${operatingCarrier}-${segment.departure.at}-${segment.departure.iataCode}-${segment.arrival.iataCode}`;
+
+        if (uniqueFlightsMap.has(key)) {
+          const existingFlight = uniqueFlightsMap.get(key);
+          const existingSegment = existingFlight.itineraries[0].segments[0];
+          const existingMarketingCarrier = existingSegment.carrierCode;
+          const existingOperatingCarrier = existingSegment.operating?.carrierCode || existingSegment.carrierCode;
+
+          // If current flight is the operating carrier (marketing == operating), prefer it
+          if (marketingCarrier === operatingCarrier && existingMarketingCarrier !== existingOperatingCarrier) {
+            uniqueFlightsMap.set(key, flight);
+          }
+        } else {
+          uniqueFlightsMap.set(key, flight);
+        }
+      });
+
+      const sortedFlights = Array.from(uniqueFlightsMap.values()).sort((a: any, b: any) => {
+        const dateA = new Date(a.itineraries[0].segments[0].departure.at).getTime();
+        const dateB = new Date(b.itineraries[0].segments[0].departure.at).getTime();
+        return dateA - dateB;
+      });
+
+      setFlights(sortedFlights);
+      setSearchParams({
+        origin: fromAirport.iataCode,
+        destination: toAirport.iataCode,
+        date: selectedDate,
+        nonStop: isNonStop,
+        travelClass: travelClass,
+        originName: fromAirport.name,
+        destinationName: toAirport.name,
+        originCoordinates: fromAirport.location ? {
+          latitude: fromAirport.location.latitude,
+          longitude: fromAirport.location.longitude,
+        } : undefined,
+        destinationCoordinates: toAirport.location ? {
+          latitude: toAirport.location.latitude,
+          longitude: toAirport.location.longitude,
+        } : undefined,
+      });
+
+      setLoading(false);
+
+      // Navigate to Flights tab
+      router.push('/(tabs)/tickets');
+    } catch (error) {
+      setLoading(false);
+      Alert.alert("Error", "Failed to search flights. Please try again.");
+      console.error(error);
+    }
   };
 
   return (
     <MeshBackground>
       <StatusBar style="light" />
-      <Image
-        source={require("@/assets/images/world-map.png")}
-        style={styles.image}
-        blurRadius={5}
-      />
-      <View style={{ position: 'absolute', top: 70, width: screenWidth, zIndex: 1, alignItems: 'center' }}>
-        <View>
-          <Text style={[styles.heading, styles.headingStroke]}>seatMaps</Text>
-          <Text style={[styles.heading, { position: 'absolute', top: 10, left: 0 }]}>seatMaps</Text>
-        </View>
-      </View>
+
+
 
       <View style={styles.screen}>
         <ScrollView
           style={{ flex: 1 }}
           contentContainerStyle={styles.formContent}
           keyboardShouldPersistTaps="handled"
-          scrollEnabled={false}
         >
 
           <BlurView
@@ -127,7 +203,7 @@ const Home = () => {
                   textSectionTitleDisabledColor: 'rgba(188, 188, 188, 1)',
                   selectedDayBackgroundColor: 'rgba(255, 255, 255, 1)',
                   selectedDayTextColor: '#ffffff',
-                  todayTextColor: '#0077ffff',
+                  todayTextColor: '#10d3ffff',
                   dayTextColor: '#ffffff',
                   textDisabledColor: '#9f9f9fff',
                   dotColor: '#ffffff',
@@ -153,7 +229,7 @@ const Home = () => {
                     dotColor: 'transparent',
                     customStyles: {
                       container: {
-                        backgroundColor: 'rgba(21, 90, 218, 0.15)',
+                        backgroundColor: 'rgba(21, 90, 218, 0)',
                         borderRadius: 20,
                       },
                       text: {
@@ -206,25 +282,15 @@ const Home = () => {
             style={styles.searchButton}
           >
             <Pressable
-              onPress={() => {
-                if (!fromAirport || !toAirport || !selectedDate) {
-                  Alert.alert("Error", "Please select all fields");
-                  return;
-                }
-                router.push({
-                  pathname: "/(flights)",
-                  params: {
-                    origin: fromAirport.iataCode,
-                    destination: toAirport.iataCode,
-                    date: selectedDate,
-                    nonStop: 'true',
-                    travelClass: travelClass,
-                  },
-                });
-              }}
+              onPress={handleSearch}
               style={styles.searchButtonInner}
+              disabled={loading}
             >
-              <Text style={styles.searchButtonText}>Search Flights</Text>
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.searchButtonText}>Search Flights</Text>
+              )}
             </Pressable>
           </BlurView>
         </ScrollView>
@@ -276,7 +342,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(128, 128, 128, 0.3)',
     borderRadius: 24,
     padding: 20,
-    marginTop: 130,
+    marginTop: 60,
     borderWidth: 1.4,
     borderColor: 'rgba(255, 255, 255, 0.3)',
     shadowColor: '#000',
@@ -289,7 +355,7 @@ const styles = StyleSheet.create({
 
   formContent: {
     padding: 10,
-    paddingBottom: 40,
+    paddingBottom: 150,
   },
 
   bottomSheetContainer: {
@@ -489,6 +555,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.4)',
     overflow: 'hidden',
     marginTop: 20,
+    marginBottom: 100,
     shadowColor: '#99999950',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
