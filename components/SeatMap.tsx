@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from "react-native";
 import React from "react";
 import Svg, { Path, Rect } from "react-native-svg";
-import { BlurView } from 'expo-blur';
+import GlassView from './GlassView';
 import { Ionicons } from "@expo/vector-icons";
 
 // Import the fuselage images
@@ -159,7 +159,9 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
             <View key={deckIndex} style={styles.deckContainer}>
                 {deckLabel && (
                     <View style={styles.deckLabelContainer}>
-                        <Text style={styles.deckLabel}>{deckLabel}</Text>
+                        <GlassView style={styles.deckLabel} intensity={40} borderRadius={24}>
+                            <Text style={styles.deckLabelText}>{deckLabel}</Text>
+                        </GlassView>
                     </View>
                 )}
 
@@ -282,17 +284,20 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     deckLabel: {
-        color: '#FFFFFF',
-        fontSize: 20,
-        fontWeight: "800",
-        letterSpacing: 1.5,
-        textTransform: 'uppercase',
         backgroundColor: 'rgba(100, 150, 255, 0.3)',
         paddingHorizontal: 24,
         paddingVertical: 10,
         borderRadius: 24,
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.3)',
+        overflow: 'hidden',
+    },
+    deckLabelText: {
+        color: '#FFFFFF',
+        fontSize: 20,
+        fontWeight: "800",
+        letterSpacing: 1.5,
+        textTransform: 'uppercase',
     },
     cabinContainer: {
         width: width * 0.95, // Slightly wider to accommodate seats better

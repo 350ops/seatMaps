@@ -13,7 +13,7 @@ import {
     Pressable,
     Keyboard
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import GlassView from './GlassView';
 import { searchAirports } from '../utils/amadeus';
 import { useDebounce } from '../utils/useDebounce';
 
@@ -89,7 +89,7 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
 
     return (
         <View style={styles.container}>
-            <BlurView intensity={30} tint="light" style={[styles.inputContainer, containerStyle]}>
+            <GlassView intensity={30} tint="light" style={[styles.inputContainer, containerStyle]}>
                 <Pressable style={styles.inputPressable} onPress={() => inputRef.current?.focus()}>
                     {icon && <Image source={icon} style={styles.icon} />}
                     <TextInput
@@ -112,10 +112,10 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
                     />
                     {loading && <ActivityIndicator size="small" color="#82828274" />}
                 </Pressable>
-            </BlurView>
+            </GlassView>
 
             {showResults && results.length > 0 && (
-                <BlurView intensity={80} tint="dark" style={styles.resultsContainer}>
+                <GlassView intensity={80} tint="dark" style={styles.resultsContainer}>
                     {results.map((item, index) => (
                         <TouchableOpacity
                             key={`${item.iataCode}-${index}`}
@@ -131,7 +131,7 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
                             </View>
                         </TouchableOpacity>
                     ))}
-                </BlurView>
+                </GlassView>
             )}
         </View>
     );

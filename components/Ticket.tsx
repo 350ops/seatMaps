@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Svg, { Circle, Line } from "react-native-svg";
 import { Href, router } from "expo-router";
 import { getOperatingFlight } from "@/utils/amadeus";
-import { BlurView } from 'expo-blur';
+import GlassView from './GlassView';
 
 interface TicketProps {
   toCode: string;
@@ -156,9 +156,9 @@ const Ticket = ({
   const airlineLogo = airlineLogos[airlineCode] || null; // No fallback - don't show logo if not found
 
   return (
-    <BlurView
+    <GlassView
       intensity={50}
-      tint="light"
+      tint="systemMaterial"
       style={styles.ticketContainer}
     >
       <Pressable
@@ -248,7 +248,7 @@ const Ticket = ({
 
         </View>
       </Pressable>
-    </BlurView>
+    </GlassView>
   );
 };
 

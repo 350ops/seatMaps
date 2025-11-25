@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Pressable, TouchableWithoutFeedback } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
+import MeshBackground from "@/components/MeshBackground";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -39,28 +40,35 @@ const InitialLayout = () => {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="sign-in"
-        options={{ headerShown: false, title: "Sign In" }}
-      />
-      <Stack.Screen
-        name="sign-up"
-        options={{
-          headerShadowVisible: false,
-          title: "",
-          headerLeft: () => (
-            <Pressable onPress={() => router.back()}>
-              <AntDesign name="arrow-left" size={24} />
-            </Pressable>
-          ),
+    <MeshBackground>
+      <Stack
+        screenOptions={{
+          contentStyle: { backgroundColor: "transparent" },
+          headerTransparent: true,
         }}
-      />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="(account)" options={{ headerShown: false }} />
-      <Stack.Screen name="(flights)" options={{ headerShown: false }} />
-    </Stack>
+      >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="sign-in"
+          options={{ headerShown: false, title: "Sign In" }}
+        />
+        <Stack.Screen
+          name="sign-up"
+          options={{
+            headerShadowVisible: false,
+            title: "",
+            headerLeft: () => (
+              <Pressable onPress={() => router.back()}>
+                <AntDesign name="arrow-left" size={24} color="white" />
+              </Pressable>
+            ),
+          }}
+        />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(account)" options={{ headerShown: false }} />
+        <Stack.Screen name="(flights)" options={{ headerShown: false }} />
+      </Stack>
+    </MeshBackground>
   );
 };
 
