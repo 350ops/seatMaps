@@ -18,7 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Calendar } from "react-native-calendars";
 import { router } from "expo-router";
 import AirportAutocomplete from "@/components/AirportAutocomplete";
-import { LinearGradient } from "expo-linear-gradient";
+import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from "expo-blur";
 
 const RadioButton = ({
@@ -54,12 +54,7 @@ const Home = () => {
   };
 
   return (
-    <LinearGradient
-      colors={['#12172B', '#497bbbff']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={styles.screen}
-    >
+    <MeshBackground>
       <StatusBar style="light" />
       <Image
         source={require("@/assets/images/world-map.png")}
@@ -136,7 +131,7 @@ const Home = () => {
                   dayTextColor: '#ffffff',
                   textDisabledColor: '#9f9f9fff',
                   dotColor: '#ffffff',
-                  selectedDotColor: '#ffff  ff',
+                  selectedDotColor: '#ffffff',
                   arrowColor: '#ffffff',
                   disabledArrowColor: 'rgba(255, 255, 255, 0.3)',
                   monthTextColor: '#ffffff',
@@ -234,7 +229,7 @@ const Home = () => {
           </BlurView>
         </ScrollView>
       </View>
-    </LinearGradient>
+    </MeshBackground>
   );
 };
 const styles = StyleSheet.create({

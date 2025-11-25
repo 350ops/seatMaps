@@ -6,7 +6,7 @@ import { getSeatmap } from "@/utils/amadeus";
 import SeatMap from "@/components/SeatMap";
 import { getSeatCharacteristicDescription } from "@/utils/seatCharacteristics";
 import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from 'expo-linear-gradient';
+import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from 'expo-blur';
 
 const TicketDetail = () => {
@@ -188,10 +188,7 @@ const TicketDetail = () => {
   };
 
   return (
-    <LinearGradient
-      colors={['#12172B', '#497bbbff']}
-      style={styles.screen}
-    >
+    <MeshBackground>
       <StatusBar style="light" />
       <SafeAreaView style={styles.safeArea}>
         {/* Header */}
@@ -350,7 +347,7 @@ const TicketDetail = () => {
         </View>
         {/* Price removed as requested */}
       </BlurView>
-    </LinearGradient>
+    </MeshBackground>
   );
 };
 

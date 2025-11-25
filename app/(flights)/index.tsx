@@ -5,7 +5,7 @@ import Ticket from "@/components/Ticket";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 import { searchFlightOffers } from "@/utils/amadeus";
-import { LinearGradient } from 'expo-linear-gradient';
+import MeshBackground from '@/components/MeshBackground';
 
 
 const TICKET_HEIGHT = 250;
@@ -136,15 +136,8 @@ const Flights = () => {
   };
 
   return (
-    <LinearGradient
-      colors={['#12172B', '#497bbbff']}
-      style={styles.screen}
-    >
-      <Image
-        source={require("@/assets/images/world-map.png")}
-        style={styles.image}
-        blurRadius={5}
-      />
+    <MeshBackground>
+
       <StatusBar style="light" />
       <View style={{ marginTop: top * 3, flex: 1 }}>
         {loading ? (
@@ -173,7 +166,7 @@ const Flights = () => {
           />
         )}
       </View>
-    </LinearGradient>
+    </MeshBackground>
   );
 };
 
