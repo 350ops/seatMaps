@@ -10,9 +10,9 @@ export default function MeshBackground({ children }: { children: React.ReactNode
                 columns={3}
                 rows={3}
                 colors={[
-                    '#12172B', '#1a2844', '#2d4478',
-                    '#1e2d52', '#497bbb', '#5a8fd4',
-                    '#12172B', '#2d4478', '#497bbb'
+                    'rgb(4, 20, 17)', 'rgb(20, 40, 35)', 'rgb(40, 100, 85)',
+                    'rgb(15, 30, 25)', 'rgb(30, 60, 50)', 'rgb(35, 80, 70)',
+                    'rgb(4, 20, 17)', 'rgb(25, 50, 42)', 'rgb(40, 100, 85)'
                 ]}
                 points={[
                     [0, 0], [0.5, 0], [1, 0],
