@@ -50,13 +50,13 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                 };
             case "OCCUPIED":
                 return {
-                    backgroundColor: "#505050", // Dark Gray
+                    backgroundColor: "#0126ad6c", // Dark Gray
                     borderColor: "#777777ff",
                     textColor: "#AAAAAA"
                 };
             case "BLOCKED":
                 return {
-                    backgroundColor: "#38072b89", // Medium Gray
+                    backgroundColor: "#2b282a89", // Medium Gray
                     borderColor: "#959595ff",
                     textColor: "#ffffffc2"
                 };

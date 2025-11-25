@@ -82,7 +82,7 @@ const Home = () => {
         >
 
           <BlurView
-            intensity={50}
+            intensity={20}
             tint="light"
             style={[styles.cardContainer, { marginHorizontal: screenWidth * 0.02 }]}
           >
@@ -92,8 +92,24 @@ const Home = () => {
                 placeholder="Origin"
                 icon={require("@/assets/images/takeoff.png")}
                 onSelect={setFromAirport}
-                containerStyle={{ marginBottom: 5 }}
+                selectedAirport={fromAirport}
+                containerStyle={{ marginBottom: 10 }}
               />
+            </View>
+
+            {/* Swap Button */}
+            <View style={styles.swapButtonContainer}>
+              <TouchableOpacity
+                style={styles.swapButton}
+                onPress={() => {
+                  // Swap the airports
+                  const temp = fromAirport;
+                  setFromAirport(toAirport);
+                  setToAirport(temp);
+                }}
+              >
+                <Ionicons name="swap-vertical" size={14} color="#ffffff80" />
+              </TouchableOpacity>
             </View>
 
             <View style={{ marginBottom: 8 }}>
@@ -102,28 +118,29 @@ const Home = () => {
                 placeholder="Destination"
                 icon={require("@/assets/images/landing.png")}
                 onSelect={setToAirport}
+                selectedAirport={toAirport}
               />
             </View>
 
-            <View style={{ marginBottom: 10 }}>
+            <View style={{ marginBottom: 0 }}>
 
               <Calendar
                 onDayPress={handleDateSelect}
                 theme={{
                   calendarBackground: 'transparent',
-                  textSectionTitleColor: 'rgba(255, 255, 255, 0.6)',
-                  textSectionTitleDisabledColor: 'rgba(255, 255, 255, 0.3)',
-                  selectedDayBackgroundColor: 'rgba(255, 255, 255, 0.18)',
+                  textSectionTitleColor: '#ffffff',
+                  textSectionTitleDisabledColor: 'rgba(188, 188, 188, 1)',
+                  selectedDayBackgroundColor: 'rgba(255, 255, 255, 1)',
                   selectedDayTextColor: '#ffffff',
                   todayTextColor: '#0077ffff',
                   dayTextColor: '#ffffff',
-                  textDisabledColor: '#ffffff',
+                  textDisabledColor: '#9f9f9fff',
                   dotColor: '#ffffff',
                   selectedDotColor: '#ffff  ff',
                   arrowColor: '#ffffff',
                   disabledArrowColor: 'rgba(255, 255, 255, 0.3)',
                   monthTextColor: '#ffffff',
-                  indicatorColor: '#ffffff',
+                  indicatorColor: '#ffffffb3',
                   textDayFontFamily: 'System',
                   textMonthFontFamily: 'System',
                   textDayHeaderFontFamily: 'System',
@@ -131,7 +148,7 @@ const Home = () => {
                   textMonthFontWeight: '600',
                   textDayHeaderFontWeight: '500',
                   textDayFontSize: 14,
-                  textMonthFontSize: 15,
+                  textMonthFontSize: 20,
                   textDayHeaderFontSize: 11,
                 }}
                 style={{ height: 350 }}
@@ -141,18 +158,18 @@ const Home = () => {
                     dotColor: 'transparent',
                     customStyles: {
                       container: {
-                        backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                        borderRadius: 16,
+                        backgroundColor: 'rgba(21, 90, 218, 0.15)',
+                        borderRadius: 20,
                       },
                       text: {
-                        color: '#ffffff',
+                        color: '#ffffff9d',
                         fontWeight: 'bold',
                       },
                     },
                   },
                   [selectedDate]: {
                     selected: true,
-                    selectedColor: 'rgba(255, 255, 255, 0.1)',
+                    selectedColor: 'rgba(255, 255, 255, 0.28)',
                   },
                 }}
                 markingType={'custom'}
@@ -414,6 +431,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 5,
   },
+  // Swap Button Styles
+  swapButtonContainer: {
+    alignItems: 'flex-end',
+    marginVertical: -6,
+    marginHorizontal: 20,
+    zIndex: 10,
+  },
+  swapButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
   // New Class Selector Styles
   classSelectorContainer: {
     backgroundColor: 'rgba(201, 201, 201, 0.12)',
@@ -427,20 +466,20 @@ const styles = StyleSheet.create({
   classSelectorContent: {
     flexDirection: 'row',
     gap: 8,
-    paddingRight: 20, // Allow scrolling a bit past the last item
+    paddingRight: 40, // Allow scrolling a bit past the last item
   },
   classItem: {
-    height: 44,
-    paddingHorizontal: 20,
+    height: 34,
+    paddingHorizontal: 10,
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
   classItemSelected: {
-    backgroundColor: 'rgba(234, 234, 234, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.26)',
   },
   classItemText: {
-    fontSize: 15,
+    fontSize: 12,
     color: 'rgba(255, 255, 255, 0.6)',
     fontWeight: '600',
     textTransform: 'capitalize',
@@ -449,17 +488,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   searchButton: {
-    backgroundColor: 'rgba(0, 0, 0, 1)',
-    borderRadius: 42,
+    backgroundColor: 'rgba(0, 0, 0, 0.24)',
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.4)',
     overflow: 'hidden',
     marginTop: 20,
-    shadowColor: '#000',
+    shadowColor: '#99999950',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
     elevation: 6,
+    alignSelf: 'center',
+    width: 350,
   },
   searchButtonInner: {
     paddingHorizontal: 20,

@@ -39,7 +39,6 @@ const Ticket = ({
   departureTime,
   arrivalDate,
   arrivalTime,
-  price,
   id,
   flightOffer,
   airlineCode = 'QR',
@@ -188,7 +187,7 @@ const Ticket = ({
                 y1="0"
                 x2="120"
                 y2="0"
-                stroke="rgba(255, 255, 255, 0.5)"
+                stroke="rgba(255, 255, 255, 0.87)"
                 strokeWidth="1"
                 strokeDasharray="4,4"
               />

@@ -44,7 +44,7 @@ export const searchAirports = async (keyword: string) => {
 
     try {
         const response = await fetch(
-            `https://api.amadeus.com/v1/reference-data/locations?subType=CITY,AIRPORT&keyword=${keyword}&page[limit]=5`,
+            `https://api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${keyword}&page[limit]=5`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

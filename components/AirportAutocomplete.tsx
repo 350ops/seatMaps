@@ -32,6 +32,7 @@ interface AirportAutocompleteProps {
     containerStyle?: StyleProp<ViewStyle>;
     inputStyle?: StyleProp<TextStyle>;
     icon?: any;
+    selectedAirport?: Airport | null;
 }
 
 const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
@@ -39,7 +40,8 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
     onSelect,
     containerStyle,
     inputStyle,
-    icon
+    icon,
+    selectedAirport
 }) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<Airport[]>([]);
@@ -48,6 +50,17 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
     const [isSelection, setIsSelection] = useState(false);
     const debouncedQuery = useDebounce(query, 500);
     const inputRef = useRef<TextInput>(null);
+
+    // Update query when selectedAirport prop changes
+    useEffect(() => {
+        if (selectedAirport) {
+            setQuery(`${selectedAirport.address.cityName} (${selectedAirport.iataCode})`);
+            setIsSelection(true);
+        } else {
+            setQuery('');
+            setIsSelection(false);
+        }
+    }, [selectedAirport]);
 
     useEffect(() => {
         if (debouncedQuery.length > 2 && !isSelection) {
@@ -82,7 +95,7 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
                     <TextInput
                         ref={inputRef}
                         placeholder={placeholder}
-                        placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                        placeholderTextColor="rgba(227, 227, 227, 0.79)"
                         style={[styles.inputText, inputStyle]}
                         value={query}
                         onChangeText={(text) => {
@@ -97,7 +110,7 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
                             if (results.length > 0) setShowResults(true);
                         }}
                     />
-                    {loading && <ActivityIndicator size="small" color="#272727" />}
+                    {loading && <ActivityIndicator size="small" color="#82828274" />}
                 </Pressable>
             </BlurView>
 
@@ -129,8 +142,8 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     inputContainer: {
-        backgroundColor: 'rgba(128, 128, 128, 0.3)',
-        borderRadius: 100,
+        backgroundColor: 'rgba(195, 195, 195, 0.15)',
+        borderRadius: 15,
         borderWidth: 1.4,
         borderColor: 'rgba(255, 255, 255, 0.4)',
         overflow: 'hidden',
@@ -140,22 +153,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 12,
         paddingHorizontal: 20,
-        gap: 24,
+        gap: 12,
     },
     icon: {
-        tintColor: '#ffffff',
+        tintColor: '#ffffff5c',
         width: 28,
         height: 20,
         resizeMode: 'contain',
     },
     inputText: {
         flex: 1,
-        color: '#ffffff',
-        fontWeight: '500',
-        fontSize: 15,
+        color: '#ffffffff',
+        fontWeight: '400',
+        fontSize: 12,
     },
     resultsContainer: {
-        backgroundColor: 'rgba(30, 30, 30, 0.85)',
+        backgroundColor: 'rgba(30, 30, 30, 0.36)',
         borderRadius: 16,
         marginTop: 8,
         borderWidth: 1,
@@ -176,7 +189,7 @@ const styles = StyleSheet.create({
     resultTextContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 16,
+        gap: 10,
     },
     cityCode: {
         fontWeight: 'bold',
@@ -185,7 +198,7 @@ const styles = StyleSheet.create({
         width: 50,
     },
     cityName: {
-        fontWeight: '600',
+        fontWeight: '400',
         fontSize: 15,
         color: '#FFFFFF',
         marginBottom: 2,
