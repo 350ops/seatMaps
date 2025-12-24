@@ -2,20 +2,19 @@ import { View, Text, StyleSheet, Platform } from 'react-native';
 import React from 'react';
 import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from 'expo-blur';
-import { AppleMaps } from 'expo-maps';
+import MapView from 'react-native-maps';
 
 const MapScreen = () => {
     if (Platform.OS === 'ios') {
         return (
             <View style={styles.container}>
-                <AppleMaps.View
+                <MapView
                     style={styles.map}
-                    cameraPosition={{
-                        coordinates: {
-                            latitude: 0,
-                            longitude: 0,
-                        },
-                        zoom: 1,
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
                     }}
                 />
             </View>

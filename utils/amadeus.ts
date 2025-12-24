@@ -1,7 +1,5 @@
-
-
-const CLIENT_ID = 'JwJ2dSwgAupzBpgbCkUnbKu1FnQ9p0N2'; // Replace with your API Key
-const CLIENT_SECRET = 'j3BEx9Z0owQDnWT3'; // Replace with your API Secret
+const CLIENT_ID = process.env.EXPO_PUBLIC_AMADEUS_CLIENT_ID;
+const CLIENT_SECRET = process.env.EXPO_PUBLIC_AMADEUS_CLIENT_SECRET;
 
 let accessToken = '';
 let tokenExpiration = 0;

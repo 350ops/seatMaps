@@ -42,8 +42,7 @@
             }
           }
         }
-      ],
-      "expo-maps"
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -131,6 +131,7 @@ const Ticket = ({
   marketingCarrier,
   marketingFlightNumber,
   dateForApi,
+  onPress,
 }: TicketProps) => {
   const [displayFlightNumber, setDisplayFlightNumber] = useState(flightNumber);
 
