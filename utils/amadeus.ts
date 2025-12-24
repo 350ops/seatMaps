@@ -1,23 +1,10 @@
-import { Alert } from 'react-native';
-
 const CLIENT_ID = process.env.EXPO_PUBLIC_AMADEUS_CLIENT_ID;
 const CLIENT_SECRET = process.env.EXPO_PUBLIC_AMADEUS_CLIENT_SECRET;
-
-const checkConfiguration = () => {
-    if (!CLIENT_ID || !CLIENT_SECRET) {
-        console.error('Missing Amadeus API credentials');
-        Alert.alert('Configuration Error', 'Amadeus API credentials are missing. Please check build configuration.');
-        return false;
-    }
-    return true;
-};
 
 let accessToken = '';
 let tokenExpiration = 0;
 
 const getAccessToken = async () => {
-    if (!checkConfiguration()) return null;
-
     const now = Date.now();
     if (accessToken && now < tokenExpiration) {
         return accessToken;
@@ -41,9 +28,8 @@ const getAccessToken = async () => {
             console.error('Failed to retrieve access token:', data);
             return null;
         }
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching access token:', error);
-        Alert.alert('Auth Error', `Failed to get access token: ${error.message}`);
         return null;
     }
 };
@@ -66,9 +52,8 @@ export const searchAirports = async (keyword: string) => {
 
         const data = await response.json();
         return data.data || [];
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error searching airports:', error);
-        Alert.alert('API Error', `Airport search failed: ${error.message}`);
         return [];
     }
 };
@@ -110,9 +95,8 @@ export const searchFlightOffers = async (
             data: data.data || [],
             dictionaries: data.dictionaries || {}
         };
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error searching flight offers:', error);
-        Alert.alert('API Error', `Flight search failed: ${error.message}`);
         return { data: [], dictionaries: {} };
     }
 };
@@ -142,9 +126,8 @@ export const getSeatmap = async (flightOffer: any) => {
             data: data.data || [],
             dictionaries: data.dictionaries || {}
         };
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching seatmap:', error);
-        Alert.alert('API Error', `Seatmap fetch failed: ${error.message}`);
         return null;
     }
 };

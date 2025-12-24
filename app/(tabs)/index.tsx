@@ -13,7 +13,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { Calendar } from "react-native-calendars";
@@ -53,6 +53,15 @@ const Home = () => {
   const today = new Date().toISOString().split('T')[0];
 
   const { setFlights, setSearchParams, setDictionaries, loading, setLoading } = useFlightContext();
+
+  useEffect(() => {
+    if (!process.env.EXPO_PUBLIC_AMADEUS_CLIENT_ID) {
+      Alert.alert(
+        "Configuration Error",
+        "Amadeus Client ID is missing. Please check your EAS Secrets configuration."
+      );
+    }
+  }, []);
 
   const handleDateSelect = (day: any) => {
     setSelectedDate(day.dateString);
@@ -134,8 +143,11 @@ const Home = () => {
       router.push('/(tabs)/tickets');
     } catch (error) {
       setLoading(false);
-      Alert.alert("Error", "Failed to search flights. Please try again.");
       console.error(error);
+      Alert.alert(
+        "Search Error",
+        `Failed to search flights. \n${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   };
 
