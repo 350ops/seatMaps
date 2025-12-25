@@ -4,8 +4,8 @@ import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from 'expo-blur';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import { useFlightContext } from '@/contexts/FlightContext';
-import { flightHistory, FlightRecord } from '@/app/data/flightHistory';
-import { airports } from '@/app/data/airports';
+import { flightHistory, FlightRecord } from '@/data/flightHistory';
+import { airports } from '@/data/airports';
 import { Ionicons } from '@expo/vector-icons';
 
 type Coordinate = {
@@ -68,6 +68,43 @@ const calculateGreatCirclePoints = (
     return points;
 };
 
+// Squared distance between point P and segment VW
+const sqr = (x: number) => x * x;
+const distToSegmentSquared = (p: Coordinate, v: Coordinate, w: Coordinate) => {
+    const l2 = sqr(v.latitude - w.latitude) + sqr(v.longitude - w.longitude);
+    if (l2 === 0) return sqr(p.latitude - v.latitude) + sqr(p.longitude - v.longitude);
+    let t = ((p.latitude - v.latitude) * (w.latitude - v.latitude) + (p.longitude - v.longitude) * (w.longitude - v.longitude)) / l2;
+    t = Math.max(0, Math.min(1, t));
+    return sqr(p.latitude - (v.latitude + t * (w.latitude - v.latitude))) +
+        sqr(p.longitude - (v.longitude + t * (w.longitude - v.longitude)));
+};
+const distToSegment = (p: Coordinate, v: Coordinate, w: Coordinate) => {
+    return Math.sqrt(distToSegmentSquared(p, v, w));
+};
+
+const getCityName = (code: string) => {
+    if (code === 'DOH') return 'Doha';
+    const name = airports[code]?.name;
+    if (!name) return code;
+    return name.split('–')[0].split(' - ')[0].replace(' International Airport', '').replace(' Airport', '');
+};
+
+const formatDateStr = (dateStr: string) => {
+    try {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { day: 'numeric', month: 'long' });
+    } catch (e) {
+        return dateStr;
+    }
+};
+
+const formatDurationText = (mins: number) => {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    if (m === 0) return `${h} hours`;
+    return `${h}h ${m}m`;
+};
+
 const MapScreen: React.FC = () => {
     const { searchParams } = useFlightContext();
     const [selectedFlight, setSelectedFlight] = useState<FlightRecord | null>(null);
@@ -119,6 +156,37 @@ const MapScreen: React.FC = () => {
         return dots;
     }, []);
 
+    const outboundFlights = useMemo(() => flightHistory.filter(f => f.dep === 'DOH'), []);
+
+    // Handle map press for manual hit testing
+    const handleMapPress = (e: any) => {
+        const coordinate = e.nativeEvent.coordinate;
+        let closestFlight: FlightRecord | null = null;
+        let minDist = Number.MAX_VALUE;
+        const threshold = 1.8; // Degrees ~ 180km, robust for fingers
+
+        outboundFlights.forEach(flight => {
+            const originCoords = airports[flight.dep];
+            const destCoords = airports[flight.arr];
+            if (originCoords && destCoords) {
+                const dist = distToSegment(coordinate,
+                    { latitude: originCoords.latitude, longitude: originCoords.longitude },
+                    { latitude: destCoords.latitude, longitude: destCoords.longitude }
+                );
+                if (dist < minDist) {
+                    minDist = dist;
+                    closestFlight = flight;
+                }
+            }
+        });
+
+        if (closestFlight && minDist < threshold) {
+            setSelectedFlight(closestFlight);
+        } else {
+            setSelectedFlight(null);
+        }
+    };
+
     if (Platform.OS === 'ios') {
         return (
             <View style={styles.container}>
@@ -126,7 +194,7 @@ const MapScreen: React.FC = () => {
                     style={styles.map}
                     initialRegion={region}
                     mapType="hybrid"
-                    onPress={() => setSelectedFlight(null)} // Deselect on map tap
+                    onPress={handleMapPress}
                 >
                     {/* Destination Dots */}
                     {destinationDots.map((code) => {
@@ -144,7 +212,7 @@ const MapScreen: React.FC = () => {
                     })}
 
                     {/* Render Flight History */}
-                    {flightHistory.map((flight, index) => {
+                    {outboundFlights.map((flight, index) => {
                         const originCoords = airports[flight.dep];
                         const destCoords = airports[flight.arr];
 
@@ -159,15 +227,11 @@ const MapScreen: React.FC = () => {
                                     { latitude: originCoords.latitude, longitude: originCoords.longitude },
                                     { latitude: destCoords.latitude, longitude: destCoords.longitude }
                                 ]}
-                                strokeColor={isSelected ? "#3673FD" : "rgba(255, 255, 255, 0.3)"}
-                                strokeWidth={isSelected ? 3 : 1}
+                                strokeColor={isSelected ? "#3673FD" : "rgba(54, 115, 253, 0.6)"}
+                                strokeWidth={isSelected ? 4 : 2}
                                 zIndex={isSelected ? 10 : 1}
                                 geodesic={true}
-                                tappable={true}
-                                onPress={(e) => {
-                                    e.stopPropagation(); // Prevent map press
-                                    setSelectedFlight(flight);
-                                }}
+                                tappable={false} // Managed by map press
                             />
                         );
                     })}
@@ -176,7 +240,7 @@ const MapScreen: React.FC = () => {
                         <>
                             <Polyline
                                 coordinates={flightPath}
-                                strokeColor="#3673FD" // Changed to blue to match theme
+                                strokeColor="#3673FD"
                                 strokeWidth={4}
                                 geodesic={true}
                                 lineDashPattern={[0]}
@@ -215,31 +279,25 @@ const MapScreen: React.FC = () => {
                 {selectedFlight && (
                     <View style={styles.toastWrapper}>
                         <BlurView intensity={30} tint="dark" style={styles.toastContainer}>
-                            <View style={styles.toastContent}>
-                                <View style={styles.toastHeader}>
-                                    <View style={styles.toastRoute}>
-                                        <Text style={styles.toastCode}>{selectedFlight.dep}</Text>
-                                        <Ionicons name="airplane" size={14} color="#fff" style={{ marginHorizontal: 8 }} />
-                                        <Text style={styles.toastCode}>{selectedFlight.arr}</Text>
-                                    </View>
-                                    <TouchableOpacity onPress={() => setSelectedFlight(null)}>
-                                        <Ionicons name="close-circle" size={20} color="rgba(255,255,255,0.6)" />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.divider} />
-                                <View style={styles.toastDetails}>
-                                    <View style={styles.detailItem}>
-                                        <Text style={styles.detailLabel}>DATE</Text>
-                                        <Text style={styles.detailValue}>{selectedFlight.date}</Text>
-                                    </View>
-                                    <View style={styles.detailItem}>
-                                        <Text style={styles.detailLabel}>AIRCRAFT</Text>
-                                        <Text style={styles.detailValue}>{selectedFlight.aircraft}</Text>
-                                    </View>
-                                    <View style={styles.detailItem}>
-                                        <Text style={styles.detailLabel}>TIME</Text>
-                                        <Text style={styles.detailValue}>{formatDuration(selectedFlight.block_minutes)}</Text>
-                                    </View>
+                            <View style={[styles.toastContent, { paddingTop: 10, paddingBottom: 10, position: 'relative' }]}>
+                                <TouchableOpacity
+                                    onPress={() => setSelectedFlight(null)}
+                                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                                    style={{ position: 'absolute', top: 5, right: 5, zIndex: 10 }}
+                                >
+                                    <Ionicons name="close-circle" size={24} color="rgba(255,255,255,0.6)" />
+                                </TouchableOpacity>
+
+                                <View style={{ alignItems: 'center', justifyContent: 'center', width: '100%', paddingHorizontal: 20 }}>
+                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700', marginBottom: 4 }}>
+                                        {getCityName(selectedFlight.dep)} - {getCityName(selectedFlight.arr)}
+                                    </Text>
+                                    <Text style={{ color: 'rgba(255,255,255,0.9)', fontSize: 15, fontWeight: '500', marginBottom: 2 }}>
+                                        {formatDateStr(selectedFlight.date)}
+                                    </Text>
+                                    <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14 }}>
+                                        {formatDurationText(selectedFlight.block_minutes)}
+                                    </Text>
                                 </View>
                             </View>
                         </BlurView>
@@ -350,7 +408,7 @@ const styles = StyleSheet.create({
     },
     toastWrapper: {
         position: 'absolute',
-        bottom: 40,
+        bottom: 110,
         left: 20,
         right: 20,
         alignItems: 'center',
