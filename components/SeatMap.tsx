@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, ScrollView } from "react-native";
-import React from "react";
-import Svg, { Path, Rect } from "react-native-svg";
+import React, { useMemo } from "react";
+import Svg, { Path, Rect, G } from "react-native-svg";
 import GlassView from './GlassView';
 import { Ionicons } from "@expo/vector-icons";
+import { getStaticSeatMap, convertStaticToApiFormat } from '../data/staticSeatMaps';
+import { rgbaColor } from "react-native-reanimated/lib/typescript/Colors";
 
 // Import the fuselage images
 const fuselageImage = require("../assets/images/fuselage.png");
@@ -13,6 +15,8 @@ interface SeatMapProps {
     dictionaries?: any;
     aircraftCode?: string;
     aircraftName?: string;
+    airlineCode?: string;
+    cabinClass?: string;
     selectedSeat: string | null;
     onSeatSelect: (seatNumber: string) => void;
     onSeatInfo: (info: any) => void;
@@ -20,8 +24,24 @@ interface SeatMapProps {
 
 const { width } = Dimensions.get("window");
 
-const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCode, aircraftName, selectedSeat, onSeatSelect, onSeatInfo }) => {
-    if (!seatmapData || !seatmapData.decks) {
+const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCode, aircraftName, airlineCode, cabinClass, selectedSeat, onSeatSelect, onSeatInfo }) => {
+    // Check for static seat map (e.g., Qatar Airways 777-300ER)
+    const effectiveSeatmapData = useMemo(() => {
+        if (airlineCode && aircraftCode) {
+            const staticMap = getStaticSeatMap(airlineCode, aircraftCode);
+            if (staticMap) {
+                // Use static data if API data is empty or has very few seats
+                const apiSeatCount = seatmapData?.decks?.[0]?.seats?.length || 0;
+                if (apiSeatCount < 10) {
+                    console.log(`Using static seat map for ${airlineCode} ${aircraftCode}`);
+                    return convertStaticToApiFormat(staticMap, cabinClass);
+                }
+            }
+        }
+        return seatmapData;
+    }, [seatmapData, airlineCode, aircraftCode, cabinClass]);
+
+    if (!effectiveSeatmapData || !effectiveSeatmapData.decks) {
         return (
             <View style={styles.container}>
                 <Text style={styles.errorText}>No seat map data available</Text>
@@ -40,9 +60,9 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
         if (isSelected) {
             return {
                 seatColor: "#3B82F6", // Bright Blue for selection
-                accentColor: "#60A5FA",
-                textColor: "#FFFFFF",
-                armrestColor: "#1D4ED8"
+                accentColor: "#00ff1eff",
+                textColor: "#ffffffff",
+                armrestColor: "#00ff1eff"
             };
         }
 
@@ -50,7 +70,7 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
             case "AVAILABLE":
                 return {
                     seatColor: "#22C55E", // Bright Green - clearly available
-                    accentColor: "#4ADE80",
+                    accentColor: "#ffffffff",
                     textColor: "#FFFFFF",
                     armrestColor: "#16A34A"
                 };
@@ -78,12 +98,96 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
         }
     };
 
-    // SVG-based realistic seat component (facing forward/up)
+    // Business class seat SVG renderer - premium Qsuite-style seat
+    const renderBusinessClassSeat = (seat: any, size: number, fontSize: number) => {
+        const style = getSeatStyle(seat);
+        const isSelected = selectedSeat === seat.number;
+
+        // Scale factor to fit the SVG (original viewBox is 200x265)
+        const scale = size / 200;
+        const height = size * 1.325; // Maintain aspect ratio (265/200)
+
+        // Get status-based colors
+        const cushionColor = style.seatColor;
+        const frameColor = style.armrestColor;
+        const accentColor = style.accentColor;
+
+        return (
+            <TouchableOpacity
+                style={[
+                    {
+                        width: size,
+                        height: height,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    },
+                    isSelected && styles.selectedSeatShadow
+                ]}
+                onPress={() => handleSeatPress(seat)}
+                activeOpacity={0.7}
+            >
+                <Svg width={size} height={height} viewBox="0 0 200 265">
+                    <G transform="scale(-1, 1) translate(-200,0)">
+                        {/* Top panel */}
+                        <Rect fill={cushionColor} stroke="rgba(255,255,255,0.3)" strokeWidth="1" x="0.6" y="0.6" width="105.4" height="66.9" rx="4" />
+
+                        {/* Right side panel */}
+                        <Path fill={frameColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" d="M103.4,91.6l96,6.5V0.6H99L103.4,91.6z" />
+
+                        {/* Left corner panel */}
+                        <Path fill={frameColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" d="M26.4,0.6l-2.6,66.9L0.6,80.1V0.6H26.4z" />
+
+                        {/* Footwell area */}
+                        <Rect fill={frameColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" x="0.6" y="180.3" width="198.8" height="84.1" rx="4" />
+
+                        {/* Right side extension */}
+                        <Path fill={frameColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" d="M133.4,145l-0.6,35.7l66.6,9.8v-35.6c0,0-11.2-3.2-18-5C169.8,146.7,133.4,145,133.4,145z" />
+
+                        {/* Left armrest */}
+                        <Path fill={frameColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" d="M7.5,245.6L1,184.1c-0.3-1.4-0.5-3-0.4-4.4L1,150.4c0-8.2,0.3-14.8,7.4-14.6H11c3,0.1,4.8,2.9,4.7,6.5v108.4h-3C10,250.7,7.8,248.4,7.5,245.6L7.5,245.6z" />
+
+                        {/* Right armrest */}
+                        <Path fill={frameColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" d="M135.9,245.6l6.5-61.5c0.3-1.4,0.5-3,0.4-4.4l-0.4-29.2c0-8.2-0.3-14.8-7.4-14.6h-2.5c-3,0.1-4.8,2.9-4.7,6.5v108.4h3C133.4,250.7,135.6,248.4,135.9,245.6L135.9,245.6z" />
+
+                        {/* Seat back */}
+                        <Path fill={cushionColor} stroke="rgba(255,255,255,0.3)" strokeWidth="1" d="M75.3,261.8c-1.3,0-2.5,0-3.9,0c-30.2-0.4-47.7-5.6-53.8-7.8c-1.2-0.4-2.2-1.6-2.2-2.8v-41.6h112v41.7c0,1.2-0.7,2.3-2.1,2.8C119.7,256.4,103.4,261.9,75.3,261.8z" />
+
+                        {/* Main cushion */}
+                        <Path fill={cushionColor} stroke="rgba(255,255,255,0.3)" strokeWidth="1" d="M15.5,209.7v-62.4c0-1.6,1.3-2.9,3.1-3.1c3.3-0.5,32.3-4.1,52.8-4.1c12.2,0,30,1.4,53,4.1c1.7,0.4,3,1.6,3,3.1v62.4L15.5,209.7L15.5,209.7z" />
+
+                        {/* Seat belt buckle accent */}
+                        <Path fill={accentColor} stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" d="M98,228c-4-0.7-14.5-2.8-26.5-2.8S48.8,227.1,45,228c-1,0.1-1.7,0.8-1.7,1.8v4.3v0.6v4.3c0,0.8,0.7,1.6,1.7,1.8c4,0.7,14.5,2.8,26.5,2.8s22.7-1.9,26.5-2.8c1-0.1,1.7-0.8,1.7-1.8v-4.3v-0.6v-4.3C99.7,228.9,99.1,228.2,98,228z" />
+                    </G>
+                </Svg>
+
+                {/* Seat number label */}
+                <View style={{
+                    position: 'absolute',
+                    bottom: height * 0.1,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    paddingHorizontal: 6,
+                    paddingVertical: 2,
+                    borderRadius: 8,
+                }}>
+                    <Text style={[styles.seatText, { fontSize: fontSize, color: '#FFFFFF' }]}>
+                        {seat.number}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
+
+    // SVG-based realistic seat component (facing forward/up) - Economy class
     const renderSeatIcon = (seat: any, size: number, fontSize: number) => {
         const style = getSeatStyle(seat);
         const isSelected = selectedSeat === seat.number;
 
-        // Dimensions for seat parts
+        // Check if this is a business/first class seat
+        if (seat.cabin === 'BUSINESS' || seat.cabin === 'FIRST') {
+            return renderBusinessClassSeat(seat, size, fontSize);
+        }
+
+        // Dimensions for seat parts (economy)
         const padding = size * 0.08;
         const seatWidth = size - padding * 2;
         const seatHeight = size - padding * 2;
@@ -132,7 +236,7 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                         width={seatWidth - (armrestWidth * 2) - 4}
                         height={backrestHeight}
                         rx={4}
-                        fill={style.seatColor}
+                        fill={style.accentColor}
                     />
 
                     {/* Headrest (bottom) */}
@@ -179,11 +283,11 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                 {/* Seat number label */}
                 <View style={{
                     position: 'absolute',
-                    bottom: size * 0.12,
-                    backgroundColor: 'rgba(70, 168, 255, 0.78)',
+                    bottom: size * 0.8,
+                    backgroundColor: 'rgba(70, 169, 255, 0)',
                     paddingHorizontal: 4,
-                    paddingVertical: 2,
-                    borderRadius: 4,
+                    paddingVertical: 4,
+                    borderRadius: 40,
                 }}>
                     <Text style={[styles.seatText, { fontSize: fontSize * 0.9, color: '#FFFFFF' }]}>
                         {seat.number}
@@ -266,7 +370,7 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
         // Get deck label based on deck index for multi-deck aircraft
         const getDeckLabel = () => {
             // Only show labels if there are multiple decks
-            if (seatmapData.decks.length === 1) return null;
+            if (effectiveSeatmapData.decks.length === 1) return null;
 
             // For A380 and other multi-deck aircraft:
             // Deck 0 (first deck) = Upper Deck
@@ -368,7 +472,7 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
 
     return (
         <View style={styles.container}>
-            {seatmapData.decks.map((deck: any, index: number) => renderDeck(deck, index))}
+            {effectiveSeatmapData.decks.map((deck: any, index: number) => renderDeck(deck, index))}
         </View>
     );
 };

@@ -288,6 +288,8 @@ const TicketDetail = () => {
                 dictionaries={dictionaries}
                 aircraftCode={JSON.parse(flightOffer).itineraries[0].segments[0].aircraft.code}
                 aircraftName={aircraftName}
+                airlineCode={JSON.parse(flightOffer).itineraries[0].segments[0].operating?.carrierCode || JSON.parse(flightOffer).itineraries[0].segments[0].carrierCode}
+                cabinClass={travelClass}
                 selectedSeat={selectedSeat}
                 onSeatSelect={handleSeatSelect}
                 onSeatInfo={showToast}

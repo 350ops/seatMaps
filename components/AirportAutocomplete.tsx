@@ -24,7 +24,63 @@ interface Airport {
         cityName: string;
         countryName: string;
     };
+    geoCode?: {
+        latitude: number;
+        longitude: number;
+    };
 }
+
+// Local cache of common airports for instant results
+const COMMON_AIRPORTS: Airport[] = [
+    {
+        iataCode: "DOH",
+        name: "Hamad International Airport",
+        address: { cityName: "Doha", countryName: "Qatar" },
+        geoCode: { latitude: 25.2731, longitude: 51.6081 }
+    },
+    {
+        iataCode: "LHR",
+        name: "Heathrow Airport",
+        address: { cityName: "London", countryName: "United Kingdom" },
+        geoCode: { latitude: 51.4700, longitude: -0.4543 }
+    },
+    {
+        iataCode: "CDG",
+        name: "Charles de Gaulle Airport",
+        address: { cityName: "Paris", countryName: "France" },
+        geoCode: { latitude: 49.0097, longitude: 2.5479 }
+    },
+    {
+        iataCode: "MXP",
+        name: "Malpensa Airport",
+        address: { cityName: "Milan", countryName: "Italy" },
+        geoCode: { latitude: 45.6306, longitude: 8.7281 }
+    },
+    {
+        iataCode: "MUC",
+        name: "Munich Airport",
+        address: { cityName: "Munich", countryName: "Germany" },
+        geoCode: { latitude: 48.3538, longitude: 11.7861 }
+    },
+    {
+        iataCode: "ZRH",
+        name: "Zurich Airport",
+        address: { cityName: "Zurich", countryName: "Switzerland" },
+        geoCode: { latitude: 47.4647, longitude: 8.5492 }
+    },
+    {
+        iataCode: "JFK",
+        name: "John F Kennedy International Airport",
+        address: { cityName: "New York", countryName: "United States" },
+        geoCode: { latitude: 40.6413, longitude: -73.7781 }
+    },
+    {
+        iataCode: "LAX",
+        name: "Los Angeles International Airport",
+        address: { cityName: "Los Angeles", countryName: "United States" },
+        geoCode: { latitude: 33.9425, longitude: -118.4081 }
+    },
+];
 
 interface AirportAutocompleteProps {
     placeholder?: string;
@@ -72,6 +128,24 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
     }, [debouncedQuery, isSelection]);
 
     const search = async (text: string) => {
+        const searchText = text.toUpperCase();
+
+        // First check local cache for instant results
+        const localMatches = COMMON_AIRPORTS.filter(airport =>
+            airport.iataCode.includes(searchText) ||
+            airport.address.cityName.toUpperCase().includes(searchText) ||
+            airport.name.toUpperCase().includes(searchText)
+        );
+
+        // If we have local matches, show them instantly
+        if (localMatches.length > 0) {
+            setResults(localMatches);
+            setShowResults(true);
+            setLoading(false);
+            return;
+        }
+
+        // Otherwise, fall back to API
         setLoading(true);
         const data = await searchAirports(text);
         setResults(data);
