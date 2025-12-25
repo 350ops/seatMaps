@@ -265,21 +265,23 @@ const TicketDetail = () => {
               style={styles.legend}
             >
               <View style={styles.legendItem}>
-                <View style={[styles.legendDot, { backgroundColor: "#FFFFFF" }]} />
+                <View style={[styles.legendDot, { backgroundColor: "#00ff26ff" }]} />
                 <Text style={styles.legendText}>Available</Text>
-              </View>
-              <View style={styles.legendItem}>
-                <View style={[styles.legendDot, { backgroundColor: "#007AFF" }]} />
-                <Text style={styles.legendText}>Selected</Text>
               </View>
               <View style={styles.legendItem}>
                 <View style={[styles.legendDot, { backgroundColor: "#505050" }]} />
                 <Text style={styles.legendText}>Occupied</Text>
               </View>
+
               <View style={styles.legendItem}>
-                <View style={[styles.legendDot, { backgroundColor: "#62156b96" }]} />
+                <View style={[styles.legendDot, { backgroundColor: "#ff282896" }]} />
                 <Text style={styles.legendText}>Blocked</Text>
               </View>
+              <View style={styles.legendItem}>
+                <View style={[styles.legendDot, { backgroundColor: "#007AFF" }]} />
+                <Text style={styles.legendText}>Selected</Text>
+              </View>
+
             </BlurView>
 
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
@@ -306,9 +308,18 @@ const TicketDetail = () => {
             styles.toastContainer,
             { opacity: fadeAnim }
           ]}
-          pointerEvents="none"
+          pointerEvents="box-none"
         >
           <BlurView intensity={90} tint="dark" style={styles.toastContent}>
+            {/* Close button */}
+            <TouchableOpacity
+              onPress={hideToast}
+              style={styles.toastCloseButton}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <AntDesign name="close" size={18} color="rgba(255,255,255,0.7)" />
+            </TouchableOpacity>
+
             <View style={styles.toastHeader}>
               <View style={styles.toastTitleRow}>
                 <Text style={styles.toastSeatNumber}>Seat {toastData.number}</Text>
@@ -500,6 +511,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 5,
+  },
+  toastCloseButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    zIndex: 10,
+    padding: 4,
   },
   toastHeader: {
     flexDirection: 'row',

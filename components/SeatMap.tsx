@@ -6,9 +6,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { getStaticSeatMap, convertStaticToApiFormat } from '../data/staticSeatMaps';
 import { rgbaColor } from "react-native-reanimated/lib/typescript/Colors";
 
-// Import the fuselage images
+// Import the fuselage and wing images
 const fuselageImage = require("../assets/images/fuselage.png");
 const upperDeckImage = require("../assets/images/upperdeck.png");
+const wingImage = require("../assets/images/wing.png");
 
 interface SeatMapProps {
     seatmapData: any;
@@ -295,8 +296,45 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
         });
     };
 
+    // Helper function to render facility icon
+    const renderFacilityIcon = (facility: any, seatSize: number) => {
+        const code = facility.code;
+        // LA = Lavatory, GN = Galley
+        const isLavatory = code === 'LA';
+        const isGalley = code === 'GN';
+
+        const bgColor = isLavatory ? '#8B5CF6' : isGalley ? '#F59E0B' : '#6B7280';
+        const label = isLavatory ? '🚻' : isGalley ? '🍽️' : code;
+
+        return (
+            <View
+                key={`facility-${facility.coordinates.x}-${facility.coordinates.y}`}
+                style={[
+                    styles.facilityIcon,
+                    {
+                        backgroundColor: bgColor,
+                        width: seatSize * 0.8,
+                        height: seatSize * 0.8,
+                    }
+                ]}
+            >
+                <Text style={[styles.facilityText, { fontSize: seatSize * 0.4 }]}>{label}</Text>
+            </View>
+        );
+    };
+
     const renderDeck = (deck: any, deckIndex: number) => {
         const seats = deck.seats || [];
+        // Get exit rows from deck configuration
+        const exitRows: number[] = deck.deckConfiguration?.exitRowsX || [];
+        // Get wing start and end positions
+        const wingStart: number = deck.deckConfiguration?.startWingsX || 0;
+        const wingEnd: number = deck.deckConfiguration?.endWingsX || 0;
+        // Get facilities (lavatories, galleys, etc.)
+        const facilities: any[] = deck.facilities || [];
+
+        // Debug: log facilities
+        console.log(`Deck ${deckIndex}: Facilities:`, facilities.length, facilities.map((f: any) => f.code).join(', '));
 
         // If the deck has no seats, do not render it
         if (seats.length === 0) {
@@ -331,23 +369,28 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
 
         const maxCols = globalMaxCol - globalMinCol + 1;
 
+        // Debug: log wing and exit values
+        console.log(`Deck ${deckIndex}: Wings ${wingStart}-${wingEnd}, Exits: ${exitRows.join(',')}`);
+
         // Calculate dynamic seat size to always fit in screen width
-        const fuselageMargin = 16;
-        const gridPadding = 10;
-        const containerPadding = (fuselageMargin * 2) + (gridPadding * 2);
+        const fuselageMargin = 8; // Reduced for more seat space
+        const gridPadding = 4; // Reduced for more seat space
+        // Add space for exit indicators on both sides (EXIT label width + padding)
+        const exitIndicatorSpace = exitRows.length > 0 ? 20 : 0; // Reduced from 40
+        const containerPadding = (fuselageMargin * 2) + (gridPadding * 2) + exitIndicatorSpace;
         // Reduce gap for wide-body aircraft
-        const gapSize = maxCols > 9 ? 2 : (maxCols > 7 ? 3 : (maxCols > 5 ? 5 : 8));
+        const gapSize = maxCols > 9 ? 1 : (maxCols > 7 ? 2 : (maxCols > 5 ? 3 : 5));
         const availableWidth = width - containerPadding;
 
         // Calculate seat size to fit all columns in available width
         // Account for aisles - typically 2 aisles for wide-body, 1 for narrow-body
         const estimatedAisles = maxCols > 7 ? 2 : 1;
-        const aisleWidth = gapSize * 2; // aisles are roughly double the gap
+        const aisleWidth = gapSize * 1.5; // aisles are slightly larger than gaps
         const totalAisleSpace = estimatedAisles * aisleWidth;
         const calculatedSeatSize = (availableWidth - totalAisleSpace - ((maxCols - 1) * gapSize)) / maxCols;
 
         // Only cap at max, no minimum - seats should always fit
-        const seatSize = Math.min(calculatedSeatSize, 50);
+        const seatSize = Math.min(calculatedSeatSize, 55); // Increased max size
         const fontSize = Math.max(8, seatSize / 2.8);
 
         // Get deck label based on deck index for multi-deck aircraft
@@ -392,7 +435,7 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                     <View style={styles.contentContainer}>
                         {deckIndex === 0 && (
                             <View style={styles.header}>
-                                <Ionicons name="airplane" size={24} color="rgba(255,255,255,0.6)" />
+                                <Ionicons name="airplane" size={24} color="rgba(255, 255, 255, 0.87)" />
                                 <Text style={styles.aircraftText}>
                                     {aircraftName || (aircraftCode && dictionaries?.aircraft?.[aircraftCode]) || aircraftCode}
                                 </Text>
@@ -405,6 +448,20 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                                 const rowSeats = seatsByRow[row].sort((a: any, b: any) =>
                                     a.coordinates.y - b.coordinates.y
                                 );
+
+                                // Check if this is an exit row
+                                const rowNumber = parseInt(row);
+                                const isExitRow = exitRows.includes(rowNumber);
+
+                                // Check if this row is in the wing zone
+                                const isWingRow = wingStart > 0 && wingEnd > 0 &&
+                                    rowNumber >= wingStart && rowNumber <= wingEnd;
+                                // Check if this is the first or last wing row for special styling
+                                const isWingStart = rowNumber === wingStart;
+                                const isWingEnd = rowNumber === wingEnd;
+
+                                // Get facilities at this row
+                                const rowFacilities = facilities.filter((f: any) => f.coordinates.x === rowNumber);
 
                                 // Find the minimum column in this row
                                 const rowMinCol = Math.min(...rowSeats.map((s: any) => s.coordinates.y));
@@ -420,29 +477,47 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                                 const trailingWidth = trailingGap > 0 ? (trailingGap * seatSize) + ((trailingGap - 1) * gapSize) : 0;
 
                                 return (
-                                    <View key={row} style={[styles.row, { gap: gapSize }]}>
-                                        {/* Add leading space to align rows */}
-                                        {leadingWidth > 0 && <View style={{ width: leadingWidth, height: seatSize }} />}
+                                    <View key={row} style={styles.rowContainer}>
 
-                                        {rowSeats.map((seat: any, index: number) => {
-                                            // Check for aisle
-                                            const prevSeat = rowSeats[index - 1];
-                                            const hasAisle = prevSeat && (seat.coordinates.y - prevSeat.coordinates.y > 1);
+                                        {/* Left EXIT indicator */}
+                                        {isExitRow && (
+                                            <View style={styles.exitIndicatorLeft}>
+                                                <Text style={styles.exitText}>EXIT</Text>
+                                            </View>
+                                        )}
 
-                                            // Calculate aisle width
-                                            const count = hasAisle ? (seat.coordinates.y - prevSeat.coordinates.y - 1) : 0;
-                                            const aisleWidth = count > 0 ? (count * seatSize) + ((count - 1) * gapSize) : 0;
+                                        <View style={[styles.row, { gap: gapSize }]}>
+                                            {/* Add leading space to align rows */}
+                                            {leadingWidth > 0 && <View style={{ width: leadingWidth, height: seatSize }} />}
 
-                                            return (
-                                                <React.Fragment key={seat.number}>
-                                                    {hasAisle && <View style={{ width: aisleWidth, height: seatSize }} />}
-                                                    {renderSeatIcon(seat, seatSize, fontSize)}
-                                                </React.Fragment>
-                                            );
-                                        })}
+                                            {rowSeats.map((seat: any, index: number) => {
+                                                // Check for aisle
+                                                const prevSeat = rowSeats[index - 1];
+                                                const hasAisle = prevSeat && (seat.coordinates.y - prevSeat.coordinates.y > 1);
 
-                                        {/* Add trailing space to make all rows same width */}
-                                        {trailingWidth > 0 && <View style={{ width: trailingWidth, height: seatSize }} />}
+                                                // Calculate aisle width
+                                                const count = hasAisle ? (seat.coordinates.y - prevSeat.coordinates.y - 1) : 0;
+                                                const aisleWidth = count > 0 ? (count * seatSize) + ((count - 1) * gapSize) : 0;
+
+                                                return (
+                                                    <React.Fragment key={seat.number}>
+                                                        {hasAisle && <View style={{ width: aisleWidth, height: seatSize }} />}
+                                                        {renderSeatIcon(seat, seatSize, fontSize)}
+                                                    </React.Fragment>
+                                                );
+                                            })}
+
+                                            {/* Add trailing space to make all rows same width */}
+                                            {trailingWidth > 0 && <View style={{ width: trailingWidth, height: seatSize }} />}
+                                        </View>
+
+                                        {/* Right EXIT indicator */}
+                                        {isExitRow && (
+                                            <View style={styles.exitIndicatorRight}>
+                                                <Text style={styles.exitText}>EXIT</Text>
+                                            </View>
+                                        )}
+
                                     </View>
                                 );
                             })}
@@ -533,9 +608,10 @@ const styles = StyleSheet.create({
     aircraftText: {
         color: 'rgba(255, 255, 255, 0.8)',
         fontSize: 14,
-        fontWeight: "600",
+        fontWeight: "800",
         letterSpacing: 0.5,
         textTransform: 'uppercase',
+        paddingTop: -33,
     },
     seatGridScrollContainer: {
         flexGrow: 1,
@@ -544,12 +620,76 @@ const styles = StyleSheet.create({
     },
     seatGrid: {
         alignItems: "center",
+        paddingHorizontal: 4, // Reduced for more seat space
+    },
+    rowContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 14,
     },
     row: {
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: 14,
+    },
+    exitIndicatorLeft: {
+        backgroundColor: "#22C55E",
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 4,
+        marginRight: 10,
+    },
+    exitIndicatorRight: {
+        backgroundColor: "#22C55E",
+        paddingHorizontal: 6,
+        paddingVertical: 4,
+        borderRadius: 4,
+        marginLeft: 8,
+    },
+    exitText: {
+        color: "#FFFFFF",
+        fontSize: 8,
+        fontWeight: "800",
+        letterSpacing: 0.5,
+    },
+    wingImageLeft: {
+        width: 50,
+        height: 36,
+        marginRight: 4,
+        transform: [{ scaleX: -1 }]
+    },
+    wingImageRight: {
+        width: 50,
+        height: 36,
+        marginLeft: 4,
+        transform: [{ scaleX: 1 }], // Flip horizontally for right wing
+    },
+    wingImageTop: {
+        // First row of wing - can adjust positioning
+    },
+    wingImageBottom: {
+        // Last row of wing - can adjust positioning
+    },
+    facilitiesContainer: {
+        marginTop: 16,
+        paddingHorizontal: 16,
+        width: '100%',
+    },
+    facilitiesRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: 8,
+    },
+    facilityIcon: {
+        borderRadius: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    facilityText: {
+        textAlign: 'center',
     },
     seat: {
         justifyContent: "center",

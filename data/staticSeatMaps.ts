@@ -53,8 +53,11 @@ function generateSeats(
 
 /**
  * Qatar Airways Boeing 777-300ER with Qsuite configuration
- * - Business Class: Rows 1-11, 1-2-1 configuration (42 seats)
- * - Economy Class: Rows 17-43, 3-4-3 configuration (312 seats)
+ * - Business Class: Rows 1-11, staggered 1-2-1 configuration
+ *   Alternating pattern:
+ *   - Odd rows (1,3,5,7,9,11): A | E-F | K (window seats forward, center back)
+ *   - Even rows (2,4,6,8,10): D | E-F | G (window seats back, center forward)
+ * - Economy Class: Rows 17-43, 3-4-3 configuration
  */
 export const QR_777_300ER: StaticSeatMap = {
     airline: 'Qatar Airways',
@@ -63,11 +66,18 @@ export const QR_777_300ER: StaticSeatMap = {
     aircraftCode: '77W',
     cabins: [
         {
-            name: 'Business Class (Qsuite)',
+            name: 'Business Class (Qsuite) - Odd Rows',
             cabin: 'BUSINESS',
-            rows: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            rows: [1, 3, 5, 7, 9, 11],
             columns: ['A', 'E', 'F', 'K'],
             aisleAfterColumns: ['A', 'F'],
+        },
+        {
+            name: 'Business Class (Qsuite) - Even Rows',
+            cabin: 'BUSINESS',
+            rows: [2, 4, 6, 8, 10],
+            columns: ['D', 'E', 'F', 'G'],
+            aisleAfterColumns: ['D', 'F'],
         },
         {
             name: 'Economy Class',
@@ -81,13 +91,38 @@ export const QR_777_300ER: StaticSeatMap = {
 };
 
 // Generate all seats for Qatar Airways 777-300ER
-const businessCabin = QR_777_300ER.cabins[0];
-const economyCabin = QR_777_300ER.cabins[1];
+const businessCabinOdd = QR_777_300ER.cabins[0];  // Odd rows: A, E, F, K
+const businessCabinEven = QR_777_300ER.cabins[1]; // Even rows: D, E, F, G
+const economyCabin = QR_777_300ER.cabins[2];
 
-// Business class special characteristics
-const businessCharacteristics: { [row: number]: { [col: string]: string[] } } = {
-    1: { A: ['WINDOW', 'FRONT_ROW'], E: ['AISLE', 'FRONT_ROW'], F: ['AISLE', 'FRONT_ROW'], K: ['WINDOW', 'FRONT_ROW'] },
-    11: { A: ['WINDOW', 'NEAR_GALLEY'], E: ['AISLE', 'NEAR_GALLEY'], F: ['AISLE', 'NEAR_GALLEY'], K: ['WINDOW', 'NEAR_GALLEY'] },
+// Business class special characteristics - Qsuite staggered layout
+// Odd rows (1,3,5,7,9,11): A (window left), E-F (center pair), K (window right)
+const businessCharacteristicsOdd: { [row: number]: { [col: string]: string[] } } = {
+    1: {
+        A: ['WINDOW', 'FRONT_ROW', 'QSUITE'],
+        E: ['AISLE', 'FRONT_ROW', 'QSUITE', 'BUDDY_SUITE'],
+        F: ['AISLE', 'FRONT_ROW', 'QSUITE', 'BUDDY_SUITE'],
+        K: ['WINDOW', 'FRONT_ROW', 'QSUITE']
+    },
+    3: { A: ['WINDOW', 'QSUITE'], E: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], F: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], K: ['WINDOW', 'QSUITE'] },
+    5: { A: ['WINDOW', 'QSUITE'], E: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], F: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], K: ['WINDOW', 'QSUITE'] },
+    7: { A: ['WINDOW', 'QSUITE'], E: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], F: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], K: ['WINDOW', 'QSUITE'] },
+    9: { A: ['WINDOW', 'QSUITE'], E: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], F: ['AISLE', 'QSUITE', 'BUDDY_SUITE'], K: ['WINDOW', 'QSUITE'] },
+    11: {
+        A: ['WINDOW', 'NEAR_GALLEY', 'QSUITE'],
+        E: ['AISLE', 'NEAR_GALLEY', 'QSUITE', 'BUDDY_SUITE'],
+        F: ['AISLE', 'NEAR_GALLEY', 'QSUITE', 'BUDDY_SUITE'],
+        K: ['WINDOW', 'NEAR_GALLEY', 'QSUITE']
+    },
+};
+
+// Even rows (2,4,6,8,10): D (aisle left), E-F (center pair), G (aisle right)
+const businessCharacteristicsEven: { [row: number]: { [col: string]: string[] } } = {
+    2: { D: ['AISLE', 'QSUITE', 'QUAD_SUITE'], E: ['AISLE', 'QSUITE', 'QUAD_SUITE'], F: ['AISLE', 'QSUITE', 'QUAD_SUITE'], G: ['AISLE', 'QSUITE', 'QUAD_SUITE'] },
+    4: { D: ['AISLE', 'QSUITE', 'QUAD_SUITE'], E: ['AISLE', 'QSUITE', 'QUAD_SUITE'], F: ['AISLE', 'QSUITE', 'QUAD_SUITE'], G: ['AISLE', 'QSUITE', 'QUAD_SUITE'] },
+    6: { D: ['AISLE', 'QSUITE', 'QUAD_SUITE'], E: ['AISLE', 'QSUITE', 'QUAD_SUITE'], F: ['AISLE', 'QSUITE', 'QUAD_SUITE'], G: ['AISLE', 'QSUITE', 'QUAD_SUITE'] },
+    8: { D: ['AISLE', 'QSUITE', 'QUAD_SUITE'], E: ['AISLE', 'QSUITE', 'QUAD_SUITE'], F: ['AISLE', 'QSUITE', 'QUAD_SUITE'], G: ['AISLE', 'QSUITE', 'QUAD_SUITE'] },
+    10: { D: ['AISLE', 'QSUITE', 'QUAD_SUITE'], E: ['AISLE', 'QSUITE', 'QUAD_SUITE'], F: ['AISLE', 'QSUITE', 'QUAD_SUITE'], G: ['AISLE', 'QSUITE', 'QUAD_SUITE'] },
 };
 
 // Economy class special characteristics
@@ -98,14 +133,15 @@ const economyCharacteristics: { [row: number]: { [col: string]: string[] } } = {
 };
 
 QR_777_300ER.seats = [
-    ...generateSeats(businessCabin, businessCharacteristics),
+    ...generateSeats(businessCabinOdd, businessCharacteristicsOdd),
+    ...generateSeats(businessCabinEven, businessCharacteristicsEven),
     ...generateSeats(economyCabin, economyCharacteristics),
 ];
 
 // Map of static seat maps by airline code and aircraft code
+// Qatar Airways 777-300ER removed - now uses API data like A350
 export const STATIC_SEAT_MAPS: { [key: string]: StaticSeatMap } = {
-    'QR-77W': QR_777_300ER,
-    'QR-773': QR_777_300ER, // Also used for 773 code
+    // No static maps currently - all aircraft use API data
 };
 
 /**

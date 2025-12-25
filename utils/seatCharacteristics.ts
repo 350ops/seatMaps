@@ -23,7 +23,20 @@ export const seatCharacteristics: Record<string, string> = {
     "V": "Seat to be left vacant or offered last",
     "W": "Window seat",
     "IE": "Seat not suitable for child",
-    "FC": "Front of cabin class/compartment"
+    "FC": "Front of cabin class/compartment",
+    // Qsuite specific characteristics
+    "QSUITE": "Qatar Airways Qsuite",
+    "BUDDY_SUITE": "Buddy suite - can be combined with adjacent seat",
+    "QUAD_SUITE": "Quad suite - can be combined into 4-seat suite",
+    "WINDOW": "Window seat",
+    "AISLE": "Aisle seat",
+    "FRONT_ROW": "Front of cabin",
+    "NEAR_GALLEY": "Near galley",
+    "EXIT_ROW": "Exit row - extra legroom",
+    "EXTRA_LEGROOM": "Extra legroom",
+    "LAST_ROW": "Last row of cabin",
+    "LIMITED_RECLINE": "Limited recline",
+    "MIDDLE": "Middle seat"
 };
 
 /**
