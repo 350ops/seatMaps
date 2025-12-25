@@ -187,22 +187,15 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
             return renderBusinessClassSeat(seat, size, fontSize);
         }
 
-        // Dimensions for seat parts (economy)
-        const padding = size * 0.08;
-        const seatWidth = size - padding * 2;
-        const seatHeight = size - padding * 2;
-        const armrestWidth = seatWidth * 0.12;
-        const backrestHeight = seatHeight * 0.25;
-        const cushionHeight = seatHeight * 0.65;
-        const headrestWidth = seatWidth * 0.5;
-        const headrestHeight = seatHeight * 0.12;
+        // Economy seat uses the seateconomy.svg design
+        // Original viewBox is "0 -3 110 100" but the SVG has a scale(2) transform
+        // Effective size is 110x100 (scaled by 2 internally)
+        const height = size * (100 / 110); // Maintain aspect ratio
 
-        // Calculate Y positions from bottom up (seat faces forward/up)
-        const headrestY = size - padding - headrestHeight;
-        const backrestY = headrestY - backrestHeight + 2;
-        const cushionY = backrestY - cushionHeight + 4;
-        const armrestY = cushionY;
-        const armrestHeight = cushionHeight + backrestHeight * 0.5 - 2;
+        // Get status-based colors
+        const cushionColor = style.seatColor;
+        const frameColor = style.armrestColor;
+        const accentColor = style.accentColor;
 
         return (
             <TouchableOpacity
@@ -218,78 +211,68 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                 onPress={() => handleSeatPress(seat)}
                 activeOpacity={0.7}
             >
-                <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-                    {/* Main seat cushion (top) */}
-                    <Rect
-                        x={padding + armrestWidth + 2}
-                        y={cushionY}
-                        width={seatWidth - (armrestWidth * 2) - 4}
-                        height={cushionHeight}
-                        rx={6}
-                        fill={style.seatColor}
-                    />
+                <Svg width={size} height={size} viewBox="0 -3 110 100">
+                    <G transform="scale(2)">
+                        {/* Left armrest */}
+                        <Rect
+                            fill={frameColor}
+                            y="4.3"
+                            width="5.36"
+                            height="32.29"
+                            rx="1.97"
+                            ry="1.97"
+                        />
 
-                    {/* Backrest */}
-                    <Rect
-                        x={padding + armrestWidth + 2}
-                        y={backrestY}
-                        width={seatWidth - (armrestWidth * 2) - 4}
-                        height={backrestHeight}
-                        rx={4}
-                        fill={style.accentColor}
-                    />
+                        {/* Right armrest */}
+                        <Rect
+                            fill={frameColor}
+                            x="49.02"
+                            y="4.3"
+                            width="5.36"
+                            height="32.29"
+                            rx="1.97"
+                            ry="1.97"
+                        />
 
-                    {/* Headrest (bottom) */}
-                    <Rect
-                        x={(size - headrestWidth) / 2}
-                        y={headrestY}
-                        width={headrestWidth}
-                        height={headrestHeight}
-                        rx={headrestHeight / 3}
-                        fill={style.accentColor}
-                    />
+                        {/* Seat back */}
+                        <Path
+                            fill={cushionColor}
+                            stroke="rgba(255,255,255,0.3)"
+                            strokeWidth="1"
+                            d="M44.94,1.07C40.15.71,33.1,0,26.87,0,21.37,0,13.66.47,9.35.93A4.41,4.41,0,0,0,5.41,5.31V33H49V5.47A4.41,4.41,0,0,0,44.94,1.07Z"
+                        />
 
-                    {/* Left armrest */}
-                    <Rect
-                        x={padding}
-                        y={armrestY}
-                        width={armrestWidth}
-                        height={armrestHeight}
-                        rx={3}
-                        fill={style.armrestColor}
-                    />
+                        {/* Seat cushion */}
+                        <Path
+                            fill={cushionColor}
+                            stroke="rgba(255,255,255,0.3)"
+                            strokeWidth="1"
+                            d="M47.56,37.58h-40a2.85,2.85,0,0,1-2.85-2.85V31.43a2.85,2.85,0,0,1,2.85-2.85h.11A139.86,139.86,0,0,0,27.56,30a150.41,150.41,0,0,0,19.9-1.38h.1a2.85,2.85,0,0,1,2.85,2.85v3.31A2.85,2.85,0,0,1,47.56,37.58Z"
+                        />
 
-                    {/* Right armrest */}
-                    <Rect
-                        x={size - padding - armrestWidth}
-                        y={armrestY}
-                        width={armrestWidth}
-                        height={armrestHeight}
-                        rx={3}
-                        fill={style.armrestColor}
-                    />
-
-                    {/* Seat belt icon (small white rectangle) */}
-                    <Rect
-                        x={(size - seatWidth * 0.25) / 2}
-                        y={cushionY + cushionHeight * 0.4}
-                        width={seatWidth * 0.25}
-                        height={cushionHeight * 0.12}
-                        rx={2}
-                        fill="rgba(255, 255, 255, 0.6)"
-                    />
+                        {/* Seat belt buckle area */}
+                        <Rect
+                            fill={accentColor}
+                            x="19.25"
+                            y="28.88"
+                            width="15.92"
+                            height="5.47"
+                            rx="2.02"
+                            ry="2.02"
+                        />
+                    </G>
                 </Svg>
 
                 {/* Seat number label */}
                 <View style={{
                     position: 'absolute',
-                    bottom: size * 0.8,
-                    backgroundColor: 'rgba(70, 169, 255, 0)',
+                    bottom: size * 0.15,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     paddingHorizontal: 4,
-                    paddingVertical: 4,
-                    borderRadius: 40,
+                    paddingVertical: 2,
+                    borderRadius: 6,
                 }}>
-                    <Text style={[styles.seatText, { fontSize: fontSize * 0.9, color: '#FFFFFF' }]}>
+                    <Text style={[styles.seatText, { fontSize: fontSize * 0.85, color: '#FFFFFF' }]}>
                         {seat.number}
                     </Text>
                 </View>
