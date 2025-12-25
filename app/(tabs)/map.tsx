@@ -77,14 +77,13 @@ const MapScreen: React.FC = () => {
         if (origin && destination) {
             const midLat = (origin.latitude + destination.latitude) / 2;
             const midLon = (origin.longitude + destination.longitude) / 2;
-            const latDelta = Math.abs(origin.latitude - destination.latitude) * 1.5 + 10;
-            const lonDelta = Math.abs(origin.longitude - destination.longitude) * 1.5 + 10;
-
+            // Globe view settings: specific delta to force planet view
+            // Using user's suggested values: latitudeDelta 200, longitudeDelta 1
             return {
                 latitude: midLat,
                 longitude: midLon,
-                latitudeDelta: Math.max(latDelta, 20),
-                longitudeDelta: Math.max(lonDelta, 20),
+                latitudeDelta: 200,
+                longitudeDelta: 1,
             };
         }
         // Default to world view
@@ -99,29 +98,46 @@ const MapScreen: React.FC = () => {
     if (Platform.OS === 'ios') {
         return (
             <View style={styles.container}>
-                <MapView style={styles.map} initialRegion={region}>
+                <MapView style={styles.map} initialRegion={region} mapType="hybrid">
                     {origin && destination && flightPath.length > 0 && (
                         <>
                             <Polyline
                                 coordinates={flightPath}
-                                strokeColor="#FF3B7F"
-                                strokeWidth={3}
+                                strokeColor="#3673FD" // Changed to blue to match theme
+                                strokeWidth={4}
                                 geodesic={true}
+                                lineDashPattern={[0]}
                             />
-                            <Marker
-                                coordinate={origin}
-                                title={searchParams?.originName || searchParams?.origin}
-                                pinColor="#00FF00"
-                            />
-                            <Marker
-                                coordinate={destination}
-                                title={searchParams?.destinationName || searchParams?.destination}
-                                pinColor="#FF0000"
-                            />
+                            {/* Origin Marker */}
+                            <Marker coordinate={origin} anchor={{ x: 0.5, y: 0.5 }}>
+                                <View style={styles.markerContainer}>
+                                    <View style={styles.dot} />
+                                    <View style={styles.labelContainer}>
+                                        <Text style={styles.cityName}>{searchParams?.originName?.split(',')[0] || searchParams?.origin}</Text>
+                                        <View style={styles.codeContainer}>
+                                            <Text style={styles.codeText}>{searchParams?.origin}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Marker>
+
+                            {/* Destination Marker */}
+                            <Marker coordinate={destination} anchor={{ x: 0.5, y: 0.5 }}>
+                                <View style={styles.markerContainer}>
+                                    <View style={styles.dot} />
+                                    <View style={styles.labelContainer}>
+                                        <Text style={styles.cityName}>{searchParams?.destinationName?.split(',')[0] || searchParams?.destination}</Text>
+                                        <View style={styles.codeContainer}>
+                                            <Text style={styles.codeText}>{searchParams?.destination}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Marker>
                         </>
                     )}
                 </MapView>
-            </View>
+
+            </View >
         );
     }
 
@@ -169,6 +185,51 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'rgba(255, 255, 255, 0.7)',
         textAlign: 'center',
+    },
+    markerContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    dot: {
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        backgroundColor: '#3673FD',
+        borderWidth: 2,
+        borderColor: 'white',
+        marginBottom: 4,
+    },
+    labelContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#3673FD',
+        borderRadius: 8,
+        padding: 4,
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    cityName: {
+        color: 'white',
+        fontWeight: '600',
+        fontSize: 14,
+        marginHorizontal: 8,
+    },
+    codeContainer: {
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 4,
+        paddingHorizontal: 6,
+        paddingVertical: 2,
+    },
+    codeText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 12,
     },
 });
 

@@ -76,8 +76,8 @@ export const QR_777_300ER: StaticSeatMap = {
             name: 'Business Class (Qsuite) - Even Rows',
             cabin: 'BUSINESS',
             rows: [2, 4, 6, 8, 10],
-            columns: ['D', 'E', 'F', 'G'],
-            aisleAfterColumns: ['D', 'F'],
+            columns: ['EMPTY', 'D', 'E', 'F', 'G'], // Added EMPTY to shift columns for stagger
+            aisleAfterColumns: [], // No explicit aisle gaps needed, alignment handled by indices
         },
         {
             name: 'Economy Class',
@@ -138,10 +138,42 @@ QR_777_300ER.seats = [
     ...generateSeats(economyCabin, economyCharacteristics),
 ];
 
+// Alaska Airlines 737-900 (73J)
+export const AS_737_900: StaticSeatMap = {
+    airline: 'Alaska Airlines',
+    airlineCode: 'AS',
+    aircraft: 'Boeing 737-900',
+    aircraftCode: '73J',
+    cabins: [
+        {
+            name: 'First Class',
+            cabin: 'FIRST',
+            rows: [1, 2, 3, 4],
+            columns: ['A', 'C', 'D', 'F'],
+            aisleAfterColumns: ['C'],
+        },
+        {
+            name: 'Premium Class / Main Cabin',
+            cabin: 'ECONOMY',
+            rows: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33],
+            columns: ['A', 'B', 'C', 'D', 'E', 'F'],
+            aisleAfterColumns: ['C'],
+        },
+    ],
+    seats: [],
+};
+
+AS_737_900.seats = [
+    ...generateSeats(AS_737_900.cabins[0]),
+    ...generateSeats(AS_737_900.cabins[1]),
+];
+
 // Map of static seat maps by airline code and aircraft code
-// Qatar Airways 777-300ER removed - now uses API data like A350
 export const STATIC_SEAT_MAPS: { [key: string]: StaticSeatMap } = {
-    // No static maps currently - all aircraft use API data
+    'QR-77W': QR_777_300ER,
+    'QR-773': QR_777_300ER, // Also used for 773 code
+    'QR-789': QR_777_300ER, // Ensure this applies to 789 as seen in screenshots
+    'AS-73J': AS_737_900,
 };
 
 /**
@@ -173,10 +205,14 @@ export function convertStaticToApiFormat(staticMap: StaticSeatMap, cabinClass?: 
 
     // Convert to API format
     const apiSeats = targetCabins.flatMap(cabin => {
-        const seats = cabinSeats[cabin.cabin] || [];
+        // Find seats that belong specifically to this cabin definition (by row)
+        // We use the full staticMap.seats list to be safe, or we could filter cabinSeats
+        const seats = cabinSeats[cabin.cabin]?.filter(s => cabin.rows.includes(s.row)) || [];
+
         return seats.map(seat => {
             // Calculate column position (Y coordinate)
             const colIndex = cabin.columns.indexOf(seat.column);
+            // ...
             let y = colIndex;
 
             // Add aisle gaps

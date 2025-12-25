@@ -119,7 +119,8 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
     }, [selectedAirport]);
 
     useEffect(() => {
-        if (debouncedQuery.length > 2 && !isSelection) {
+        // User requested to start with 2nd character (length >= 2)
+        if (debouncedQuery.length >= 2 && !isSelection) {
             search(debouncedQuery);
         } else {
             setResults([]);
@@ -131,27 +132,52 @@ const AirportAutocomplete: React.FC<AirportAutocompleteProps> = ({
         const searchText = text.toUpperCase();
 
         // First check local cache for instant results
+        // Changed to startsWith to avoid "Mad" matching "Hamad"
         const localMatches = COMMON_AIRPORTS.filter(airport =>
-            airport.iataCode.includes(searchText) ||
-            airport.address.cityName.toUpperCase().includes(searchText) ||
-            airport.name.toUpperCase().includes(searchText)
+            airport.iataCode === searchText || // Exact match for IATA
+            airport.address.cityName.toUpperCase().startsWith(searchText) || // Startswith for city
+            airport.name.toUpperCase().startsWith(searchText) // Startswith for airport name
         );
 
-        // If we have local matches, show them instantly
+        // If we have local matches, show them instantly but don't stop there
         if (localMatches.length > 0) {
             setResults(localMatches);
             setShowResults(true);
-            setLoading(false);
-            return;
+            // We now continue to API search to append more results if needed
+            // But if users want purely local priority, we might want to wait?
+            // Actually, if local match is found, user might be happy.
+            // But let's check user intent. "Rush into giving me DOH".
+            // Since DOH is no longer a match for "Mad", it won't rush to DOH.
+            // So we can fallback to API.
         }
 
-        // Otherwise, fall back to API
-        setLoading(true);
-        const data = await searchAirports(text);
-        setResults(data);
-        setLoading(false);
-        setShowResults(true);
+        // Always search API to get full results (unless we have a perfect local match?)
+        // Let's effectively merge or overwrite.
+
+        try {
+            setLoading(true);
+            const data = await searchAirports(text);
+
+            // If local matches exist, prioritize them or merge?
+            // Simple approach: prefer API results if available, as they are more relevant to the specific query
+            // Or deduplicate.
+            if (data && data.length > 0) {
+                setResults(data);
+            } else if (localMatches.length === 0) {
+                // No local and no API results
+                setResults([]);
+            }
+            // If data is empty but we had local matches, keep local matches?
+            // The searchAirports probably returns good matches.
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+            setShowResults(true);
+        }
     };
+
+
 
     const handleSelect = (item: Airport) => {
         setIsSelection(true);

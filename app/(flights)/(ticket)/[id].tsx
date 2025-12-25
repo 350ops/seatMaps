@@ -8,6 +8,7 @@ import { getSeatCharacteristicDescription } from "@/utils/seatCharacteristics";
 import { AntDesign } from "@expo/vector-icons";
 import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from 'expo-blur';
+import { getStaticSeatMap, convertStaticToApiFormat } from "@/data/staticSeatMaps";
 
 const TicketDetail = () => {
   const router = useRouter();
@@ -69,6 +70,28 @@ const TicketDetail = () => {
       try {
         setLoading(true);
         const parsedOffer = JSON.parse(flightOffer);
+        const segment = parsedOffer.itineraries[0].segments[0];
+        const carrierCode = segment.carrierCode;
+        // Try to get aircraft code from segment equipment
+        const aircraftCode = segment.aircraft?.code;
+
+        console.log(`Checking for static seat map: ${carrierCode} ${aircraftCode}`);
+        const staticMap = getStaticSeatMap(carrierCode, aircraftCode);
+
+        if (staticMap) {
+          console.log(`Found static seat map for ${carrierCode} ${aircraftCode}`);
+          const apiData = convertStaticToApiFormat(staticMap, travelClass || undefined);
+          setSeatmapData(apiData);
+          // setDictionaries? Static map might need dictionaries for aircraft name etc.
+          // We can create a minimal dictionary or rely on existing behavior
+          setDictionaries({
+            aircraft: {
+              [aircraftCode]: staticMap.aircraft
+            }
+          });
+          setLoading(false);
+          return;
+        }
 
         // If travelClass is set and different from the original booking, re-search
         const originalCabin = parsedOffer?.travelerPricings?.[0]?.fareDetailsBySegment?.[0]?.cabin;

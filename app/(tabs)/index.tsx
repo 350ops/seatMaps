@@ -88,6 +88,12 @@ const Home = () => {
 
       setDictionaries(dicts);
 
+      if (!results || results.length === 0) {
+        setLoading(false);
+        Alert.alert("Sorry", "We didn't find any flights.");
+        return;
+      }
+
       // Filter out duplicate flights (codeshares)
       const uniqueFlightsMap = new Map();
 
