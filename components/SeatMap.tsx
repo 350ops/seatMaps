@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, ScrollView } from "react-native";
 import React from "react";
 import Svg, { Path, Rect } from "react-native-svg";
 import GlassView from './GlassView';
@@ -30,43 +30,167 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
     }
 
     const getSeatStyle = (seat: any) => {
-        const status = seat.travelerPricing?.[0]?.seatAvailabilityStatus;
+        // Check multiple possible status field locations
+        const status = seat.travelerPricing?.[0]?.seatAvailabilityStatus
+            || seat.seatAvailabilityStatus
+            || seat.status
+            || (seat.travelerPricing?.length > 0 ? "OCCUPIED" : "AVAILABLE");
         const isSelected = selectedSeat === seat.number;
 
         if (isSelected) {
             return {
-                backgroundColor: "#007AFF", // Bright Blue for selection
-                borderColor: "#007AFF",
-                textColor: "#FFFFFF"
+                seatColor: "#3B82F6", // Bright Blue for selection
+                accentColor: "#60A5FA",
+                textColor: "#FFFFFF",
+                armrestColor: "#1D4ED8"
             };
         }
 
         switch (status) {
             case "AVAILABLE":
                 return {
-                    backgroundColor: "#ffffff7f", // White
-                    borderColor: "#E0E0E0",
-                    textColor: "#333333"
+                    seatColor: "#22C55E", // Bright Green - clearly available
+                    accentColor: "#4ADE80",
+                    textColor: "#FFFFFF",
+                    armrestColor: "#16A34A"
                 };
             case "OCCUPIED":
                 return {
-                    backgroundColor: "#0126ad6c", // Dark Gray
-                    borderColor: "#777777ff",
-                    textColor: "#AAAAAA"
+                    seatColor: "#374151", // Dark Gray - clearly taken
+                    accentColor: "#4B5563",
+                    textColor: "#9CA3AF",
+                    armrestColor: "#1F2937"
                 };
             case "BLOCKED":
                 return {
-                    backgroundColor: "#2b282a89", // Medium Gray
-                    borderColor: "#959595ff",
-                    textColor: "#ffffffc2"
+                    seatColor: "#DC2626", // Red - clearly blocked/unavailable
+                    accentColor: "#EF4444",
+                    textColor: "#FFFFFF",
+                    armrestColor: "#B91C1C"
                 };
             default:
                 return {
-                    backgroundColor: "#707070",
-                    borderColor: "#606060",
-                    textColor: "#AAAAAA"
+                    seatColor: "#6B7280", // Gray for unknown
+                    accentColor: "#9CA3AF",
+                    textColor: "#D1D5DB",
+                    armrestColor: "#4B5563"
                 };
         }
+    };
+
+    // SVG-based realistic seat component (facing forward/up)
+    const renderSeatIcon = (seat: any, size: number, fontSize: number) => {
+        const style = getSeatStyle(seat);
+        const isSelected = selectedSeat === seat.number;
+
+        // Dimensions for seat parts
+        const padding = size * 0.08;
+        const seatWidth = size - padding * 2;
+        const seatHeight = size - padding * 2;
+        const armrestWidth = seatWidth * 0.12;
+        const backrestHeight = seatHeight * 0.25;
+        const cushionHeight = seatHeight * 0.65;
+        const headrestWidth = seatWidth * 0.5;
+        const headrestHeight = seatHeight * 0.12;
+
+        // Calculate Y positions from bottom up (seat faces forward/up)
+        const headrestY = size - padding - headrestHeight;
+        const backrestY = headrestY - backrestHeight + 2;
+        const cushionY = backrestY - cushionHeight + 4;
+        const armrestY = cushionY;
+        const armrestHeight = cushionHeight + backrestHeight * 0.5 - 2;
+
+        return (
+            <TouchableOpacity
+                style={[
+                    {
+                        width: size,
+                        height: size,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    },
+                    isSelected && styles.selectedSeatShadow
+                ]}
+                onPress={() => handleSeatPress(seat)}
+                activeOpacity={0.7}
+            >
+                <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+                    {/* Main seat cushion (top) */}
+                    <Rect
+                        x={padding + armrestWidth + 2}
+                        y={cushionY}
+                        width={seatWidth - (armrestWidth * 2) - 4}
+                        height={cushionHeight}
+                        rx={6}
+                        fill={style.seatColor}
+                    />
+
+                    {/* Backrest */}
+                    <Rect
+                        x={padding + armrestWidth + 2}
+                        y={backrestY}
+                        width={seatWidth - (armrestWidth * 2) - 4}
+                        height={backrestHeight}
+                        rx={4}
+                        fill={style.seatColor}
+                    />
+
+                    {/* Headrest (bottom) */}
+                    <Rect
+                        x={(size - headrestWidth) / 2}
+                        y={headrestY}
+                        width={headrestWidth}
+                        height={headrestHeight}
+                        rx={headrestHeight / 3}
+                        fill={style.accentColor}
+                    />
+
+                    {/* Left armrest */}
+                    <Rect
+                        x={padding}
+                        y={armrestY}
+                        width={armrestWidth}
+                        height={armrestHeight}
+                        rx={3}
+                        fill={style.armrestColor}
+                    />
+
+                    {/* Right armrest */}
+                    <Rect
+                        x={size - padding - armrestWidth}
+                        y={armrestY}
+                        width={armrestWidth}
+                        height={armrestHeight}
+                        rx={3}
+                        fill={style.armrestColor}
+                    />
+
+                    {/* Seat belt icon (small white rectangle) */}
+                    <Rect
+                        x={(size - seatWidth * 0.25) / 2}
+                        y={cushionY + cushionHeight * 0.4}
+                        width={seatWidth * 0.25}
+                        height={cushionHeight * 0.12}
+                        rx={2}
+                        fill="rgba(255, 255, 255, 0.6)"
+                    />
+                </Svg>
+
+                {/* Seat number label */}
+                <View style={{
+                    position: 'absolute',
+                    bottom: size * 0.12,
+                    backgroundColor: 'rgba(70, 168, 255, 0.78)',
+                    paddingHorizontal: 4,
+                    paddingVertical: 2,
+                    borderRadius: 4,
+                }}>
+                    <Text style={[styles.seatText, { fontSize: fontSize * 0.9, color: '#FFFFFF' }]}>
+                        {seat.number}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
     };
 
     const handleSeatPress = (seat: any) => {
@@ -120,18 +244,23 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
 
         const maxCols = globalMaxCol - globalMinCol + 1;
 
-        // Calculate dynamic seat size
+        // Calculate dynamic seat size to always fit in screen width
         const fuselageMargin = 16;
         const gridPadding = 10;
         const containerPadding = (fuselageMargin * 2) + (gridPadding * 2);
-        const gapSize = maxCols > 8 ? 4 : (maxCols > 6 ? 6 : 10);
+        // Reduce gap for wide-body aircraft
+        const gapSize = maxCols > 9 ? 2 : (maxCols > 7 ? 3 : (maxCols > 5 ? 5 : 8));
         const availableWidth = width - containerPadding;
 
-        // Calculate optimal seat size
-        const calculatedSeatSize = (availableWidth - ((maxCols - 1) * gapSize)) / maxCols;
+        // Calculate seat size to fit all columns in available width
+        // Account for aisles - typically 2 aisles for wide-body, 1 for narrow-body
+        const estimatedAisles = maxCols > 7 ? 2 : 1;
+        const aisleWidth = gapSize * 2; // aisles are roughly double the gap
+        const totalAisleSpace = estimatedAisles * aisleWidth;
+        const calculatedSeatSize = (availableWidth - totalAisleSpace - ((maxCols - 1) * gapSize)) / maxCols;
 
-        // Constrain seat size
-        const seatSize = Math.min(Math.max(calculatedSeatSize, 20), 50);
+        // Only cap at max, no minimum - seats should always fit
+        const seatSize = Math.min(calculatedSeatSize, 50);
         const fontSize = Math.max(8, seatSize / 2.8);
 
         // Get deck label based on deck index for multi-deck aircraft
@@ -217,32 +346,10 @@ const SeatMap: React.FC<SeatMapProps> = ({ seatmapData, dictionaries, aircraftCo
                                             const count = hasAisle ? (seat.coordinates.y - prevSeat.coordinates.y - 1) : 0;
                                             const aisleWidth = count > 0 ? (count * seatSize) + ((count - 1) * gapSize) : 0;
 
-                                            const style = getSeatStyle(seat);
-                                            const isAvailable = seat.travelerPricing?.[0]?.seatAvailabilityStatus === "AVAILABLE";
-
                                             return (
                                                 <React.Fragment key={seat.number}>
                                                     {hasAisle && <View style={{ width: aisleWidth, height: seatSize }} />}
-                                                    <TouchableOpacity
-                                                        style={[
-                                                            styles.seat,
-                                                            {
-                                                                width: seatSize,
-                                                                height: seatSize,
-                                                                backgroundColor: style.backgroundColor,
-                                                                borderColor: style.borderColor,
-                                                                borderRadius: 8,
-                                                                borderWidth: 1,
-                                                            },
-                                                            selectedSeat === seat.number && styles.selectedSeatShadow
-                                                        ]}
-                                                        onPress={() => handleSeatPress(seat)}
-                                                        activeOpacity={0.7}
-                                                    >
-                                                        <Text style={[styles.seatText, { fontSize, color: style.textColor }]}>
-                                                            {seat.number}
-                                                        </Text>
-                                                    </TouchableOpacity>
+                                                    {renderSeatIcon(seat, seatSize, fontSize)}
                                                 </React.Fragment>
                                             );
                                         })}
@@ -343,8 +450,12 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
         textTransform: 'uppercase',
     },
+    seatGridScrollContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        paddingHorizontal: 8,
+    },
     seatGrid: {
-        width: "100%",
         alignItems: "center",
     },
     row: {

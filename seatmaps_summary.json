@@ -1,0 +1,3857 @@
+{
+  "totalAirlines": 770,
+  "totalAircraft": 2031,
+  "scrapedAt": "2025-12-25T04:58:39.880Z",
+  "airlines": [
+    {
+      "name": "4Airways",
+      "code": "dak-4airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "748 Air Services",
+      "code": "fe-748-air-services",
+      "aircraftCount": 6
+    },
+    {
+      "name": "9 Air",
+      "code": "aq-9-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Advanced Air",
+      "code": "an-advanced-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Aegean Airlines",
+      "code": "a3-aegean-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Aer Lingus Limited",
+      "code": "ei-aer-lingus",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Aer Lingus Regional",
+      "code": "ei*-aer-lingus-regional",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aer Lingus UK",
+      "code": "eg-aer-lingus-uk",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Aero Contractors",
+      "code": "n2-aero-contractors",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aero Dili",
+      "code": "8g-aero-dili",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Aero K",
+      "code": "rf-aero-k",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aero Mongolia",
+      "code": "m0-aero-mongolia",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Aero Transporte SA - ATSA",
+      "code": "4a-atsa",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aeroflot",
+      "code": "su-aeroflot",
+      "aircraftCount": 9
+    },
+    {
+      "name": "Aeroitalia",
+      "code": "xz-aeroitalia",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Aeroitalia Regional",
+      "code": "ks-aeroitalia-regional",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AeroJet (Ukraine)",
+      "code": "bju-aerojet-(ukraine)",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Aerolineas Argentinas",
+      "code": "ar-aerolineas-arg",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Aerolineas Sosa S.A de C.V.",
+      "code": "s0-aerolineas-sosa",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AeroMexico",
+      "code": "am-aeromexico",
+      "aircraftCount": 6
+    },
+    {
+      "name": "AeroMexico Connect - Aerolitoral",
+      "code": "5d-aeromexico-connect",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aeroregional",
+      "code": "rer-aeroregional",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aerovías DAP",
+      "code": "v5-aerovias-dap",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aerus",
+      "code": "zv-aerus",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Africa Charter Airline",
+      "code": "fsk-africa-charter-airline",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Africa World Airlines",
+      "code": "aw-africa-world",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Afrijet Business Service",
+      "code": "j7-afrijet",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Afriqiyah Airways",
+      "code": "8u-afriqiyah-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Albania",
+      "code": "zb-air-albania",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Algerie",
+      "code": "ah-air-algerie",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Air Alsie",
+      "code": "6i-air-alsie",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Antilles",
+      "code": "3s*-air-antilles",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Arabia",
+      "code": "g9-air-arabia",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Arabia Abu Dhabi",
+      "code": "3l-air-arabia-abu-dhabi",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Arabia Egypt",
+      "code": "e5-air-arabia-egypt",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Arabia Maroc",
+      "code": "3o-air-arabia-maroc",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Astana",
+      "code": "kc-air-astana",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Austral",
+      "code": "uu-air-austral",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Borealis",
+      "code": "lbr-air-borealis",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Botswana",
+      "code": "bp-air-botswana",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Burkina",
+      "code": "2j-air-burkina",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Busan",
+      "code": "bx-air-busan",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Cairo",
+      "code": "sm-air-cairo",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Caledonie",
+      "code": "ty-air-caledonie",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Cambodia",
+      "code": "k6-air-cambodia",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Canada",
+      "code": "ac-air-canada",
+      "aircraftCount": 15
+    },
+    {
+      "name": "Air Canada Rouge",
+      "code": "rv-air-canada-rouge",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Caraibes",
+      "code": "tx-air-caraibes",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Caraibes Atlantique",
+      "code": "caj-air-caraibes-atlantique",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Century - ACSA",
+      "code": "y2-air-century-acsa",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Changan",
+      "code": "9h-air-changan",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Chathams",
+      "code": "3c-air-chathams",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air China",
+      "code": "ca-air-china",
+      "aircraftCount": 16
+    },
+    {
+      "name": "Air China Inner Mongolia",
+      "code": "cnm-air-china-inner-mongolia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Corsica",
+      "code": "xk-air-corsica",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Côte d'Ivoire",
+      "code": "hf-air-cote-d-ivoire",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Creebec",
+      "code": "yn-air-creebec",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Do",
+      "code": "hd-air-do",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Dolomiti",
+      "code": "en-air-dolomiti",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Europa",
+      "code": "ux-air-europa",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Europa Express",
+      "code": "x5-air-europa-express",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air France",
+      "code": "af-air-france",
+      "aircraftCount": 12
+    },
+    {
+      "name": "Air France Hop",
+      "code": "a5-air-france-hop",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Greenland",
+      "code": "gl-air-greenland",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Guilin",
+      "code": "gt-air-guilin",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Guyane Express",
+      "code": "3s-air-guyane-express",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air India",
+      "code": "ai-air-india",
+      "aircraftCount": 12
+    },
+    {
+      "name": "Air India Express",
+      "code": "ix-air-india-express",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Inter Iles by St Barth Executive",
+      "code": "le-air-inter-iles",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Inuit",
+      "code": "3h-air-inuit",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Japan",
+      "code": "nq-air-japan",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air KBZ",
+      "code": "k7-air-kbz",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Kiribati",
+      "code": "ik-air-kiribati",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Koryo",
+      "code": "js-air-koryo",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Liaison",
+      "code": "lsj-air-liaison",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Macau",
+      "code": "nx-air-macau",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Mauritius",
+      "code": "mk-air-mauritius",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Mediterranean",
+      "code": "mv-air-mediterranean",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Moana",
+      "code": "nm-air-moana",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Moldova",
+      "code": "9u-air-moldova",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Montenegro",
+      "code": "mne-air-montenegro",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air New Zealand",
+      "code": "nz-air-new-zealand",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Air Niugini & Link PNG",
+      "code": "px-air-niugini",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Air North",
+      "code": "4n-air-north",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Nostrum",
+      "code": "yw-air-nostrum",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Panama",
+      "code": "7p-air-panama",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Peace",
+      "code": "p4-air-peace",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Air Premia",
+      "code": "yp-air-premia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Rarotonga",
+      "code": "gz-air-rarotonga",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Saint-Pierre",
+      "code": "pj-air-saint-pierre",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Samarkand",
+      "code": "9s-air-samarkand",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Senegal",
+      "code": "hc-air-senegal",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Seoul",
+      "code": "rs-air-seoul",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Serbia",
+      "code": "ju-air-serbia",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Seychelles",
+      "code": "hm-air-seychelles",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Sial Limited",
+      "code": "pf-air-sial",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Tahiti",
+      "code": "vt-air-tahiti",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Tahiti Nui",
+      "code": "tn-air-tahiti-nui",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Tanzania",
+      "code": "tc-air-tanzania",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Thanlwin",
+      "code": "st-air-thanlwin",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Tindi",
+      "code": "8t-air-tindi",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Transat",
+      "code": "ts-air-transat",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Air Travel",
+      "code": "a6-air-travel",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Air Urga",
+      "code": "3n-air-urga",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Air Vanuatu",
+      "code": "nf-air-vanuatu",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Air Wisconsin",
+      "code": "zw-air-wisconsin",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Air Zimbabwe",
+      "code": "um-air-zimbabwe",
+      "aircraftCount": 0
+    },
+    {
+      "name": "AirAsia",
+      "code": "ak-airasia",
+      "aircraftCount": 4
+    },
+    {
+      "name": "AirAsia Cambodia",
+      "code": "cam-airasia-cambodia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AirAsia X Berhad",
+      "code": "d7-airasia-x",
+      "aircraftCount": 1
+    },
+    {
+      "name": "airBaltic",
+      "code": "bt-airbaltic",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AirBlue",
+      "code": "pa-airblue",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Aircalin",
+      "code": "sb-aircalin",
+      "aircraftCount": 2
+    },
+    {
+      "name": "AirExplore",
+      "code": "ed-airexplore",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Airfast Indonesia",
+      "code": "afe-airfast-indonesia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "airHaifa",
+      "code": "e2-airhaifa",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Airhub Airlines",
+      "code": "gjm-airhub-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Airkenya Express",
+      "code": "p2-airkenya-express",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Airlink",
+      "code": "4z-airlink",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Airnorth",
+      "code": "tl-airnorth",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Airseven",
+      "code": "cat*-airseven",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AirSWIFT",
+      "code": "t6-airswift",
+      "aircraftCount": 2
+    },
+    {
+      "name": "AirTanker",
+      "code": "9l-airtanker",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AIX Connect",
+      "code": "i5-aix-connect",
+      "aircraftCount": 2
+    },
+    {
+      "name": "AJet",
+      "code": "vf-ajet",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Akasa Air",
+      "code": "qp-akasa-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Alaska Airlines",
+      "code": "as-alaska-airlines",
+      "aircraftCount": 10
+    },
+    {
+      "name": "AlbaStar",
+      "code": "ap-albastar",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Alexandria Airlines",
+      "code": "dq-alexandria-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Allegiant Air",
+      "code": "g4-allegiant-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Alliance Air (India)",
+      "code": "9i-alliance-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Alliance Airlines",
+      "code": "qq-alliance-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "AlMasria Universal Airlines",
+      "code": "uj-almasria-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Alrosa Aviakompania",
+      "code": "6r-alrosa",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Amakusa Airlines",
+      "code": "mz-amakusa-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Amelia International",
+      "code": "8r-amelia-international",
+      "aircraftCount": 3
+    },
+    {
+      "name": "American Airlines",
+      "code": "aa-american-airlines",
+      "aircraftCount": 15
+    },
+    {
+      "name": "ANA - All Nippon Airways",
+      "code": "nh-ana",
+      "aircraftCount": 14
+    },
+    {
+      "name": "ANA Wings",
+      "code": "eh-ana-wings",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Animawings",
+      "code": "a2-animawings",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Arajet",
+      "code": "dm-arajet",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Arik Air",
+      "code": "w3-arik-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Arkia",
+      "code": "iz-arkia",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Armenia Airways",
+      "code": "6a-armenia-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aruba Airlines",
+      "code": "ag-aruba-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Ascend Airways",
+      "code": "yd-ascend-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Asiana Airlines",
+      "code": "oz-asiana-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "ASKY Airlines",
+      "code": "kp-asky-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "ASL Airlines France",
+      "code": "5o-asl-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Astra Airways Limited",
+      "code": "awa-air-astra",
+      "aircraftCount": 1
+    },
+    {
+      "name": "ATA Airlines",
+      "code": "tbz-ata-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Atlantic Airways",
+      "code": "rc-atlantic-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Atlas Air",
+      "code": "5y-atlas-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Auric Air",
+      "code": "ui-auric-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aurigny Air Services",
+      "code": "gr-aurigny-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Aurora",
+      "code": "hz-aurora",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Austrian Airlines",
+      "code": "os-austrian-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Avanti Air",
+      "code": "atv-avanti-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Avelo Airlines",
+      "code": "xp-avelo-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Avia Traffic Company",
+      "code": "yk-avia-traffic-company",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Avianca",
+      "code": "av-avianca",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Avianca Costa Rica",
+      "code": "lr-avianca-costa-rica",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Avianca Ecuador",
+      "code": "2k-avianca-ecuador",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Avianca El Salvador",
+      "code": "ta-avianca-el-salvador",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Avianca Express",
+      "code": "ex-avianca-express",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Avion Express",
+      "code": "x9-avion-express",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Avion Express Malta",
+      "code": "x8-avion-express-malta",
+      "aircraftCount": 2
+    },
+    {
+      "name": "AZAL Azerbaijan Airlines",
+      "code": "j2-azal-azerbaijan",
+      "aircraftCount": 8
+    },
+    {
+      "name": "Azimuth",
+      "code": "a4-azimuth",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Azores Airlines",
+      "code": "s4-azores-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Azul Brazilian Airlines",
+      "code": "ad-azul",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Azul Conecta",
+      "code": "2f-azul-conecta",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Azur Air",
+      "code": "zf-azur-air",
+      "aircraftCount": 4
+    },
+    {
+      "name": "BA Cityflyer",
+      "code": "cj-ba-cityflyer",
+      "aircraftCount": 1
+    },
+    {
+      "name": "BA Euroflyer",
+      "code": "a0-ba-euroflyer",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Badr Airlines",
+      "code": "j4-badr-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Bahamasair",
+      "code": "up-bahamasair",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Bamboo Airways",
+      "code": "qh-bamboo-airways",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Bangkok Airways",
+      "code": "pg-bangkok-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Batik Air",
+      "code": "id-batik-air",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Batik Air Malaysia",
+      "code": "od-batik-air-malaysia",
+      "aircraftCount": 3
+    },
+    {
+      "name": "BBN Airlines",
+      "code": "b5-bbn-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Bees Airlines",
+      "code": "bes-bees-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Beijing Airlines",
+      "code": "bjn-beijing-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Belavia",
+      "code": "b2-belavia",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Beond",
+      "code": "b4-beond",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Bering Air",
+      "code": "8e-bering-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "BermudAir",
+      "code": "bma-bermudair",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Bestfly Cabo Verde",
+      "code": "3b-bestfly-cabo-verde",
+      "aircraftCount": 1
+    },
+    {
+      "name": "BH Air",
+      "code": "8h-bh-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Bhutan Airlines",
+      "code": "b3-bhutan-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Biman Bangladesh Airlines",
+      "code": "bg-biman",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Binter Canarias",
+      "code": "nt-binter-canarias",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Blue Bird Airways",
+      "code": "bz-blue-bird-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Blue Islands",
+      "code": "si-blue-islands",
+      "aircraftCount": 1
+    },
+    {
+      "name": "BoA - Boliviana de Aviación",
+      "code": "ob-boa",
+      "aircraftCount": 4
+    },
+    {
+      "name": "BRA Braathens Regional Airlines",
+      "code": "tf-bra",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Braathens International Airways",
+      "code": "tt-braathens",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Breeze Airways",
+      "code": "mx-breeze-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "British Airways",
+      "code": "ba-british-airways",
+      "aircraftCount": 13
+    },
+    {
+      "name": "Brussels Airlines",
+      "code": "sn-brussels-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Buddha Air",
+      "code": "u4-buddha-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Buff Air Services (Buffair Services)",
+      "code": "buf-buff-air-services",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Bul Air",
+      "code": "lb-bul-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Bulgaria Air",
+      "code": "fb-bulgaria-air",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Buzz",
+      "code": "rr-buzz",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Cabo Verde Airlines",
+      "code": "vr-cabo-verde-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Calm Air",
+      "code": "mo-calm-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Cambodia Airways",
+      "code": "kr-cambodia-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Canadian North",
+      "code": "5t-canadian-north",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Canarias Airlines",
+      "code": "rsc-canair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "CanaryFly",
+      "code": "pm-canaryfly",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Cape Air",
+      "code": "9k-cape-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Capital Airlines (Beijing)",
+      "code": "jd-capital-airlines",
+      "aircraftCount": 8
+    },
+    {
+      "name": "Caribbean Airlines",
+      "code": "bw-caribbean-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Carpatair",
+      "code": "v3-carpatair",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Cathay Pacific",
+      "code": "cx-cathay-pacific",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Cayman Airways",
+      "code": "kx-cayman-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Cebgo",
+      "code": "dg-cebgo",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Cebu Pacific Air",
+      "code": "5j-cebu-pacific-air",
+      "aircraftCount": 8
+    },
+    {
+      "name": "CemAir",
+      "code": "5z-cemair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Central Mountain Air",
+      "code": "9m-central-mountain-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Centrum Air",
+      "code": "c6-centrum-air",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Chair Airlines",
+      "code": "gm-chair-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Chalair Aviation",
+      "code": "ce-chalair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Cham Wings Airlines",
+      "code": "6q-cham-wings",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Chengdu Airlines",
+      "code": "eu-chengdu-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "China Airlines",
+      "code": "ci-china-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "China Eastern",
+      "code": "mu-china-eastern",
+      "aircraftCount": 13
+    },
+    {
+      "name": "China Express Airlines",
+      "code": "g5-china-express-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "China Southern",
+      "code": "cz-china-southern",
+      "aircraftCount": 14
+    },
+    {
+      "name": "China United Airlines",
+      "code": "kn-china-united-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Chongqing Airlines",
+      "code": "oq-chongqing-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Chrono Aviation",
+      "code": "ndl-chrono-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Citilink",
+      "code": "qg-citilink",
+      "aircraftCount": 4
+    },
+    {
+      "name": "CityJet",
+      "code": "wx-cityjet",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Clic Air",
+      "code": "ve-clic",
+      "aircraftCount": 2
+    },
+    {
+      "name": "CM Airlines",
+      "code": "cc-cm-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Colorful Guizhou Airlines",
+      "code": "gy-colorful-guizhou",
+      "aircraftCount": 3
+    },
+    {
+      "name": "CommuteAir",
+      "code": "c5-commuteair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Condor",
+      "code": "de-condor",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Contour Aviation",
+      "code": "lf-contour-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Conviasa",
+      "code": "v0-conviasa",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Copa Airlines",
+      "code": "cm-copa-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Corendon Airlines",
+      "code": "xc-corendon-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Corendon Airlines Europe",
+      "code": "xr-corendon-europe",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Corendon Dutch Airlines",
+      "code": "cd-corendon-dutch",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Corsair International",
+      "code": "ss-corsair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Croatia Airlines",
+      "code": "ou-croatia-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Cronos Airlines",
+      "code": "c8-cronos-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Cubana de Aviación S.A.",
+      "code": "cu-cubana",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Cyprus Airways",
+      "code": "cy-cyprus-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Daallo Airlines",
+      "code": "d3-daallo-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Daily Air",
+      "code": "da-daily-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Dalian Airlines",
+      "code": "ccd-dalian-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Dan Air",
+      "code": "dn-dan-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "DAT",
+      "code": "dx-dat",
+      "aircraftCount": 2
+    },
+    {
+      "name": "DAT LT",
+      "code": "r6-dat-lt",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Delta",
+      "code": "dl-delta",
+      "aircraftCount": 21
+    },
+    {
+      "name": "Discover Airlines",
+      "code": "4y-discover-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Divi Divi Air N.V.",
+      "code": "3r-divi-divi-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Druk Air",
+      "code": "kb-druk-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Eastar Jet",
+      "code": "ze-eastar-jet",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Eastern Airways",
+      "code": "t3-eastern-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Eastern Australia Airlines",
+      "code": "eaq-eastern-australia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "easyJet Europe",
+      "code": "ec-easyjet-europe",
+      "aircraftCount": 4
+    },
+    {
+      "name": "easyJet Switzerland",
+      "code": "ds-easyjet-switzerland",
+      "aircraftCount": 2
+    },
+    {
+      "name": "easyJet UK",
+      "code": "u2-easyjet-uk",
+      "aircraftCount": 4
+    },
+    {
+      "name": "EcoJet - Linea Aerea EcoJet",
+      "code": "8j-ecojet",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Edelweiss Air",
+      "code": "wk-edelweiss-air",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Egyptair",
+      "code": "ms-egyptair",
+      "aircraftCount": 9
+    },
+    {
+      "name": "El Al",
+      "code": "ly-el-al",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Electra Airways",
+      "code": "eaf-electra-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Emerald Airlines UK",
+      "code": "eag-emerald-uk",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Emirates",
+      "code": "ek-emirates",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Endeavor Air",
+      "code": "9e-endeavor-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Enter Air",
+      "code": "e4-enter-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Envoy Air",
+      "code": "mq-envoy-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Eswatini Air",
+      "code": "rn-eswatini-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "ETF Airways",
+      "code": "ezz-etf-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Ethiopian Airlines",
+      "code": "et-ethiopian-airlines",
+      "aircraftCount": 10
+    },
+    {
+      "name": "Etihad Airways",
+      "code": "ey-etihad-airways",
+      "aircraftCount": 10
+    },
+    {
+      "name": "EuroAtlantic Airways",
+      "code": "yu-euroatlantic-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "European Air Charter",
+      "code": "h6-european-air-charter",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Eurowings",
+      "code": "ew-eurowings",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Eurowings Europe",
+      "code": "e6-eurowings-europe",
+      "aircraftCount": 2
+    },
+    {
+      "name": "EVA Air",
+      "code": "br-eva-air",
+      "aircraftCount": 5
+    },
+    {
+      "name": "EWA Air",
+      "code": "zd-ewa-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Eznis Airways",
+      "code": "mg-eznis-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Fastjet Zimbabwe",
+      "code": "fn-fastjet-zimbabwe",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Federal Airlines",
+      "code": "7v-fedair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Fiji Airways",
+      "code": "fj-fiji-airways",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Fiji Link",
+      "code": "fja-fiji-link",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Finnair",
+      "code": "ay-finnair",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Firefly",
+      "code": "fy-firefly",
+      "aircraftCount": 2
+    },
+    {
+      "name": "FITS Aviation",
+      "code": "8d-fitsair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Flair Airlines",
+      "code": "f8-flair",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Fly Air41 Airways",
+      "code": "ber-fly-air41",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Fly All Ways Airlines",
+      "code": "8w-fly-all-ways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Fly Angola",
+      "code": "eq-fly-angola",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Fly Baghdad",
+      "code": "if-fly-baghdad",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Fly Jinnah",
+      "code": "9p-fly-jinnah",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Fly Khiva",
+      "code": "2u-fly-khiva",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Fly Lili",
+      "code": "lil-fly-lili",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Fly Oya",
+      "code": "yi-fly-oya",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Fly2Sky",
+      "code": "vaw-fly2sky",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Fly4 Airlines",
+      "code": "ffa-fly4",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Fly91",
+      "code": "goa-fly91",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Flyadeal",
+      "code": "f3-flyadeal",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlyArystan",
+      "code": "fs-flyarystan",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlyBig",
+      "code": "s9-flybig",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Flybondi - FB Lineas Aereas",
+      "code": "fo-flybondi",
+      "aircraftCount": 0
+    },
+    {
+      "name": "flyCAA",
+      "code": "bu-flycaa",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Flydubai",
+      "code": "fz-flydubai",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlyJaya",
+      "code": "fhs-flyjaya",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlyMe - Villa Air",
+      "code": "vp-flyme",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Flynas",
+      "code": "xy-flynas",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlyOne",
+      "code": "5f-flyone",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlyOne Armenia",
+      "code": "3f-flyone-armenia",
+      "aircraftCount": 0
+    },
+    {
+      "name": "FlySafair",
+      "code": "fa*-flysafair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Freebird Airlines",
+      "code": "fh-freebird-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Freebird Airlines Europe",
+      "code": "fhm-freebird-airlines-europe",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Freedom Airline Express",
+      "code": "4f-freedom-airline",
+      "aircraftCount": 2
+    },
+    {
+      "name": "French Bee",
+      "code": "bf-french-bee",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Frontier Airlines",
+      "code": "f9-frontier-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Frost Air",
+      "code": "fro-frost-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Fuji Dream Airlines - FDA",
+      "code": "jh-fuji-dream-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Fuzhou Airlines",
+      "code": "fu-fuzhou-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Galistair Malta",
+      "code": "gtr-galistair-malta",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Garuda Indonesia",
+      "code": "ga-garuda",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Gazpromavia",
+      "code": "4g-gazpromavia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Genghis Khan Airlines",
+      "code": "9d-genghis-khan-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Georgian Airways",
+      "code": "a9-georgian-airways",
+      "aircraftCount": 4
+    },
+    {
+      "name": "German Airways",
+      "code": "zq-german-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "GetJet Airlines",
+      "code": "gw-getjet-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Global Airlines",
+      "code": "hfm*-global-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Global Aviation Operations",
+      "code": "ge-global-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Global Crossing Airlines",
+      "code": "gxa-globalx",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Global Reach Aviation",
+      "code": "hmr-global-reach-aviation",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Go2Sky",
+      "code": "6g-go2sky",
+      "aircraftCount": 1
+    },
+    {
+      "name": "GoJet Airlines",
+      "code": "g7-gojet-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "GOL Linhas Aereas",
+      "code": "g3-gol",
+      "aircraftCount": 3
+    },
+    {
+      "name": "GP Aviation",
+      "code": "iv-gp-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Grand Canyon Airlines",
+      "code": "yr-grand-canyon-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Grand China Air",
+      "code": "cn-grand-china-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Greater Bay Airlines",
+      "code": "hb-gba",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Green Africa Airways",
+      "code": "q9-green-africa",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Gulf Air",
+      "code": "gf-gulf-air",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Gum Air",
+      "code": "gum-gum-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "GX Airlines",
+      "code": "gx-gx-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Hainan Airlines",
+      "code": "hu-hainan-airlines",
+      "aircraftCount": 9
+    },
+    {
+      "name": "Harbour Air Seaplanes",
+      "code": "yb-harbour-air-seaplanes",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Hawaiian Airlines",
+      "code": "ha-hawaiian-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Hebei Airlines",
+      "code": "ns-hebei-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Hello Jets",
+      "code": "h3-hello-jets",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Helvetic Airways",
+      "code": "2l-helvetic-airways",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Heston Airlines",
+      "code": "hn-heston-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Hi Air (Korea)",
+      "code": "4h-hi-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Hi Fly",
+      "code": "5k-hi-fly",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Hi Fly Malta",
+      "code": "hfm-hi-fly-malta",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Hibernian Airlines",
+      "code": "hg-hibernian-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Himalaya Airlines",
+      "code": "h9-himalaya-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "HiSky",
+      "code": "h7-hisky",
+      "aircraftCount": 1
+    },
+    {
+      "name": "HiSky Europe",
+      "code": "h4-hisky-europe",
+      "aircraftCount": 4
+    },
+    {
+      "name": "HK Express",
+      "code": "uo-hk-express",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Hokkaido Air System",
+      "code": "6l-hac",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Holiday Europe",
+      "code": "5q-holiday-europe",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Hong Kong Airlines",
+      "code": "hx-hong-kong-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Horizon Air",
+      "code": "qx-horizon-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Humo Air",
+      "code": "hj-humo-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Hunnu Air",
+      "code": "mr-hunnu-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "i-Fly Air",
+      "code": "ify-i-fly-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Iberia",
+      "code": "ib-iberia",
+      "aircraftCount": 11
+    },
+    {
+      "name": "Iberia Express",
+      "code": "i2-iberia-express",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Iberojet",
+      "code": "e9-iberojet",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Iberojet Portugal",
+      "code": "6o-iberojet-portugal",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Ibex Airlines",
+      "code": "fw-ibex-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Ibom Air",
+      "code": "qi-ibom-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Icelandair",
+      "code": "fi-icelandair",
+      "aircraftCount": 7
+    },
+    {
+      "name": "iFly Airlines",
+      "code": "f7-ifly-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Ikar",
+      "code": "eo-ikar",
+      "aircraftCount": 3
+    },
+    {
+      "name": "IndiGo",
+      "code": "6e-indigo",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Indonesia AirAsia",
+      "code": "qz-indonesia-airasia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "InterCaribbean Airways",
+      "code": "jy-intercaribbean",
+      "aircraftCount": 1
+    },
+    {
+      "name": "IrAero",
+      "code": "io-iraero",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Iran Air",
+      "code": "ir-iran-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Iran Aseman Airlines",
+      "code": "ep-iran-aseman",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Iraqi Airways",
+      "code": "ia-iraqi-airways",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Israir",
+      "code": "6h-israir",
+      "aircraftCount": 2
+    },
+    {
+      "name": "ITA Airways",
+      "code": "az-ita-airways",
+      "aircraftCount": 10
+    },
+    {
+      "name": "Izhavia",
+      "code": "i8-izhavia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Canada Jetlines",
+      "code": "au-jetlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "J-Air",
+      "code": "xm-j-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Jambojet",
+      "code": "jm-jambojet",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Japan Air Commuter",
+      "code": "jc-japan-air-commuter",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Japan Airlines - JAL",
+      "code": "jl-jal",
+      "aircraftCount": 12
+    },
+    {
+      "name": "Jazeera Airways",
+      "code": "j9-jazeera-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Jazz Air",
+      "code": "qk-jazz-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Jeju Air",
+      "code": "7c-jeju-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Jet2.com",
+      "code": "ls-jet2-com",
+      "aircraftCount": 5
+    },
+    {
+      "name": "JetBlue Airways",
+      "code": "b6-jetblue-airways",
+      "aircraftCount": 4
+    },
+    {
+      "name": "JetSMART",
+      "code": "ja-jetsmart",
+      "aircraftCount": 3
+    },
+    {
+      "name": "JetSMART Argentina",
+      "code": "wj-jetsmart-argentina",
+      "aircraftCount": 3
+    },
+    {
+      "name": "JetSMART Colombia",
+      "code": "j6-jetsmart-colombia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "JetSMART Peru",
+      "code": "jz-jetsmart-peru",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Jetstar Airways",
+      "code": "jq-jetstar-airways",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Jetstar Japan",
+      "code": "gk-jetstar-japan",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Jettime",
+      "code": "jtd-jettime",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Jiangxi Air",
+      "code": "ry-jiangxi-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Jin Air",
+      "code": "lj-jin-air",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Jonair",
+      "code": "jon-jonair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Jonika Airlines",
+      "code": "jnk-jonika-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Jordan Aviation",
+      "code": "r5-jordan-aviation",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Joy Air",
+      "code": "jr-joy-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "JSX Air",
+      "code": "xe-jsx-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "JTA",
+      "code": "nu-jta",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Jubba Airways (Kenya)",
+      "code": "3j-jubba-airways-ke",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Juneyao Air",
+      "code": "ho-juneyao-air",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Kangala Air Express",
+      "code": "kae-kangala-air-express",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Kenya Airways",
+      "code": "kq-kenya-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Key Lime Air",
+      "code": "kg-key-lime-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "KlasJet",
+      "code": "klj-klasjet",
+      "aircraftCount": 1
+    },
+    {
+      "name": "KLM",
+      "code": "kl-klm",
+      "aircraftCount": 13
+    },
+    {
+      "name": "KLM Cityhopper",
+      "code": "wa-klm-cityhopper",
+      "aircraftCount": 3
+    },
+    {
+      "name": "KM Malta Airlines",
+      "code": "km-km-malta-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Komiaviatrans",
+      "code": "ko-komiaviatrans",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Korean Air",
+      "code": "ke-korean-air",
+      "aircraftCount": 14
+    },
+    {
+      "name": "KrasAvia",
+      "code": "ssj-krasavia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Kunming Airlines",
+      "code": "ky-kunming-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Kuwait Airways",
+      "code": "ku-kuwait-airways",
+      "aircraftCount": 6
+    },
+    {
+      "name": "La Compagnie (Dreamjet)",
+      "code": "b0-la-compagnie",
+      "aircraftCount": 1
+    },
+    {
+      "name": "La Costeña",
+      "code": "w8-la-costena",
+      "aircraftCount": 1
+    },
+    {
+      "name": "LAM Mozambique Airlines",
+      "code": "tm-lam-mozambique",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Lao Airlines",
+      "code": "qv-lao-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "LATAM Airlines",
+      "code": "la-latam-airlines",
+      "aircraftCount": 9
+    },
+    {
+      "name": "LATAM Airlines Brasil",
+      "code": "jj-latam-brasil",
+      "aircraftCount": 7
+    },
+    {
+      "name": "LATAM Airlines Colombia",
+      "code": "4c-latam-colombia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "LATAM Airlines Ecuador",
+      "code": "xl-latam-ecuador",
+      "aircraftCount": 1
+    },
+    {
+      "name": "LATAM Airlines Peru",
+      "code": "lp-latam-peru",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Lauda Europe",
+      "code": "lw-lauda-europe",
+      "aircraftCount": 1
+    },
+    {
+      "name": "LEAV Aviation",
+      "code": "kk-leav-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Legend Airlines",
+      "code": "lz-legend-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Liat Air",
+      "code": "5l-liat-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "LIFT",
+      "code": "ge*-lift",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Líneas Aéreas del Estado - LADE",
+      "code": "5u*-lade",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Link Airways",
+      "code": "fc-link-airways",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Lion Air",
+      "code": "jt-lion-air",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Lipican Aer",
+      "code": "lip-lipican-aer",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Liz Aviation",
+      "code": "liz-liz-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Loganair",
+      "code": "lm-loganair",
+      "aircraftCount": 3
+    },
+    {
+      "name": "LongJiang Airlines",
+      "code": "lt-lj-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Loong Air",
+      "code": "gj-loong-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "LOT Polish Airlines",
+      "code": "lo-lot",
+      "aircraftCount": 9
+    },
+    {
+      "name": "Lucky Air",
+      "code": "8l-lucky-air",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Lufthansa",
+      "code": "lh-lufthansa",
+      "aircraftCount": 13
+    },
+    {
+      "name": "Lufthansa City Airlines",
+      "code": "vl-lufthansa-city",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Lufthansa CityLine",
+      "code": "cl-lufthansa-cityline",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Lulutai Airlines",
+      "code": "l8-lulutai-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Lumiwings",
+      "code": "l9-lumiwings",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Luxair",
+      "code": "lg-luxair",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Luxwing",
+      "code": "bn-luxwing",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Madagascar Airlines",
+      "code": "md-madagascar-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Mahan Air",
+      "code": "w5-mahan-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Malawi Airlines",
+      "code": "3w-malawi-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Malaysia Airlines",
+      "code": "mh-malaysia-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Maldivian",
+      "code": "q2-maldivian",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Maleth-Aero",
+      "code": "db-maleth-aero",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Malta Air",
+      "code": "al-malta-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Malta MedAir",
+      "code": "mt-malta-medair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Mandarin Airlines",
+      "code": "ae-mandarin-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Mann Yadanarpon Airlines",
+      "code": "7y-mann-yadanarpon",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Manta Air",
+      "code": "nr-manta-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "MAP Linhas Aéreas",
+      "code": "7m-map-linhas-aereas",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Marabu",
+      "code": "di-marabu",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Marathon Airlines",
+      "code": "o8-marathon-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "MASwings",
+      "code": "my-maswings",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Mauritania Airlines",
+      "code": "l6-mauritania-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Mavi Gok Airlines",
+      "code": "4m-mga",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Maya Island Air",
+      "code": "2m-maya-island-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Mel AIr",
+      "code": "5m-mel-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Meraj Air",
+      "code": "mrj-meraj-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Mesa Airlines",
+      "code": "yv-mesa-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Mexicana de Aviación",
+      "code": "xn-mexicana",
+      "aircraftCount": 2
+    },
+    {
+      "name": "MIAT Mongolian Airlines",
+      "code": "om-miat-mongolian",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Middle East Airlines",
+      "code": "me-mea",
+      "aircraftCount": 3
+    },
+    {
+      "name": "MYAirline",
+      "code": "z9-myairline",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Myanmar Airways International",
+      "code": "8m-myanmar-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Myanmar National Airlines",
+      "code": "ub-myanmar-mna",
+      "aircraftCount": 4
+    },
+    {
+      "name": "MyWay Airlines",
+      "code": "mj-myway-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Nam Air",
+      "code": "in-nam-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "National Airlines",
+      "code": "n8-national-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "National Jet Systems",
+      "code": "njs-national-jet-systems",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nauru Airlines",
+      "code": "on-nauru-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Neos",
+      "code": "no-neos",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Nepal Airlines",
+      "code": "ra-nepal-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nesma Airlines (Egypt)",
+      "code": "ne-nesma-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Network Aviation",
+      "code": "nwk-network-aviation",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nexus Airlines",
+      "code": "gd-nexus-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "NG Eagle",
+      "code": "xle-ng-eagle",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Nile Air",
+      "code": "np-nile-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nok Air",
+      "code": "dd-nok-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nolinor Aviation",
+      "code": "n5-nolinor-aviation",
+      "aircraftCount": 2
+    },
+    {
+      "name": "NordStar",
+      "code": "y7-nordstar",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nordwind Airlines",
+      "code": "n4-nordwind",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Norlandair",
+      "code": "fna-norlandair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "NoRRA Nordic Regional Airlines",
+      "code": "n7-norra",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Norse Atlantic Airways",
+      "code": "n0-norse-atlantic",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Norse Atlantic UK",
+      "code": "z0-norse-atlantic-uk",
+      "aircraftCount": 1
+    },
+    {
+      "name": "North Cariboo Air",
+      "code": "ncb-north-cariboo-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "North-West Aircompany",
+      "code": "0e-north-west-aircompany",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Norwegian Air Shuttle",
+      "code": "dy-norwegian",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Norwegian Air Sweden",
+      "code": "d8-norwegian-air-sweden",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Nouvelair",
+      "code": "bj-nouvelair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Nova Airways",
+      "code": "o9-nova-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Novoair",
+      "code": "vq-novoair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "NyxAir",
+      "code": "oj-nyxair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Okay Airways",
+      "code": "bk-okay-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Olympic Air",
+      "code": "oa-olympic-air",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Oman Air",
+      "code": "wy-oman-air",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Omni Air International",
+      "code": "oy-omni-air-international",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Oriental Air Bridge",
+      "code": "oc-oriental-air-bridge",
+      "aircraftCount": 3
+    },
+    {
+      "name": "OTT Airlines",
+      "code": "ott-ott-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Overland Airways",
+      "code": "of-overland-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Pacific Airlines",
+      "code": "bl-pacific-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Pacific Coastal Airlines",
+      "code": "8p-pacific-coastal-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Pakistan International Airlines - PIA",
+      "code": "pk-pia",
+      "aircraftCount": 5
+    },
+    {
+      "name": "PAL Airlines (Canada)",
+      "code": "pb-pal-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "PAL Express",
+      "code": "2p-pal-express",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Pan Europeenne Air Service",
+      "code": "pea-pan-europeenne",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Pan Pacific Airlines",
+      "code": "8y-pan-pacific-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Paranair",
+      "code": "zp-paranair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Parata Air",
+      "code": "we-parata-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Pars Air",
+      "code": "prs-pars-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Pascan Aviation",
+      "code": "psc-pascan-aviation",
+      "aircraftCount": 0
+    },
+    {
+      "name": "PassionAir",
+      "code": "op-passionair",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Peach",
+      "code": "mm-peach",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Pegasus Airlines",
+      "code": "pc-pegasus",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Pelita Air",
+      "code": "ip-pelita-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "People's",
+      "code": "pe-people-s",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Perimeter Aviation",
+      "code": "jv-perimeter-aviation",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Petroleum Air Services",
+      "code": "uf-petroleum-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Philippine Airlines - PAL",
+      "code": "pr-pal",
+      "aircraftCount": 8
+    },
+    {
+      "name": "Philippines AirAsia",
+      "code": "z2-philippines-airasia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Piedmont Airlines",
+      "code": "pt-piedmont-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Plus Ultra Líneas Aéreas",
+      "code": "pu-plus-ultra",
+      "aircraftCount": 2
+    },
+    {
+      "name": "PNG Air",
+      "code": "cg-png-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Pobeda",
+      "code": "dp-pobeda",
+      "aircraftCount": 1
+    },
+    {
+      "name": "PopulAir",
+      "code": "hp-populair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Porter Airlines",
+      "code": "pd-porter-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Portugalia",
+      "code": "ni-portugalia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Precision Air",
+      "code": "pw-precision-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Privilege Style",
+      "code": "p6-privilege-style",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Proflight Zambia",
+      "code": "p0-proflight-zambia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "PSA Airlines",
+      "code": "oh-psa-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Qanot Sharq  Airlines",
+      "code": "hh-qanot-sharq",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Qantas",
+      "code": "qf-qantas",
+      "aircraftCount": 13
+    },
+    {
+      "name": "Qantaslink",
+      "code": "qlk-qantaslink",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Qatar Airways",
+      "code": "qr-qatar-airways",
+      "aircraftCount": 13
+    },
+    {
+      "name": "Qazaq Air",
+      "code": "iq-qazaq-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Qingdao Airlines",
+      "code": "qw-qingdao-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "RAF-Avia",
+      "code": "mtl-raf-avia",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Rano Air",
+      "code": "r4-rano-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "RED Air",
+      "code": "rea-red-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Red Sea Airlines",
+      "code": "4s-red-sea-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Red Wings Airlines",
+      "code": "wz-red-wings",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Regent Airways",
+      "code": "rge-regent-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Regional Air Services Limited",
+      "code": "8n-regional-air-services",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Renegade Air",
+      "code": "rng-renegade-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Republic Airways",
+      "code": "yx-republic-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "REX Airlines",
+      "code": "zl-rex-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Rise Air",
+      "code": "4t-rise-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Rossiya",
+      "code": "fv-rossiya",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Royal Air Charter Service",
+      "code": "rw-royal-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Royal Air Maroc",
+      "code": "at-royal-air-maroc",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Royal Air Maroc Express",
+      "code": "rxp-royal-air-maroc-express",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Royal Brunei Airlines",
+      "code": "bi-royal-brunei",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Royal Jordanian",
+      "code": "rj-royal-jordanian",
+      "aircraftCount": 9
+    },
+    {
+      "name": "Ruili Airlines",
+      "code": "dr-ruili-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "RusLine",
+      "code": "7r-rusline",
+      "aircraftCount": 2
+    },
+    {
+      "name": "RwandAir",
+      "code": "wb-rwandair",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Ryanair",
+      "code": "fr-ryanair",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Ryanair UK",
+      "code": "rk-ryanair-uk",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Ryukyu Air Commuter - RAC",
+      "code": "rac-rac-ryukyu-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "S7 Airlines",
+      "code": "s7-s7-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Safair",
+      "code": "fa-safair",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Safarilink Aviation",
+      "code": "f2-safarilink-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SalamAir",
+      "code": "ov-salamair",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Samoa Airways",
+      "code": "ol-samoa-airways",
+      "aircraftCount": 0
+    },
+    {
+      "name": "SAS",
+      "code": "sk-sas",
+      "aircraftCount": 8
+    },
+    {
+      "name": "SAS Connect",
+      "code": "szs-sas-connect",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SAS Link",
+      "code": "svs-sas-link",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SATA Air Acores",
+      "code": "sp-sata-air-acores",
+      "aircraftCount": 2
+    },
+    {
+      "name": "SATENA",
+      "code": "9r-satena",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Saudia",
+      "code": "sv-saudia",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Saurya Airlines",
+      "code": "s1-saurya-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SCAT Airlines",
+      "code": "dv-scat-airlines",
+      "aircraftCount": 8
+    },
+    {
+      "name": "Scoot Tigerair Pte",
+      "code": "tr-scoot",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Señor Air",
+      "code": "sen-senor-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Sepehran Airlines",
+      "code": "is-sepehran-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Serene Air",
+      "code": "er-serene-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Severstal Aircompany",
+      "code": "d2-severstal-aircompany",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Shandong Airlines",
+      "code": "sc-shandong-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Shanghai Airlines",
+      "code": "fm-shanghai-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Shenzhen Airlines",
+      "code": "zh-shenzhen-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Shirak Avia",
+      "code": "5g-shirak-avia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Shree Airlines",
+      "code": "sha-shree-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Sichuan Airlines",
+      "code": "3u-sichuan-airlines",
+      "aircraftCount": 8
+    },
+    {
+      "name": "Silk Avia",
+      "code": "usa-silk-avia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Singapore Airlines",
+      "code": "sq-singapore-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Skippers Aviation",
+      "code": "hk-skippers-aviation",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Sky Airline",
+      "code": "h2-sky-airline",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Sky Airline Peru",
+      "code": "h8-sky-peru",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Sky Alps",
+      "code": "bq-sky-alps",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Sky Angkor Airlines",
+      "code": "za-sky-angkor-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Sky Express",
+      "code": "gq-sky-express",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Sky High Aviation Services",
+      "code": "do-sky-high",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Sky Mali",
+      "code": "ml-sky-mali",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Sky Vision Airlines",
+      "code": "svi-sky-vision-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Skybus (United Kingdom)",
+      "code": "ios-skybus",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Skymark Airlines",
+      "code": "bc-skymark-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Skytraders",
+      "code": "snd-skytraders",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SkyUp Airlines",
+      "code": "pq-skyup-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "SkyUp MT",
+      "code": "u5-skyup-mt",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Skyward Airlines",
+      "code": "ow-skyward-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "SkyWest Airlines",
+      "code": "oo-skywest",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Smartavia",
+      "code": "5n-smartavia",
+      "aircraftCount": 3
+    },
+    {
+      "name": "SmartLynx",
+      "code": "6y-smartlynx",
+      "aircraftCount": 2
+    },
+    {
+      "name": "SmartLynx Airlines Estonia",
+      "code": "myx-smartlynx-estonia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SmartLynx Airlines Malta",
+      "code": "lyx-smartlynx-malta",
+      "aircraftCount": 4
+    },
+    {
+      "name": "SmartLynx Australia",
+      "code": "qn-smartlynx-australia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Smartwings",
+      "code": "qs-smartwings",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Solaseed Air",
+      "code": "6j-solaseed-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Solenta Aviation",
+      "code": "set-solenta-aviation",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Solenta Aviation Mozambique",
+      "code": "fw*-solenta-mozambique",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Solomon Airlines",
+      "code": "ie-solomon-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Somon Air",
+      "code": "sz-somon-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "South African Airways",
+      "code": "sa-south-african-airways",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Southern Airways Express",
+      "code": "9x-southern-airways-express",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Southwest Airlines",
+      "code": "wn-southwest-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Southwind Airlines",
+      "code": "2s-southwind",
+      "aircraftCount": 5
+    },
+    {
+      "name": "SpiceJet",
+      "code": "sg-spicejet",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Spirit Airlines",
+      "code": "nk-spirit-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Spring Airlines",
+      "code": "9c-spring-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Spring Airlines Japan",
+      "code": "ij-spring-japan",
+      "aircraftCount": 1
+    },
+    {
+      "name": "SprintAir",
+      "code": "p8-sprintair",
+      "aircraftCount": 0
+    },
+    {
+      "name": "SriLankan Airlines",
+      "code": "ul-srilankan-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Sriwijaya Air",
+      "code": "sj-sriwijaya-air",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Star Air (India)",
+      "code": "s5-star-air-(india)",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Star Air (South Africa)",
+      "code": "brh-star-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Star East Airlines",
+      "code": "4r-star-east-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Star Perú",
+      "code": "2i-star-peru",
+      "aircraftCount": 2
+    },
+    {
+      "name": "StarFlyer",
+      "code": "7g-starflyer",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Starlux Airlines",
+      "code": "jx-starlux",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Sterling Airways",
+      "code": "vc-sterling-airways",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Sun Country Airlines",
+      "code": "sy-sun-country-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Sun-Air",
+      "code": "ez-sun-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Sunclass Airlines",
+      "code": "dk-sunclass-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "SundAir",
+      "code": "sr-sundair",
+      "aircraftCount": 2
+    },
+    {
+      "name": "SunExpress",
+      "code": "xq-sunexpress",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Sunlight Air",
+      "code": "2r-sunlight-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Sunstate Airlines",
+      "code": "ssq-sunstate-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Sunwest Aviation",
+      "code": "cnk-sunwest-aviation",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Suparna Airlines",
+      "code": "y8-suparna-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Super Air Jet",
+      "code": "iu-super-air-jet",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Surinam Airways",
+      "code": "py-surinam-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "SVG Air",
+      "code": "svd-svg-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Swiftair",
+      "code": "wt-swiftair",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Swiss",
+      "code": "lx-swiss",
+      "aircraftCount": 14
+    },
+    {
+      "name": "Syphax Airlines",
+      "code": "so-syphax",
+      "aircraftCount": 2
+    },
+    {
+      "name": "T'way Air",
+      "code": "tw-t-way-air",
+      "aircraftCount": 5
+    },
+    {
+      "name": "TAAG Angola",
+      "code": "dt-taag-angola",
+      "aircraftCount": 7
+    },
+    {
+      "name": "TAG",
+      "code": "5u-tag",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Tailwind Airlines",
+      "code": "ti-tailwind-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "TAP Air Portugal",
+      "code": "tp-tap",
+      "aircraftCount": 10
+    },
+    {
+      "name": "TAR Mexico",
+      "code": "yq-tar-mexico",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Tara Air",
+      "code": "ta*-tara-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Tarom",
+      "code": "ro-tarom",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Tassili Airlines",
+      "code": "sf-tassili-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Tbilisi Airways",
+      "code": "td-tbilisi-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Tez Jet Airlines",
+      "code": "tez-tez-jet",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Thai AirAsia",
+      "code": "fd-thai-airasia",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Thai AirAsia X",
+      "code": "xj-thai-airasia-x",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Thai Airways International",
+      "code": "tg-thai-airways",
+      "aircraftCount": 8
+    },
+    {
+      "name": "Thai Lion Air",
+      "code": "sl-thai-lion-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Thai VietjetAir",
+      "code": "vz-thai-vietjetair",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Tianjin Airlines",
+      "code": "gs-tianjin-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Tibet Airlines",
+      "code": "tv-tibet-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Tigerair Taiwan",
+      "code": "it-tigerair-taiwan",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Titan Airways",
+      "code": "zt-titan-airways",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Toki Air",
+      "code": "bv-toki-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Trade Air",
+      "code": "c3-trade-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Trans Guyana Airways",
+      "code": "tga-tga",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Trans Maldivian Airways",
+      "code": "tmw-tma",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Transavia",
+      "code": "hv-transavia",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Transavia France",
+      "code": "to-transavia-france",
+      "aircraftCount": 2
+    },
+    {
+      "name": "TransNusa",
+      "code": "8b-transnusa",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Travelcoup",
+      "code": "hrn*-travelcoup",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Trigana Air Service",
+      "code": "il-trigana-air-service",
+      "aircraftCount": 1
+    },
+    {
+      "name": "TUI Airways",
+      "code": "by-tui-airways",
+      "aircraftCount": 4
+    },
+    {
+      "name": "TUI fly (Belgium)",
+      "code": "tb-tui-fly-be",
+      "aircraftCount": 6
+    },
+    {
+      "name": "TUI fly (Germany)",
+      "code": "x3-tui-fly-de",
+      "aircraftCount": 2
+    },
+    {
+      "name": "TUI fly (Netherlands)",
+      "code": "or-tui-fly-nl",
+      "aircraftCount": 2
+    },
+    {
+      "name": "TUI fly Nordic",
+      "code": "6b-tui-fly-nordic",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Tunisair",
+      "code": "tu-tunisair",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Tunisair Express",
+      "code": "ug-tunisair-express",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Turkish Airlines",
+      "code": "tk-turkish-airlines",
+      "aircraftCount": 13
+    },
+    {
+      "name": "Turkmenistan Airlines",
+      "code": "t5-turkmenistan-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Turpial Airlines",
+      "code": "t9-turpial-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Tus Airways",
+      "code": "u8-tus-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Uganda Airlines",
+      "code": "ur-uganda-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Ukraine International Airlines",
+      "code": "ps-ukraine-intl",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Uni Air",
+      "code": "b7-uni-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "United",
+      "code": "ua-united",
+      "aircraftCount": 21
+    },
+    {
+      "name": "United Nigeria Airlines",
+      "code": "nua-united-nigeria",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Universal Air",
+      "code": "uvl-universal-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "UR Airlines",
+      "code": "ud-ur-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Ural Airlines",
+      "code": "u6-ural-airlines",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Urumqi Air",
+      "code": "uq-urumqi-air",
+      "aircraftCount": 1
+    },
+    {
+      "name": "US-Bangla Airlines",
+      "code": "bs-us-bangla-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "USC",
+      "code": "usy-usc",
+      "aircraftCount": 1
+    },
+    {
+      "name": "UTair",
+      "code": "ut-utair",
+      "aircraftCount": 4
+    },
+    {
+      "name": "UVT aero",
+      "code": "rt-uvt-aero",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Uzbekistan Airways",
+      "code": "hy-uzbekistan-airways",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Valletta Airlines",
+      "code": "hot-valletta-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "ValueJet",
+      "code": "vk-valuejet",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Varesh Airlines",
+      "code": "vrh-varesh-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "VASCO - Vietnam Air Services",
+      "code": "0v-vasco",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Venezolana - RAVSA",
+      "code": "vne-venezolana",
+      "aircraftCount": 0
+    },
+    {
+      "name": "VietJet Air",
+      "code": "vj-vietjet-air",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Vietnam Airlines",
+      "code": "vn-vietnam-airlines",
+      "aircraftCount": 7
+    },
+    {
+      "name": "Vietravel Airlines",
+      "code": "vu-vietravel-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Virgin Atlantic",
+      "code": "vs-virgin-atlantic",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Virgin Australia",
+      "code": "va-virgin-australia",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Virgin Australia Regional",
+      "code": "ozw-virgin-australia-regional",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Viva",
+      "code": "vb-viva",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Volaris",
+      "code": "y4-volaris",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Volaris Costa Rica",
+      "code": "q6-volaris-costa-rica",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Volaris El Salvador",
+      "code": "n3-volaris-el-salvador",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Volotea",
+      "code": "v7-volotea",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Vueling",
+      "code": "vy-vueling",
+      "aircraftCount": 5
+    },
+    {
+      "name": "Wamos Air",
+      "code": "eb-wamos-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Wasaya Airways",
+      "code": "wsg-wasaya-airways",
+      "aircraftCount": 1
+    },
+    {
+      "name": "West Air",
+      "code": "pn-west-air",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Westair Aviation",
+      "code": "wv-westair-aviation",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Western Air",
+      "code": "wu-western-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "WestJet",
+      "code": "ws-westjet",
+      "aircraftCount": 5
+    },
+    {
+      "name": "WestJet Encore",
+      "code": "wr-westjet-encore",
+      "aircraftCount": 1
+    },
+    {
+      "name": "White Airways",
+      "code": "wi-white-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Widerøe",
+      "code": "wf-wideroe",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Winair",
+      "code": "wm-winair",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Windrose Airlines",
+      "code": "7w-windrose-airlines",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Wingo - Aero Republica",
+      "code": "p5-wingo",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Wingo Panama",
+      "code": "wh-wingo-panama",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Wings Air",
+      "code": "iw-wings-air",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Wizz Air",
+      "code": "w6-wizz-air",
+      "aircraftCount": 4
+    },
+    {
+      "name": "Wizz Air Abu Dhabi",
+      "code": "5w-wizz-air-abu-dhabi",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Wizz Air Malta",
+      "code": "w4-wizz-air-malta",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Wizz Air UK",
+      "code": "w9-wizz-air-uk",
+      "aircraftCount": 3
+    },
+    {
+      "name": "World 2 Fly",
+      "code": "2w-world-2-fly",
+      "aircraftCount": 2
+    },
+    {
+      "name": "World 2 Fly Portugal",
+      "code": "3p-world-2-fly-portugal",
+      "aircraftCount": 1
+    },
+    {
+      "name": "World Atlantic Airlines",
+      "code": "wl-world-atlantic-airlines",
+      "aircraftCount": 0
+    },
+    {
+      "name": "XiamenAir",
+      "code": "mf-xiamenair",
+      "aircraftCount": 6
+    },
+    {
+      "name": "Yakutia Airlines",
+      "code": "r3-yakutia-airlines",
+      "aircraftCount": 3
+    },
+    {
+      "name": "Yamal Airlines",
+      "code": "yc-yamal-airlines",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Yemenia",
+      "code": "iy-yemenia",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Yeti Airlines",
+      "code": "yt-yeti-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Z Air",
+      "code": "7z-z-air",
+      "aircraftCount": 0
+    },
+    {
+      "name": "Zagros Airlines",
+      "code": "izg-zagros-airlines",
+      "aircraftCount": 1
+    },
+    {
+      "name": "Zambia Airways",
+      "code": "zn-zambia-airways",
+      "aircraftCount": 2
+    },
+    {
+      "name": "Zipair Tokyo",
+      "code": "zg-zipair",
+      "aircraftCount": 1
+    }
+  ]
+}

@@ -13,6 +13,8 @@ import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Divider, Switch } from "react-native-paper";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Appearance } from "react-native";
+
 import { Href, router } from "expo-router";
 
 interface NavBtnProps {
@@ -62,10 +64,16 @@ const NavigationButton = ({
 
 const Account = () => {
   const { top } = useSafeAreaInsets();
+  const [isLightMode, setIsLightMode] = useState(Appearance.getColorScheme() === 'light');
+  const toggleAppearance = () => {
+    const newMode = !isLightMode;
+    setIsLightMode(newMode);
+    Appearance.setColorScheme(newMode ? 'light' : 'dark');
+  };
 
   return (
     <View style={styles.screen}>
-      <StatusBar style="light" />
+      <StatusBar style={isLightMode ? "light" : "dark"} />
       <View style={[styles.profileContainer, { paddingTop: top * 1.75 }]}>
         <View style={styles.imageContainer}>
           <Image
@@ -106,6 +114,15 @@ const Account = () => {
           name="Quick Login"
           visible={false}
         />
+        {/* Appearance Toggle */}
+        <View style={styles.appearanceContainer}>
+          <Text style={styles.appearanceLabel}>Light Mode</Text>
+          <Switch
+            value={isLightMode}
+            onValueChange={toggleAppearance}
+            color="#272727"
+          />
+        </View>
         <NavigationButton icon="settings-outline" name="Settings"
           pathname="settings" />
         <NavigationButton icon="log-out-outline" name="Logout" />
@@ -176,6 +193,18 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     fontSize: 16,
     fontWeight: "500",
+  },
+  appearanceContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: "#272727",
+  },
+  appearanceLabel: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
 

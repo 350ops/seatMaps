@@ -52,7 +52,7 @@ const Home = () => {
   const screenWidth = Dimensions.get('window').width;
   const today = new Date().toISOString().split('T')[0];
 
-  const { setFlights, setSearchParams, setDictionaries, loading, setLoading } = useFlightContext();
+  const { setFlights, setSearchParams, setDictionaries, loading, setLoading, saveToHistory } = useFlightContext();
 
   useEffect(() => {
     if (!process.env.EXPO_PUBLIC_AMADEUS_CLIENT_ID) {
@@ -119,7 +119,8 @@ const Home = () => {
       });
 
       setFlights(sortedFlights);
-      setSearchParams({
+
+      const newSearchParams = {
         origin: fromAirport.iataCode,
         destination: toAirport.iataCode,
         date: selectedDate,
@@ -127,15 +128,18 @@ const Home = () => {
         travelClass: travelClass,
         originName: fromAirport.name,
         destinationName: toAirport.name,
-        originCoordinates: fromAirport.location ? {
-          latitude: fromAirport.location.latitude,
-          longitude: fromAirport.location.longitude,
+        originCoordinates: fromAirport.geoCode ? {
+          latitude: fromAirport.geoCode.latitude,
+          longitude: fromAirport.geoCode.longitude,
         } : undefined,
-        destinationCoordinates: toAirport.location ? {
-          latitude: toAirport.location.latitude,
-          longitude: toAirport.location.longitude,
+        destinationCoordinates: toAirport.geoCode ? {
+          latitude: toAirport.geoCode.latitude,
+          longitude: toAirport.geoCode.longitude,
         } : undefined,
-      });
+      };
+
+      setSearchParams(newSearchParams);
+      saveToHistory(newSearchParams, sortedFlights, dicts);
 
       setLoading(false);
 

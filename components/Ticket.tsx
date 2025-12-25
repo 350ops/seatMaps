@@ -226,7 +226,6 @@ const Ticket = ({
         <View style={[styles.row, { marginBottom: 18 }]}>
           <View style={styles.locationContainer}>
             <Text style={styles.code}>{fromCode}</Text>
-            <Text style={styles.city}>{fromCity}</Text>
           </View>
 
           {/* Airplane Icon */}
@@ -251,7 +250,6 @@ const Ticket = ({
 
           <View style={styles.locationContainer}>
             <Text style={[styles.code, { textAlign: "right" }]}>{toCode}</Text>
-            <Text style={styles.city}>{toCity}</Text>
           </View>
         </View>
 

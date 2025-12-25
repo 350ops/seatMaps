@@ -5,6 +5,7 @@ import Ticket from "@/components/Ticket";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 import { searchFlightOffers } from "@/utils/amadeus";
+import { formatFlightTime, formatFlightDate } from '@/utils/date';
 import MeshBackground from '@/components/MeshBackground';
 
 
@@ -86,16 +87,10 @@ const Flights = () => {
     const segment = itinerary.segments[0];
     const lastSegment = itinerary.segments[itinerary.segments.length - 1];
 
-    const departureDateObj = new Date(segment.departure.at);
-    const arrivalDateObj = new Date(lastSegment.arrival.at);
 
-    const formatTime = (date: Date) => {
-      return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    };
 
-    const formatDate = (date: Date) => {
-      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    };
+    const formatTime = (dateString: string) => formatFlightTime(dateString);
+    const formatDate = (dateString: string) => formatFlightDate(dateString);
 
     const duration = itinerary.duration.replace('PT', '').toLowerCase();
 
@@ -118,10 +113,10 @@ const Flights = () => {
         toCode={lastSegment.arrival.iataCode}
         toCity={destination || lastSegment.arrival.iataCode}
         duration={duration}
-        departureTime={formatTime(departureDateObj)}
-        departureDate={formatDate(departureDateObj)}
-        arrivalTime={formatTime(arrivalDateObj)}
-        arrivalDate={formatDate(arrivalDateObj)}
+        departureTime={formatTime(segment.departure.at)}
+        departureDate={formatDate(segment.departure.at)}
+        arrivalTime={formatTime(lastSegment.arrival.at)}
+        arrivalDate={formatDate(lastSegment.arrival.at)}
         price={item.price.total}
         flightOffer={item}
         airlineCode={airlineCode}
