@@ -1,13 +1,23 @@
-import { View, Text, StyleSheet, Platform } from 'react-native';
-import React, { useMemo } from 'react';
+import { View, Text, StyleSheet, Platform, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
+import React, { useMemo, useState } from 'react';
 import MeshBackground from '@/components/MeshBackground';
 import { BlurView } from 'expo-blur';
 import MapView, { Polyline, Marker } from 'react-native-maps';
 import { useFlightContext } from '@/contexts/FlightContext';
+import { flightHistory, FlightRecord } from '@/app/data/flightHistory';
+import { airports } from '@/app/data/airports';
+import { Ionicons } from '@expo/vector-icons';
 
 type Coordinate = {
     latitude: number;
     longitude: number;
+};
+
+// Helper to format minutes to "XH Ym"
+const formatDuration = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
 };
 
 // Calculate intermediate points for a great circle arc
@@ -60,6 +70,7 @@ const calculateGreatCirclePoints = (
 
 const MapScreen: React.FC = () => {
     const { searchParams } = useFlightContext();
+    const [selectedFlight, setSelectedFlight] = useState<FlightRecord | null>(null);
 
     const origin = searchParams?.originCoordinates;
     const destination = searchParams?.destinationCoordinates;
@@ -88,17 +99,79 @@ const MapScreen: React.FC = () => {
         }
         // Default to world view
         return {
-            latitude: 0,
-            longitude: 0,
-            latitudeDelta: 180,
-            longitudeDelta: 360,
+            latitude: 25,
+            longitude: 10,
+            latitudeDelta: 160,
+            longitudeDelta: 160,
         };
     }, [origin, destination]);
+
+    // Deduplicate destination airports for dots
+    const destinationDots = useMemo(() => {
+        const uniqueDestinations = new Set<string>();
+        const dots: string[] = [];
+        flightHistory.forEach(flight => {
+            if (!uniqueDestinations.has(flight.arr)) {
+                uniqueDestinations.add(flight.arr);
+                dots.push(flight.arr);
+            }
+        });
+        return dots;
+    }, []);
 
     if (Platform.OS === 'ios') {
         return (
             <View style={styles.container}>
-                <MapView style={styles.map} initialRegion={region} mapType="hybrid">
+                <MapView
+                    style={styles.map}
+                    initialRegion={region}
+                    mapType="hybrid"
+                    onPress={() => setSelectedFlight(null)} // Deselect on map tap
+                >
+                    {/* Destination Dots */}
+                    {destinationDots.map((code) => {
+                        const coords = airports[code];
+                        if (!coords) return null;
+                        return (
+                            <Marker
+                                key={`dot-${code}`}
+                                coordinate={coords}
+                                anchor={{ x: 0.5, y: 0.5 }}
+                            >
+                                <View style={styles.destinationDot} />
+                            </Marker>
+                        );
+                    })}
+
+                    {/* Render Flight History */}
+                    {flightHistory.map((flight, index) => {
+                        const originCoords = airports[flight.dep];
+                        const destCoords = airports[flight.arr];
+
+                        if (!originCoords || !destCoords) return null;
+
+                        const isSelected = selectedFlight === flight;
+
+                        return (
+                            <Polyline
+                                key={`history-${index}`}
+                                coordinates={[
+                                    { latitude: originCoords.latitude, longitude: originCoords.longitude },
+                                    { latitude: destCoords.latitude, longitude: destCoords.longitude }
+                                ]}
+                                strokeColor={isSelected ? "#3673FD" : "rgba(255, 255, 255, 0.3)"}
+                                strokeWidth={isSelected ? 3 : 1}
+                                zIndex={isSelected ? 10 : 1}
+                                geodesic={true}
+                                tappable={true}
+                                onPress={(e) => {
+                                    e.stopPropagation(); // Prevent map press
+                                    setSelectedFlight(flight);
+                                }}
+                            />
+                        );
+                    })}
+
                     {origin && destination && flightPath.length > 0 && (
                         <>
                             <Polyline
@@ -107,9 +180,10 @@ const MapScreen: React.FC = () => {
                                 strokeWidth={4}
                                 geodesic={true}
                                 lineDashPattern={[0]}
+                                zIndex={20}
                             />
                             {/* Origin Marker */}
-                            <Marker coordinate={origin} anchor={{ x: 0.5, y: 0.5 }}>
+                            <Marker coordinate={origin} anchor={{ x: 0.5, y: 0.5 }} zIndex={21}>
                                 <View style={styles.markerContainer}>
                                     <View style={styles.dot} />
                                     <View style={styles.labelContainer}>
@@ -122,7 +196,7 @@ const MapScreen: React.FC = () => {
                             </Marker>
 
                             {/* Destination Marker */}
-                            <Marker coordinate={destination} anchor={{ x: 0.5, y: 0.5 }}>
+                            <Marker coordinate={destination} anchor={{ x: 0.5, y: 0.5 }} zIndex={21}>
                                 <View style={styles.markerContainer}>
                                     <View style={styles.dot} />
                                     <View style={styles.labelContainer}>
@@ -136,6 +210,41 @@ const MapScreen: React.FC = () => {
                         </>
                     )}
                 </MapView>
+
+                {/* Flight Details Toast */}
+                {selectedFlight && (
+                    <View style={styles.toastWrapper}>
+                        <BlurView intensity={30} tint="dark" style={styles.toastContainer}>
+                            <View style={styles.toastContent}>
+                                <View style={styles.toastHeader}>
+                                    <View style={styles.toastRoute}>
+                                        <Text style={styles.toastCode}>{selectedFlight.dep}</Text>
+                                        <Ionicons name="airplane" size={14} color="#fff" style={{ marginHorizontal: 8 }} />
+                                        <Text style={styles.toastCode}>{selectedFlight.arr}</Text>
+                                    </View>
+                                    <TouchableOpacity onPress={() => setSelectedFlight(null)}>
+                                        <Ionicons name="close-circle" size={20} color="rgba(255,255,255,0.6)" />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.divider} />
+                                <View style={styles.toastDetails}>
+                                    <View style={styles.detailItem}>
+                                        <Text style={styles.detailLabel}>DATE</Text>
+                                        <Text style={styles.detailValue}>{selectedFlight.date}</Text>
+                                    </View>
+                                    <View style={styles.detailItem}>
+                                        <Text style={styles.detailLabel}>AIRCRAFT</Text>
+                                        <Text style={styles.detailValue}>{selectedFlight.aircraft}</Text>
+                                    </View>
+                                    <View style={styles.detailItem}>
+                                        <Text style={styles.detailLabel}>TIME</Text>
+                                        <Text style={styles.detailValue}>{formatDuration(selectedFlight.block_minutes)}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </BlurView>
+                    </View>
+                )}
 
             </View >
         );
@@ -199,6 +308,14 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         marginBottom: 4,
     },
+    destinationDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.8)',
+    },
     labelContainer: {
         flexDirection: 'row',
         backgroundColor: '#3673FD',
@@ -230,6 +347,71 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 12,
+    },
+    toastWrapper: {
+        position: 'absolute',
+        bottom: 40,
+        left: 20,
+        right: 20,
+        alignItems: 'center',
+    },
+    toastContainer: {
+        width: '100%',
+        maxWidth: 400,
+        borderRadius: 20,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        elevation: 8,
+    },
+    toastContent: {
+        padding: 16,
+    },
+    toastHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    toastRoute: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    toastCode: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: '700',
+    },
+    divider: {
+        height: 1,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        marginBottom: 12,
+    },
+    toastDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    detailItem: {
+        alignItems: 'flex-start',
+    },
+    detailLabel: {
+        color: 'rgba(255, 255, 255, 0.5)',
+        fontSize: 10,
+        fontWeight: '600',
+        marginBottom: 4,
+        textTransform: 'uppercase',
+    },
+    detailValue: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: '500',
     },
 });
 

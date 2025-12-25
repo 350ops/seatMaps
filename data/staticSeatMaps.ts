@@ -37,6 +37,7 @@ function generateSeats(
     const seats: StaticSeat[] = [];
     for (const row of cabin.rows) {
         for (const col of cabin.columns) {
+            if (col === 'EMPTY') continue;
             const seatNumber = `${row}${col}`;
             seats.push({
                 number: seatNumber,

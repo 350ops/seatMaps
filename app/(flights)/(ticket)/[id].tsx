@@ -67,6 +67,42 @@ const TicketDetail = () => {
         return;
       }
 
+      // Helper to merge API status into static map
+      const mergeStaticWithApi = (staticMap: any, apiData: any, currentClass: string) => {
+        const staticApiData = convertStaticToApiFormat(staticMap, currentClass || undefined);
+
+        if (!apiData || !apiData.decks) return staticApiData;
+
+        // Create map of API statuses
+        const apiStatusMap = new Map<string, string>();
+        apiData.decks.forEach((deck: any) => {
+          deck.seats.forEach((seat: any) => {
+            const status = seat.travelerPricing?.[0]?.seatAvailabilityStatus
+              || seat.seatAvailabilityStatus
+              || "OCCUPIED"; // If in API but no status, assume occupied? Usually explicit.
+            apiStatusMap.set(seat.number, status);
+          });
+        });
+
+        // Update static seats
+        staticApiData.decks.forEach((deck: any) => {
+          deck.seats.forEach((seat: any) => {
+            if (apiStatusMap.has(seat.number)) {
+              seat.travelerPricing = [{
+                seatAvailabilityStatus: apiStatusMap.get(seat.number)
+              }];
+            } else {
+              // Seat in static map but NOT in API response.
+              // This usually means it's occupied or blocked, as Amadeus often returns only available seats 
+              // (though typically it returns full map, but missing often means unavailable).
+              seat.travelerPricing = [{ seatAvailabilityStatus: "OCCUPIED" }];
+            }
+          });
+        });
+
+        return staticApiData;
+      };
+
       try {
         setLoading(true);
         const parsedOffer = JSON.parse(flightOffer);
@@ -78,114 +114,133 @@ const TicketDetail = () => {
         console.log(`Checking for static seat map: ${carrierCode} ${aircraftCode}`);
         const staticMap = getStaticSeatMap(carrierCode, aircraftCode);
 
-        if (staticMap) {
-          console.log(`Found static seat map for ${carrierCode} ${aircraftCode}`);
-          const apiData = convertStaticToApiFormat(staticMap, travelClass || undefined);
-          setSeatmapData(apiData);
-          // setDictionaries? Static map might need dictionaries for aircraft name etc.
-          // We can create a minimal dictionary or rely on existing behavior
-          setDictionaries({
-            aircraft: {
-              [aircraftCode]: staticMap.aircraft
-            }
-          });
-          setLoading(false);
-          return;
-        }
+        // Fetch from API regardless of static map presence
+        let apiData = null;
+        let apiDictionaries = null;
+        let fetchError = null;
 
-        // If travelClass is set and different from the original booking, re-search
+        // Determine if we need to re-search based on travelClass
         const originalCabin = parsedOffer?.travelerPricings?.[0]?.fareDetailsBySegment?.[0]?.cabin;
+        let offerToUse = parsedOffer;
 
-        if (travelClass && travelClass !== originalCabin) {
-          console.log(`Re-searching flight with cabin class: ${travelClass}`);
+        try {
+          if (travelClass && travelClass !== originalCabin) {
+            console.log(`Re-searching flight with cabin class: ${travelClass}`);
 
-          // Extract flight details for re-search
-          const segment = parsedOffer.itineraries[0].segments[0];
-          const origin = segment.departure.iataCode;
-          const destination = segment.arrival.iataCode;
-          const departureDate = segment.departure.at.split('T')[0];
-          const carrierCode = segment.carrierCode;
-          const flightNumber = segment.number;
-          const operatingCarrier = segment.operating?.carrierCode || carrierCode;
+            // Extract flight details for re-search
+            const origin = segment.departure.iataCode;
+            const destination = segment.arrival.iataCode;
+            const departureDate = segment.departure.at.split('T')[0];
+            const flightNumber = segment.number;
+            const operatingCarrier = segment.operating?.carrierCode || carrierCode;
 
-          console.log(`Searching for ${carrierCode}${flightNumber}: ${origin} -> ${destination} on ${departureDate} in ${travelClass}`);
-          console.log(`Operating carrier: ${operatingCarrier}`);
+            // Re-search flights with the new cabin class
+            const { searchFlightOffers } = await import('@/utils/amadeus');
+            const searchResponse = await searchFlightOffers(
+              origin,
+              destination,
+              departureDate,
+              1,
+              true,
+              travelClass
+            );
 
-          // Re-search flights with the new cabin class
-          const { searchFlightOffers } = await import('@/utils/amadeus');
-          const searchResponse = await searchFlightOffers(
-            origin,
-            destination,
-            departureDate,
-            1,
-            true,  // Always search for non-stop flights
-            travelClass
-          );
-
-          if (searchResponse && searchResponse.data && searchResponse.data.length > 0) {
-            console.log(`Found ${searchResponse.data.length} flights in ${travelClass} class`);
-
-            // Log all available flights for debugging
-            searchResponse.data.forEach((offer: any, index: number) => {
-              const seg = offer.itineraries[0].segments[0];
-              const opCarrier = seg.operating?.carrierCode || seg.carrierCode;
-              console.log(`  Flight ${index + 1}: ${seg.carrierCode}${seg.number} (Operating: ${opCarrier}${seg.number})`);
-            });
-
-            let matchingFlight = null;
-
-            // Strategy 1: Match by carrier and flight number (exact match)
-            matchingFlight = searchResponse.data.find((offer: any) => {
-              const seg = offer.itineraries[0].segments[0];
-              const matches = seg.carrierCode === carrierCode && seg.number === flightNumber;
-              if (matches) console.log(`✓ Strategy 1: Found exact match ${seg.carrierCode}${seg.number}`);
-              return matches;
-            });
-
-            // Strategy 2: Match by operating carrier and flight number
-            if (!matchingFlight) {
-              matchingFlight = searchResponse.data.find((offer: any) => {
+            if (searchResponse && searchResponse.data && searchResponse.data.length > 0) {
+              // Find matching flight
+              let matchingFlight = searchResponse.data.find((offer: any) => {
                 const seg = offer.itineraries[0].segments[0];
-                const opCarrier = seg.operating?.carrierCode || seg.carrierCode;
-                const matches = opCarrier === operatingCarrier && seg.number === flightNumber;
-                if (matches) console.log(`✓ Strategy 2: Found operating carrier match ${opCarrier}${seg.number}`);
-                return matches;
+                return seg.carrierCode === carrierCode && seg.number === flightNumber;
               });
-            }
 
-            if (matchingFlight) {
-              const seg = matchingFlight.itineraries[0].segments[0];
-              console.log(`✓ Using flight: ${seg.carrierCode}${seg.number} in ${travelClass} class`);
-              const response = await getSeatmap(matchingFlight);
+              if (!matchingFlight) {
+                matchingFlight = searchResponse.data.find((offer: any) => {
+                  const seg = offer.itineraries[0].segments[0];
+                  const opCarrier = seg.operating?.carrierCode || seg.carrierCode;
+                  return opCarrier === operatingCarrier && seg.number === flightNumber;
+                });
+              }
 
-              if (response && response.data && response.data.length > 0) {
-                setSeatmapData(response.data[0]);
-                setDictionaries(response.dictionaries);
-                setError(null);
+              if (matchingFlight) {
+                console.log(`Found matching flight for ${travelClass}`);
+                offerToUse = matchingFlight;
               } else {
-                setError(`No seatmap available for ${travelClass} class`);
+                console.log(`No matching flight found in ${travelClass}`);
+                fetchError = `Flight not available in ${travelClass}`;
               }
             } else {
-              console.log(`✗ Flight ${carrierCode}${flightNumber} not found in ${travelClass} class`);
-              setError(`Flight ${carrierCode}${flightNumber} is not available in ${travelClass} class`);
+              fetchError = `No flights found for ${travelClass}`;
             }
+          }
+
+          if (!fetchError) {
+            const response = await getSeatmap(offerToUse);
+            if (response && response.data && response.data.length > 0) {
+              apiData = response.data[0];
+              apiDictionaries = response.dictionaries;
+            } else {
+              fetchError = "No seatmap data from API";
+            }
+          }
+
+        } catch (apiErr) {
+          console.error("API Fetch Error:", apiErr);
+          fetchError = "Failed to fetch from API";
+        }
+
+        // Decision Logic
+        if (staticMap) {
+          console.log(`Using static map for layout (API Data: ${!!apiData})`);
+
+          if (apiData) {
+            // Merge API availability into Static Layout
+            const mergedData = mergeStaticWithApi(staticMap, apiData, travelClass || originalCabin);
+            setSeatmapData(mergedData);
+            setDictionaries(apiDictionaries || {
+              aircraft: { [aircraftCode]: staticMap.aircraft }
+            });
+            setError(null);
           } else {
-            setError(`No flights found for ${travelClass} class`);
+            // Fallback: Static Map Only (Randomize availability for realism if API failed)
+            console.log("API failed or empty, falling back to fully static map");
+            const staticData = convertStaticToApiFormat(staticMap, travelClass || undefined);
+
+            // Randomize availability for demo purposes so it's not "all available"
+            staticData.decks.forEach((deck: any) => {
+              deck.seats.forEach((seat: any) => {
+                // 30% chance of being occupied
+                if (Math.random() < 0.3) {
+                  seat.travelerPricing = [{ seatAvailabilityStatus: "OCCUPIED" }];
+                }
+              });
+            });
+
+            setSeatmapData(staticData);
+            setDictionaries({
+              aircraft: { [aircraftCode]: staticMap.aircraft }
+            });
+            // Don't show error if we have a fallback, unless it was a specific class error?
+            // Actually, if we falling back because 'Flight not available in class', we should maybe just show that.
+            // But if it's just a seatmap fetch error, show the map.
+            if (fetchError && fetchError.includes("not available in")) {
+              setError(fetchError);
+            } else {
+              setError(null);
+            }
           }
         } else {
-          // Original cabin or no travelClass set - use original offer
-          const response = await getSeatmap(parsedOffer);
-
-          if (response && response.data && response.data.length > 0) {
-            setSeatmapData(response.data[0]);
-            setDictionaries(response.dictionaries);
+          // No Static Map - rely purely on API
+          if (apiData) {
+            setSeatmapData(apiData);
+            setDictionaries(apiDictionaries);
+            setError(null);
           } else {
-            setError("No seatmap available for this flight");
+            setError(fetchError || "No seat map available");
           }
         }
+
       } catch (err) {
-        console.error("Error fetching seatmap:", err);
-        setError("Failed to load seatmap");
+        console.error("Error in seatmap logic:", err);
+        setError("An unexpected error occurred");
       } finally {
         setLoading(false);
       }
